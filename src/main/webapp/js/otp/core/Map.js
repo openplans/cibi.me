@@ -33,7 +33,13 @@ otp.core.Map = {
     },
     
     activeModuleChanged : function(newModule) {
-        this.lmap.on('click', newModule.handleClick)
+        this.lmap.on('click', function(event) {
+            newModule.handleClick(event);
+        });
+        
+        for (var i = 0; i < newModule.mapLayers.length; i++) {
+            this.lmap.addLayer(newModule.mapLayers[i]);
+        }
     },
     
     CLASS_NAME : "otp.core.Map"

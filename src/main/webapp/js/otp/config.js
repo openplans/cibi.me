@@ -7,6 +7,8 @@ if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 // step 2: create an object of default otp.config default values (see step3 where we apply this to any existing config)
 otp.config_defaults = {
 
+    hostname : "http://localhost:8080",
+    
     // default cloudmade tiles:
     // tileUrl : 'http://{s}.tile.cloudmade.com/882f51841e1f47e9b81b3e258e6d76b4/997/256/{z}/{x}/{y}.png',
     // tileAttrib : 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
