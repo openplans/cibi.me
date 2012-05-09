@@ -12,32 +12,22 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-otp.namespace("otp.core");
+otp.namespace("otp.modules.bikeshare");
 
-otp.core.Map = {
+otp.modules.bikeshare.BikeShareModule = {
 
-    lmap    : null,
-    
-    initialize : function(config) {
-        otp.configure(this, config);
+    moduleName  : "Bike Share",
         
-        this.lmap = new L.Map('map');
-
-        var tileLayer = new L.TileLayer(otp.config.tileUrl, {maxZoom: 18, attribution: otp.config.tileAttrib});
-	    
-	    if(typeof otp.config.getTileUrl != 'undefined') {
-    	    tileLayer.getTileUrl = otp.config.getTileUrl;
-        }
-	    
-        this.lmap.setView(otp.config.initLatLng, otp.config.initZoom).addLayer(tileLayer);
+    initialize : function(config) {
+        otp.inherit(this, new otp.modules.Module());
     },
     
-    activeModuleChanged : function(newModule) {
-        this.lmap.on('click', newModule.handleClick)
+    handleClick : function(event) {
+        console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);    
     },
     
-    CLASS_NAME : "otp.core.Map"
+    CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"
 }
 
 
-otp.core.Map = new otp.Class(otp.core.Map);
+otp.modules.bikeshare.BikeShareModule = new otp.Class(otp.modules.bikeshare.BikeShareModule);

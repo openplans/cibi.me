@@ -12,38 +12,23 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-otp.namespace("otp.core");
+otp.namespace("otp.modules");
 
-otp.core.Webapp = {
+otp.modules.Module = {
 
-    map     : null,
-    
-    modules : [ ],
-    activeModule : null,
-    
+    moduleName  : "N/A",
+    mapLayers   : [ ],
+        
     initialize : function(config) {
         otp.configure(this, config);
-        
-        this.map = new otp.core.Map();        
-        
-        this.addModule(new otp.modules.bikeshare.BikeShareModule(), true);
     },
     
-    addModule : function(module, makeActive) {
-        makeActive = typeof makeActive !== 'undefined' ? makeActive : false;
-        this.modules.push(module);
-        if(makeActive) {
-            this.setActiveModule(module);
-        }
+    handleClick : function(event) {
+        console.log('unhandled map click at '+event.latlng.lat+", "+event.latlng.lng);
     },
     
-    setActiveModule : function(module) {
-        console.log("set active module: "+module.moduleName);
-        this.map.activeModuleChanged(module);
-    },    
-    
-    CLASS_NAME : "otp.core.Webapp"
+    CLASS_NAME : "otp.modules.Module"
 }
 
 
-otp.core.Webapp = new otp.Class(otp.core.Webapp);
+otp.modules.Module = new otp.Class(otp.modules.Module);
