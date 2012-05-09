@@ -21,7 +21,7 @@ otp.core.Webapp = {
     initialize : function(config) {
         otp.configure(this, config);
         
-        map = new otp.core.Map();        
+        this.map = new otp.core.Map();        
     },
     
     CLASS_NAME : "otp.core.Webapp"

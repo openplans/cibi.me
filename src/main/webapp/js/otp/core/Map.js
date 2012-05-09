@@ -21,7 +21,7 @@ otp.core.Map = {
     initialize : function(config) {
         otp.configure(this, config);
         
-        lmap = new L.Map('map');
+        this.lmap = new L.Map('map');
 
         var tileLayer = new L.TileLayer(otp.config.tileUrl, {maxZoom: 18, attribution: otp.config.tileAttrib});
 	    
@@ -31,7 +31,7 @@ otp.core.Map = {
 	    
 	
 	
-        lmap.setView(otp.config.initLatLng, otp.config.initZoom).addLayer(tileLayer);
+        this.lmap.setView(otp.config.initLatLng, otp.config.initZoom).addLayer(tileLayer);
     },
     
     CLASS_NAME : "otp.core.Map"
