@@ -59,17 +59,26 @@ otp.modules.bikeshare.BikeShareModule = {
 
     handleClick : function(event) {
         //console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
+        var this_ = this;
         if(this.startLatLng == null) {
             this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-            var start = new L.Marker(this.startLatLng, {icon: greenFlag}); 
+            var start = new L.Marker(this.startLatLng, {icon: greenFlag, draggable: true}); 
             start.bindPopup('<strong>From:</strong> '+this.startLatLng);
+            start.on('dragend', function() {
+                this_.startLatLng = start.getLatLng();
+                this_.planTrip();
+            });
             this.markerLayer.addLayer(start);
         }
         else if(this.endLatLng == null) {
             this.endLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-            var end = new L.Marker(this.endLatLng, {icon: redFlag}); 
+            var end = new L.Marker(this.endLatLng, {icon: redFlag, draggable: true}); 
             end.bindPopup('<strong>To:</strong> '+this.endLatLng);
             this.markerLayer.addLayer(end);
+            end.on('dragend', function() {
+                this_.endLatLng = end.getLatLng();
+                this_.planTrip();
+            });
             
             this.planTrip();
         }
@@ -77,7 +86,7 @@ otp.modules.bikeshare.BikeShareModule = {
     
     planTrip : function() {
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
-                
+        this.pathLayer.clearLayers();        
         var this_ = this;
         $.ajax(url, {
             data: {             
@@ -92,7 +101,7 @@ otp.modules.bikeshare.BikeShareModule = {
                 //console.log(data);
                 var itin = data.plan.itineraries[0];
                 for(var i=0; i < itin.legs.length; i++) {
-                    var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points, { color : 'red' });
+                    var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points, { color : 'blue' });
                     this_.pathLayer.addLayer(polyline);
                 }
             }
