@@ -98,16 +98,23 @@ otp.modules.bikeshare.BikeShareModule = {
                 
             success: function(data) {
             
-                //console.log(data);
+                console.log(data);
                 var itin = data.plan.itineraries[0];
                 for(var i=0; i < itin.legs.length; i++) {
-                    var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points, { color : 'blue' });
+                    var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points);
+                    polyline.setStyle({ color : this_.getModeColor(itin.legs[i].mode), weight: 8});
                     this_.pathLayer.addLayer(polyline);
                 }
             }
         });
     },
 
+    getModeColor : function(mode) {
+        if(mode === "WALK") return '#0f0';
+        if(mode === "BICYCLE") return '#f00';
+        return '#aaa';
+    },
+    
     CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"
 }
 
