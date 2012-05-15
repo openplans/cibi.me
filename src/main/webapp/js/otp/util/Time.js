@@ -12,31 +12,23 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-otp.namespace("otp.modules");
+otp.namespace("otp.util");
 
-otp.modules.Module = {
+/**
+ * Utility routines for date/time conversion
+ */
+ 
+otp.util.Time = {
 
-    moduleName  : "N/A",
-    mapLayers   : [ ],
-    widgets     : [ ],
+    msToHrMin : function(ms) {
+        var hrs = Math.floor(ms / 3600000);
+        var mins = Math.floor(ms / 60000) % 60;
         
-    initialize : function(config) {
-        otp.configure(this, config);
-    },
+        // TODO: localization
+        var str = (hrs > 0 ? (hrs +" hr, ") : "") + mins + " min";
     
-    handleClick : function(event) {
-        console.log('unhandled map click at '+event.latlng.lat+", "+event.latlng.lng);
+        return str;
     },
 
-    createWidget : function(id, content) {
-        var widget = new otp.widgets.Widget({id : id}); 
-        widget.setContent(content);
-        this.widgets.push(widget);
-        return widget;
-    },
-        
-    CLASS_NAME : "otp.modules.Module"
-}
-
-
-otp.modules.Module = new otp.Class(otp.modules.Module);
+    CLASS_NAME: "otp.util.Time"
+};
