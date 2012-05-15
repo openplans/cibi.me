@@ -75,15 +75,20 @@ otp.modules.bikeshare.BikeShareModule = {
 
     moduleName  : "Bike Share",
     
+    webapp      : null,
+    
     startLatLng : null,
     endLatLng   : null,
     
     markerLayer     : new L.LayerGroup(),
     pathLayer       : new L.LayerGroup(),
     stationsLayer   : new L.LayerGroup(),
+    
+    resultsWidget   : null,
         
     initialize : function(config) {
         otp.inherit(this, new otp.modules.Module());
+        otp.configure(this, config);
         
         this.mapLayers.push(this.pathLayer);
         this.mapLayers.push(this.stationsLayer);
@@ -134,13 +139,26 @@ otp.modules.bikeshare.BikeShareModule = {
             
                 console.log(data);
                 var itin = data.plan.itineraries[0];
-                for(var i=0; i < itin.legs.length; i++) {
-                    var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points);
-                    polyline.setStyle({ color : this_.getModeColor(itin.legs[i].mode), weight: 8});
-                    this_.pathLayer.addLayer(polyline);
-                    if(itin.legs[i].mode === 'BICYCLE') {
-                        this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
+                var resultsContent = '';
+                if(data.plan) {
+                    for(var i=0; i < itin.legs.length; i++) {
+                        var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points);
+                        polyline.setStyle({ color : this_.getModeColor(itin.legs[i].mode), weight: 8});
+                        this_.pathLayer.addLayer(polyline);
+                        if(itin.legs[i].mode === 'BICYCLE') {
+                            this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
+                        }
                     }
+                    resultsContent += '<strong>Trip Duration:</strong> '+otp.util.Time.msToHrMin(itin.duration);
+                }
+                else {
+                    resultsContent = '<i>This trip could not be routed. Try different start/end locations.</i>';
+                }
+                
+                if(this_.resultsWidget) {
+                }
+                else {
+                    this_.createWidget("tripResultsWidget", resultsContent);
                 }
             }
         });
