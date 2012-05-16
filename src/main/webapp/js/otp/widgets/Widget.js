@@ -28,7 +28,7 @@ otp.widgets.Widget = {
         this.div.setAttribute('id', this.id);
         this.div.className = 'otp-widget';
         document.body.appendChild(this.div);
-        $(this.div).draggable();
+        //$(this.div).draggable();
     },
     
     setContent : function(content) {

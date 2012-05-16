@@ -421,3 +421,11 @@ button {width: auto; overflow: visible;}
   border-top: 1px solid #d1d263;
   border-bottom: 1px solid #929339;
 }
+
+#otp-mainTSW {
+  width: 240px;
+  height: 360px;
+  left: 20px;
+  bottom: 100px;
+}
+

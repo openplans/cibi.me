@@ -88,7 +88,11 @@ otp.modules.bikeshare.BikeShareModule =
     resultsWidget   : null,
     tipWidget       : null,
     tipStep         : 0,
-        
+
+    triangleTimeFactor     : 0.333,
+    triangleSlopeFactor    : 0.333,
+    triangleSafetyFactor   : 0.334,
+                        
     initialize : function(config) {
         //otp.inherit(this, new otp.modules.Module());
         otp.configure(this, config);
@@ -129,6 +133,14 @@ otp.modules.bikeshare.BikeShareModule =
         }
     },
     
+    trianglePlanTrip : function() {
+        var triParams = this.resultsWidget.bikeTriangle.getFormData();
+        this.triangleTimeFactor = triParams.triangleTimeFactor;
+        this.triangleSlopeFactor = triParams.triangleSlopeFactor;
+        this.triangleSafetyFactor = triParams.triangleSafetyFactor;
+        this.planTrip();
+    },
+    
     planTrip : function() {
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
         this.pathLayer.clearLayers();        
@@ -138,12 +150,22 @@ otp.modules.bikeshare.BikeShareModule =
             data: {             
                 fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
-                mode: 'WALK,BICYCLE'
+                mode: 'WALK,BICYCLE',
+                optimize: 'TRIANGLE',
+                triangleTimeFactor: this_.triangleTimeFactor,
+                triangleSlopeFactor: this_.triangleSlopeFactor,
+                triangleSafetyFactor: this_.triangleSafetyFactor
             },
             dataType: 'jsonp',
                 
             success: function(data) {
             
+                if(this_.resultsWidget == null) {
+                    this_.resultsWidget = new otp.widgets.TripSummaryWidget('otp-mainTSW', function() {
+                        this_.trianglePlanTrip();
+                    });
+                }
+                
                 console.log(data);
                 var itin = data.plan.itineraries[0];
                 var resultsContent = '';
@@ -156,40 +178,17 @@ otp.modules.bikeshare.BikeShareModule =
                             this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
                         }
                     }
-                    resultsContent = this_.getResultsContent(itin);
+                    this_.resultsWidget.updateMetrics(itin);
                     this_.updateTipStep(3);
                 }
                 else {
-                    resultsContent = '<i>This trip could not be routed. Try different start/end locations.</i>';
-                }
-                
-                if(this_.resultsWidget) {
-                    this_.resultsWidget.setContent(resultsContent)
-                }
-                else {
-                    this_.resultsWidget = this_.createWidget("otp-tripResultsWidget", resultsContent);
-                }
+                    //this_.resultsWidget.noTripFound();
+                }                
             }
         });
+        console.log("rw "+this.resultsWidget);
     },
-    
-    getResultsContent : function(itin) {
-        var content = '<div style="text-align: center;">';
-        content += '<div style="font-size: 18px; margin-bottom: 8px; font-weight: bold;">Your Trip</div>';
-        content += '<strong>Distance Traveled:</strong> '+Math.round(100*itin.walkDistance/5280)/100+' mi.<br/>';
-        content += '<strong>Estimated Time:</strong> '+otp.util.Time.msToHrMin(itin.duration)+'<br/>';
-        content += '<strong>Calories Burned:</strong> N/A'+'<br/>';
-        content += '<strong>Cost:</strong> N/A'+'<br/>';
-        content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Drag to Change Trip:</div>';
-        content += '<div style="background: lightgray; height: 100px; margin-top: 10px;">bike triangle</div>';
-        content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Share this Trip:</div>';
-        content += '<div style="background: lightgray; height: 40px; margin-top: 10px;">social media icons</div>';
-        content += '</div>';
-
-        return content;
-    },
-    
-
+        
     getModeColor : function(mode) {
         if(mode === "WALK") return '#0f0';
         if(mode === "BICYCLE") return '#f00';
