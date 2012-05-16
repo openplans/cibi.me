@@ -155,7 +155,7 @@ otp.modules.bikeshare.BikeShareModule = {
                             this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
                         }
                     }
-                    resultsContent += '<strong>Trip Duration:</strong> '+otp.util.Time.msToHrMin(itin.duration);
+                    resultsContent = this_.getResultsContent(itin);
                     this_.updateTipStep(3);
                 }
                 else {
@@ -171,6 +171,23 @@ otp.modules.bikeshare.BikeShareModule = {
             }
         });
     },
+    
+    getResultsContent : function(itin) {
+        var content = '<div style="text-align: center;">';
+        content += '<div style="font-size: 18px; margin-bottom: 8px; font-weight: bold;">Your Trip</div>';
+        content += '<strong>Distance Traveled:</strong> '+Math.round(100*itin.walkDistance/5280)/100+' mi.<br/>';
+        content += '<strong>Estimated Time:</strong> '+otp.util.Time.msToHrMin(itin.duration)+'<br/>';
+        content += '<strong>Calories Burned:</strong> N/A'+'<br/>';
+        content += '<strong>Cost:</strong> N/A'+'<br/>';
+        content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Drag to Change Trip:</div>';
+        content += '<div style="background: lightgray; height: 100px; margin-top: 10px;">bike triangle</div>';
+        content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Share this Trip:</div>';
+        content += '<div style="background: lightgray; height: 40px; margin-top: 10px;">social media icons</div>';
+        content += '</div>';
+
+        return content;
+    },
+    
 
     getModeColor : function(mode) {
         if(mode === "WALK") return '#0f0';
