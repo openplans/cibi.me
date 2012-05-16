@@ -99,8 +99,6 @@ otp.modules.bikeshare.BikeShareModule =
         
         this.tipWidget = this.createWidget("otp-tipWidget", "");
         this.updateTipStep(1);
-        
-        new otp.widgets.TripSummaryWidget('otp-mainTSW');
     },
 
     handleClick : function(event) {
