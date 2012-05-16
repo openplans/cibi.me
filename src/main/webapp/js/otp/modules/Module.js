@@ -29,7 +29,7 @@ otp.modules.Module = {
     },
 
     createWidget : function(id, content) {
-        var widget = new otp.widgets.Widget({id : id}); 
+        var widget = new otp.widgets.Widget(id); 
         widget.setContent(content);
         this.widgets.push(widget);
         return widget;

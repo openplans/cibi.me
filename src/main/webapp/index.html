@@ -20,16 +20,22 @@
 <script src="js/lib/jquery-ui/js/jquery-ui-1.8.20.custom.min.js"></script>
 <link rel="stylesheet" href="js/lib/jquery-ui/css/smoothness/jquery-ui-1.8.20.custom.css" />
 
+<!-- raphael -->
+<script src="js/lib/raphael/raphael-min.js"></script>
+
+
 <!-- otp-specific imports -->
 <script src="js/otp/otp.js"></script>
 <script src="js/otp/config.js"></script>
 <script src="js/otp/util/leaflet.js"></script>
-<script src="js/otp/widgets/Widget.js"></script>
 <script src="js/otp/util/Time.js"></script>
 <script src="js/otp/core/Webapp.js"></script>
 <script src="js/otp/core/Map.js"></script>
 <script src="js/otp/modules/Module.js"></script>
 <script src="js/otp/modules/bikeshare/BikeShareModule.js"></script>
+<script src="js/otp/widgets/Widget.js"></script>
+<script src="js/otp/widgets/TripSummaryWidget.js"></script>
+<script src="js/otp/widgets/BikeTrianglePanel.js"></script>
 <link rel="stylesheet" href="style.css" />
 
 <!-- make legacy Internet Explorer play nice(r) -->
@@ -79,7 +85,10 @@ $(document).ready(function() {
     </ul>
   </nav>
 
-  <div class="seach">Search for a location&hellip;</div>
+  <div class="search">
+    <!-- This is just stubbed in. Non-functional. Please make it work. -->
+    <input type="text" name="location_search" placeholder="Search for a location&hellip;" />
+  </div>
 
 </header><!-- #branding -->
 

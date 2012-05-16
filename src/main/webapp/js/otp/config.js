@@ -5,7 +5,7 @@ if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 
 
 // step 2: create an object of default otp.config default values (see step3 where we apply this to any existing config)
-otp.config_defaults = {
+otp.config = {
 
     hostname : "http://nyc-bike.deployer.opentripplanner.org",
     
@@ -25,7 +25,7 @@ otp.config_defaults = {
     CLASS_NAME : "otp.config"
 };
 
-
+/*
 // step 3: apply our default to the existing (possibly empty) otp config
 try {
     otp.inherit(otp.config, otp.config_defaults);       // step 3a: build the object up
@@ -33,4 +33,4 @@ try {
     console.log("otp.config updated with default items from otp.config_defaults");
 } catch(e) {
     console.log("ERROR: was unable to run otp.inherit override in config.js - got this exception: " + e);
-}
+}*/

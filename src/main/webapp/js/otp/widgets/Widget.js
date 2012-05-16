@@ -19,14 +19,16 @@ otp.widgets.Widget = {
     div :   null,
     id :    null,
     
-    initialize : function(config) {
-        otp.configure(this, config);
+    initialize : function(id) {
+        //otp.configure(this, config);
+        this.id = id;
+        console.log('widget constructor: '+this.id);
         
         this.div = document.createElement('div');
         this.div.setAttribute('id', this.id);
         this.div.className = 'otp-widget';
         document.body.appendChild(this.div);
-        $(this.div).draggable();
+        //$(this.div).draggable();
     },
     
     setContent : function(content) {

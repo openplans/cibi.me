@@ -140,7 +140,7 @@ button {width: auto; overflow: visible;}
 -------------------------------------------------------------- */
 
 #page {
-  max-width: 100%;
+  width: 100%;
   height: 100%;
   overflow: hidden;
 }
@@ -182,7 +182,7 @@ button {width: auto; overflow: visible;}
   position: absolute;
   top: 4em;
   right: -2em;
-  padding: 0 4em 0 2em;
+  padding: 0 4.5em 0 2em;
   border-top: 1px solid #529be6;
   border-bottom: 1px solid #2a65a1;
 
@@ -268,19 +268,41 @@ button {width: auto; overflow: visible;}
 
 #site-title {
   font-family: 'Dancing Script', cursive;
-  font-size: 6em;
-  
+  font-size: 4.25em;
+  margin: -0.2em 0 0;
+  line-height: 1;
 }
 #site-title a {
   text-decoration: none;
   color: #fff;
+  text-shadow: -1px -1px 1px rgba(42,101,161,0.25),
+               -1px  1px 1px rgba(42,101,161,0.25),
+                1px -1px 1px rgba(42,101,161,0.25),
+                1px  1px 1px rgba(42,101,161,0.25)
+}
+#site-title a:hover {
+  text-shadow: -1px -1px 1px rgba(42,101,161,0.5),
+               -1px  1px 1px rgba(42,101,161,0.75),
+                1px -1px 1px rgba(42,101,161,0.25),
+                1px  1px 1px rgba(42,101,161,0.5)
+}
+#site-description {
+  color: #dfeefd;
+  font-size: 1.25em;
+  margin: 0;
+  text-shadow: -1px -1px 1px rgba(42,101,161,0.25),
+               -1px  1px 1px rgba(42,101,161,0.25),
+                1px -1px 1px rgba(42,101,161,0.25),
+                1px  1px 1px rgba(42,101,161,0.25)
 }
 
 /* AddThis */
 #branding .addthis {
+  margin: 1.25em 0 0;
   float: right;
+  min-width: 163px;
 }
-  
+
 /* Main Navigation */
 #main-menu {
   padding: 1em;
@@ -295,7 +317,7 @@ button {width: auto; overflow: visible;}
   color: #fff;
   font-size: 1em;
   font-weight: bold;
-  line-height: 2;
+  line-height: 1.75;
   text-decoration: none;
   padding: 0 0.75em;
   -webkit-border-radius: 3px;
@@ -303,8 +325,39 @@ button {width: auto; overflow: visible;}
           border-radius: 3px;
 }
 #main-menu a:hover {
-  background-color: #444;
+  background-color: #333;
 }
+
+/* Location Search Form */
+#branding .search {
+  padding: 1em;
+}
+#branding .search input {
+  width: 15em;
+  padding: 0.5em;
+  background: #eee;
+  border: 0;
+  font-weight: bold;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+
+  background-image: linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+
+  background-image: -webkit-gradient(
+  	linear,
+  	left bottom,
+  	left top,
+  	color-stop(0, rgb(229,229,229)),
+  	color-stop(1, rgb(208,208,208))
+  );
+}
+#branding .search ::-webkit-input-placeholder { color: #777; }
+#branding .search :-moz-placeholder { color: #777; }
 
 
 /* =The Map
@@ -332,21 +385,47 @@ button {width: auto; overflow: visible;}
   position : fixed;
   z-index: 10;
   padding: 10px;
-  background: white;
-  border: 2px solid black;
+  background: #eee;
+  border: 1px solid #acacac;
+  border-top: 1px solid #bfbfbf;
+  border-bottom: 1px solid #9a9a9a;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+     -moz-box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+  -webkit-box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+          box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
 }
 
 #otp-tripResultsWidget {
+  width: 230px;
+  height: auto;
+  left: 20px;
+  bottom: 7.5em;
+}
+
+#otp-tipWidget {
+  left: 20px;
+  bottom: 2em;
+  height: 1.5em;
+  font-size: 1.25em;
+  font-weight: bold;
+  line-height: 1.5;
+  padding-right: 1em;
+  padding-left: 1em;
+  text-shadow: -1px 1px #fff;
+  white-space: nowrap;
+  background-color: #e3e57a;
+  background-color: rgba(227,229,122,0.8);
+  border: 1px solid #b1b24e;
+  border-top: 1px solid #d1d263;
+  border-bottom: 1px solid #929339;
+}
+
+#otp-mainTSW {
   width: 240px;
   height: 360px;
   left: 20px;
   bottom: 100px;
 }
 
-#otp-tipWidget {
-  width: 450px;
-  height: 25px;
-  left: 20px;
-  bottom: 20px;
-  font-size: 18px;
-}
