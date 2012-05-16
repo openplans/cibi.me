@@ -16,59 +16,69 @@ otp.namespace("otp.modules.bikeshare");
 
 
 // TODO: move these to a shared icon libary file
-var GreenFlagIcon = L.Icon.extend({
-    iconUrl: 'images/flag_marker_green.png',
-    shadowUrl: 'images/shadow.png',	
-    iconSize: new L.Point(32, 37),
-    shadowSize: new L.Point(51, 37),
-    iconAnchor: new L.Point(16, 37),
-    popupAnchor: new L.Point(0, -37)
+
+var StartFlagIcon = L.Icon.extend({
+    iconUrl: 'images/marker-flag-start-shadowed.png',
+    shadowUrl: null,
+    iconSize: new L.Point(48, 49),
+    iconAnchor: new L.Point(46, 42),
+    popupAnchor: new L.Point(0, -16)
 });
-var greenFlag = new GreenFlagIcon();
+var startFlag = new StartFlagIcon();
 
-
-var RedFlagIcon = L.Icon.extend({
-    iconUrl: 'images/flag_marker_red.png',
-    shadowUrl: 'images/shadow.png',	
-    iconSize: new L.Point(32, 37),
-    shadowSize: new L.Point(51, 37),
-    iconAnchor: new L.Point(16, 37),
-    popupAnchor: new L.Point(0, -37)
+var EndFlagIcon = L.Icon.extend({
+    iconUrl: 'images/marker-flag-end-shadowed.png',
+    shadowUrl: null,
+    iconSize: new L.Point(48, 49),
+    iconAnchor: new L.Point(46, 42),
+    popupAnchor: new L.Point(0, -16)
 });
-var redFlag = new RedFlagIcon();
+var endFlag = new EndFlagIcon();
 
-
-var GreenBikeIcon = L.Icon.extend({
-    iconUrl: 'images/bicycle_green.png',
-    iconSize: new L.Point(21, 39),
-    iconAnchor: new L.Point(10, 39),
-    popupAnchor: new L.Point(0, -39)
+var StartBikeIcon = L.Icon.extend({
+    iconUrl: 'images/marker-bike-green-shadowed.png',
+    shadowUrl: null,
+    iconSize: new L.Point(25, 39),
+    iconAnchor: new L.Point(12, 36),
+    popupAnchor: new L.Point(0, -36)
 });
-var greenBike = new GreenBikeIcon();
+var startBike = new StartBikeIcon();
 
-var SmallGreenBikeIcon = L.Icon.extend({
-    iconUrl: 'images/bicycle_green_small.png',
-    iconSize: new L.Point(15, 28),
-    iconAnchor: new L.Point(10, 28),
-    popupAnchor: new L.Point(0, -28)
+var EndBikeIcon = L.Icon.extend({
+    iconUrl: 'images/marker-bike-red-shadowed.png',
+    shadowUrl: null,
+    iconSize: new L.Point(25, 39),
+    iconAnchor: new L.Point(12, 36),
+    popupAnchor: new L.Point(0, -36)
 });
-var smallGreenBike = new SmallGreenBikeIcon();
+var endBike = new EndBikeIcon();
 
-var RedBikeIcon = L.Icon.extend({
-    iconUrl: 'images/bicycle_red.png',
-    iconSize: new L.Point(21, 39),
-    iconAnchor: new L.Point(10, 39),
-    popupAnchor: new L.Point(0, -39)
+var SmallBlueIcon = L.Icon.extend({
+    iconUrl: 'images/marker-blue-sm.png',
+    shadowUrl: null,
+    iconSize: new L.Point(9, 16),
+    iconAnchor: new L.Point(5, 16),
+    popupAnchor: new L.Point(0, -16)
 });
-var redBike = new RedBikeIcon();
+var smallBlue = new SmallBlueIcon();
 
-var SmallRedBikeIcon = L.Icon.extend({
-    iconUrl: 'images/bicycle_red_small.png',
-    iconSize: new L.Point(15, 28),
-    iconAnchor: new L.Point(10, 28),
-    popupAnchor: new L.Point(0, -28)
+var MediumBlueIcon = L.Icon.extend({
+    iconUrl: 'images/marker-blue-med.png',
+    shadowUrl: null,
+    iconSize: new L.Point(13, 23),
+    iconAnchor: new L.Point(7, 23),
+    popupAnchor: new L.Point(0, -23)
 });
-var smallRedBike = new SmallRedBikeIcon();
+var mediumBlue = new MediumBlueIcon();
+
+var BlueNubIcon = L.Icon.extend({
+    iconUrl: 'images/marker-blue-nub.png',
+    shadowUrl: null,
+    iconSize: new L.Point(11, 8),
+    iconAnchor: new L.Point(5, 8),
+    popupAnchor: new L.Point(0, -8)
+});
+var blueNub = new BlueNubIcon();
 
 
 otp.modules.bikeshare.BikeShareModule = 
@@ -81,6 +91,8 @@ otp.modules.bikeshare.BikeShareModule =
     startLatLng : null,
     endLatLng   : null,
     
+    stations    : null,
+    
     markerLayer     : new L.LayerGroup(),
     pathLayer       : new L.LayerGroup(),
     stationsLayer   : new L.LayerGroup(),
@@ -88,6 +100,11 @@ otp.modules.bikeshare.BikeShareModule =
     resultsWidget   : null,
     tipWidget       : null,
     tipStep         : 0,
+    
+    currentRequest  : null,
+    
+    currentHash : null,
+
 
     triangleTimeFactor     : 0.333,
     triangleSlopeFactor    : 0.333,
@@ -101,6 +118,8 @@ otp.modules.bikeshare.BikeShareModule =
         this.mapLayers.push(this.stationsLayer);
         this.mapLayers.push(this.markerLayer);
         
+        this.initStations();
+        
         this.tipWidget = this.createWidget("otp-tipWidget", "");
         this.updateTipStep(1);
     },
@@ -110,7 +129,7 @@ otp.modules.bikeshare.BikeShareModule =
         var this_ = this;
         if(this.startLatLng == null) {
             this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-            var start = new L.Marker(this.startLatLng, {icon: greenFlag, draggable: true}); 
+            var start = new L.Marker(this.startLatLng, {icon: startFlag, draggable: true}); 
             start.bindPopup('<strong>From:</strong> '+this.startLatLng);
             start.on('dragend', function() {
                 this_.startLatLng = start.getLatLng();
@@ -121,7 +140,7 @@ otp.modules.bikeshare.BikeShareModule =
         }
         else if(this.endLatLng == null) {
             this.endLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-            var end = new L.Marker(this.endLatLng, {icon: redFlag, draggable: true}); 
+            var end = new L.Marker(this.endLatLng, {icon: endFlag, draggable: true}); 
             end.bindPopup('<strong>To:</strong> '+this.endLatLng);
             this.markerLayer.addLayer(end);
             end.on('dragend', function() {
@@ -142,12 +161,23 @@ otp.modules.bikeshare.BikeShareModule =
     },
     
     planTrip : function() {
+    	
+    	if(this.currentRequest !== null)
+        {
+    		console.log("Canceling current request.");
+        	this.currentRequest.abort();
+        	this.currentRequest = null;
+        }
+    	
+    	this.currentHash = null;
+    	
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
         this.pathLayer.clearLayers();        
-        this.stationsLayer.clearLayers();        
+        //this.stationsLayer.clearLayers(); 
+        
         var this_ = this;
-        $.ajax(url, {
-            data: {             
+        
+        var data_ = {             
                 fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
                 mode: 'WALK,BICYCLE',
@@ -155,16 +185,23 @@ otp.modules.bikeshare.BikeShareModule =
                 triangleTimeFactor: this_.triangleTimeFactor,
                 triangleSlopeFactor: this_.triangleSlopeFactor,
                 triangleSafetyFactor: this_.triangleSafetyFactor
-            },
+            };
+        
+        
+        
+        this.currentRequest = $.ajax(url, {
+            data: data_,
             dataType: 'jsonp',
                 
             success: function(data) {
-            
-                if(this_.resultsWidget == null) {
+            	
+            	if(this_.resultsWidget == null) {
                     this_.resultsWidget = new otp.widgets.TripSummaryWidget('otp-mainTSW', function() {
                         this_.trianglePlanTrip();
                     });
                 }
+            	
+            	this.currentHash = "abc123";
                 
                 console.log(data);
                 var itin = data.plan.itineraries[0];
@@ -183,9 +220,10 @@ otp.modules.bikeshare.BikeShareModule =
                 }
                 else {
                     //this_.resultsWidget.noTripFound();
-                }                
+                }
             }
         });
+        
         console.log("rw "+this.resultsWidget);
     },
         
@@ -197,6 +235,61 @@ otp.modules.bikeshare.BikeShareModule =
     
     getStations : function(start, end) {
         console.log('stations '+start+' '+end);
+        var tol = .0001, distTol = .005;
+        
+        for(var i=0; i<this.stations.length; i++) {
+            var station = this.stations[i].BikeRentalStation;
+            if(Math.abs(station.x - start.lng) < tol && Math.abs(station.y - start.lat) < tol) {
+                // start station
+                this.stationsLayer.removeLayer(station.marker);                        
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: startBike});
+                marker.bindPopup(this.constructStationInfo("PICK UP BIKE", station));
+                this.stationsLayer.addLayer(marker);
+                station.marker = marker;
+            }
+            else if(this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol && 
+                    parseInt(station.bikesAvailable) > 0) {
+                // start-adjacent station
+                this.stationsLayer.removeLayer(station.marker);
+                              
+                var icon = this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol/2 ?  mediumBlue : smallBlue;
+                var marker = new L.Marker(station.marker.getLatLng(), { icon: icon }); 
+                marker.bindPopup(this.constructStationInfo("ALTERNATE PICKUP", station));
+                this.stationsLayer.addLayer(marker);                        
+                station.marker = marker;
+            }
+            else if(Math.abs(station.x - end.lng) < tol && Math.abs(station.y - end.lat) < tol) {
+                // end station
+                this.stationsLayer.removeLayer(station.marker);                        
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: endBike});
+                marker.bindPopup(this.constructStationInfo("DROP OFF BIKE", station));
+                this.stationsLayer.addLayer(marker);
+                station.marker = marker;
+            }
+            else if(this.distance(station.x, station.y, this.endLatLng.lng, this.endLatLng.lat) < distTol && 
+                    parseInt(station.bikesAvailable) > 0) {
+                // end-adjacent station
+                this.stationsLayer.removeLayer(station.marker);                        
+
+                var icon = this.distance(station.x, station.y, this.endLatLng.lng, this.endLatLng.lat) < distTol/2 ?  mediumBlue : smallBlue;
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: icon}); 
+                marker.bindPopup(this.constructStationInfo("ALTERNATE DROP OFF", station));
+                this.stationsLayer.addLayer(marker);                        
+                station.marker = marker;
+            }
+            else {
+                this.stationsLayer.removeLayer(station.marker);                        
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: blueNub}); 
+                marker.bindPopup(this.constructStationInfo("BIKE STATION", station));
+                this.stationsLayer.addLayer(marker);                        
+                station.marker = marker;
+            }
+        }
+    },
+    
+    
+    initStations : function(start, end) {
+        console.log('stations '+start+' '+end);
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/bike_rental';
         var this_ = this;
         $.ajax(url, {
@@ -205,40 +298,21 @@ otp.modules.bikeshare.BikeShareModule =
             dataType: 'jsonp',
                 
             success: function(data) {
-                //console.log(data);
-                var tol = .0001, distTol = .005;
-                for(var i=0; i<data.stations.length; i++) {
-                    var station = data.stations[i].BikeRentalStation;
-                    //console.log(station.x+","+station.y);
-                    if(Math.abs(station.x - start.lng) < tol && Math.abs(station.y - start.lat) < tol) {
-                        // start station
-                        var marker = new L.Marker(start, {icon: greenBike}); 
-                        marker.bindPopup(this_.constructStationInfo("PICK UP BIKE", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                    else if(Math.abs(station.x - end.lng) < tol && Math.abs(station.y - end.lat) < tol) {
-                        // end station
-                        var marker = new L.Marker(end, {icon: redBike}); 
-                        marker.bindPopup(this_.constructStationInfo("DROP OFF BIKE", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                    else if(this_.distance(station.x, station.y, this_.startLatLng.lng, this_.startLatLng.lat) < distTol && 
-                            parseInt(station.bikesAvailable) > 0) {
-                        var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: smallGreenBike}); 
-                        marker.bindPopup(this_.constructStationInfo("ALTERNATE PICKUP", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                    else if(this_.distance(station.x, station.y, this_.endLatLng.lng, this_.endLatLng.lat) < distTol && 
-                            parseInt(station.spacesAvailable) > 0) {
-                        var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: smallRedBike}); 
-                        marker.bindPopup(this_.constructStationInfo("ALTERNATE DROPOFF", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
+                this_.stations = data.stations;
+                for(var i=0; i<this_.stations.length; i++) {
+                    var station = this_.stations[i].BikeRentalStation;
+                    var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: blueNub}); 
+                    marker.bindPopup(this_.constructStationInfo("BIKE STATION", station));
+                    this_.stationsLayer.addLayer(marker)
+                    station.marker = marker;
                 }
             }
-        });        
+        });
+        
+
     },
-    
+        
+            
     constructStationInfo : function(title, station) {
         var info = "<strong>"+title+"</strong><br/>";
         info += '<strong>Station:</strong> '+station.name+'<br/>';
