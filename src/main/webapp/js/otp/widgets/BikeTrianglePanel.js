@@ -94,13 +94,13 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         safetyBar.attr({fill:safeFill, stroke:"none"});
 
         var timeLabel = canvas.text(barLeft + barWidth/2, margin+barHeight/2, timeName + ": 33%");
-        timeLabel.attr({"font-size":"16px", opacity:1});
+        timeLabel.attr({"font-size":"15px", opacity:1});
 
         var topoLabel = canvas.text(barLeft + barWidth/2, margin*2+barHeight+barHeight/2,  hillName + ": 33%");
-        topoLabel.attr({"font-size":"16px", opacity:1});
+        topoLabel.attr({"font-size":"15px", opacity:1});
 
         var safetyLabel = canvas.text(barLeft + barWidth/2, margin*3+barHeight*2+barHeight/2, safeName + ": 33%");
-        safetyLabel.attr({"font-size":"16px", opacity:1});
+        safetyLabel.attr({"font-size":"15px", opacity:1});
 
         var cx = margin+tri_side/2, cy = height-margin-(1/Math.sqrt(3))*(tri_side/2);
         var cursorVert = canvas.rect(cx-.5, cy-this.cursor_size/2-2, 1, this.cursor_size+4).attr({

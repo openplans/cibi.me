@@ -431,9 +431,14 @@ button {width: auto; overflow: visible;}
 
 #otp-mainTSW {
   width: 240px;
-  height: 360px;
+/*  height: 360px;*/ /* do we need this height? don't think so. -acochran */
   left: 20px;
   bottom: 100px;
+}
+
+#otp-tsw-bikeTriangle {
+  height: 100px;
+  margin: 0 0 1em;
 }
 
 ul.otp-stats {
@@ -442,4 +447,12 @@ ul.otp-stats {
 }
 ul.otp-stats li { 
   margin-bottom: 0.25em 
+}
+
+#share-route-header {
+  float: left;
+  margin-right: 0.5em;
+}
+#share-route {
+  padding: 0.2em 0 0;
 }

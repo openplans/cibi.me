@@ -34,8 +34,9 @@ otp.widgets.TripSummaryWidget =
         content += '</ul>';
         content += '<hr />';
         content += '<h6>Drag to Change Trip:</h6>';
-        content += '<div id="otp-tsw-bikeTriangle" style="background: lightgray; height: 100px; margin-top: 10px;"></div>';
-        content += '<h6>Share this Trip:</h6>';
+        content += '<div id="otp-tsw-bikeTriangle"></div>';
+        content += '<hr />';
+        content += '<h6 id="share-route-header">Share this Trip:</h6>';
         content += '<div id="share-route"></div>';
                 
         this.setContent(content);
