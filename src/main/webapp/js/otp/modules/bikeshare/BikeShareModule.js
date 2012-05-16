@@ -71,7 +71,8 @@ var SmallRedBikeIcon = L.Icon.extend({
 var smallRedBike = new SmallRedBikeIcon();
 
 
-otp.modules.bikeshare.BikeShareModule = {
+otp.modules.bikeshare.BikeShareModule = 
+    otp.Class(otp.modules.Module, {
 
     moduleName  : "Bike Share",
     
@@ -89,7 +90,7 @@ otp.modules.bikeshare.BikeShareModule = {
     tipStep         : 0,
         
     initialize : function(config) {
-        otp.inherit(this, new otp.modules.Module());
+        //otp.inherit(this, new otp.modules.Module());
         otp.configure(this, config);
         
         this.mapLayers.push(this.pathLayer);
@@ -97,7 +98,9 @@ otp.modules.bikeshare.BikeShareModule = {
         this.mapLayers.push(this.markerLayer);
         
         this.tipWidget = this.createWidget("otp-tipWidget", "");
-        this.updateTipStep(1);          
+        this.updateTipStep(1);
+        
+        new otp.widgets.TripSummaryWidget('otp-mainTSW');
     },
 
     handleClick : function(event) {
@@ -261,7 +264,7 @@ otp.modules.bikeshare.BikeShareModule = {
     },
     
     CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"
-}
+});
 
 
-otp.modules.bikeshare.BikeShareModule = new otp.Class(otp.modules.bikeshare.BikeShareModule);
+//otp.modules.bikeshare.BikeShareModule = new otp.Class(otp.modules.bikeshare.BikeShareModule);
