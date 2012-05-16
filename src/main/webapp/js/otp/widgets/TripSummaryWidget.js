@@ -42,6 +42,7 @@ otp.widgets.TripSummaryWidget =
         // Copy our existing share widget from the header and customize it for route sharing.
         var addthisElement = $(".addthis_toolbox").clone();
         addthisElement.appendTo("#share-route");
+
         addthisElement.attr("addthis:url", "http://cibi.me/12345");
         addthisElement.attr("addthis:title", "route title");
         addthisElement.attr("addthis:description", "route description");
