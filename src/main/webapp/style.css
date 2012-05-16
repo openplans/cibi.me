@@ -337,8 +337,8 @@ button {width: auto; overflow: visible;}
 }
 
 #otp-tripResultsWidget {
-  width: 200px;
-  height: 100px;
+  width: 240px;
+  height: 360px;
   left: 20px;
   bottom: 100px;
 }
