@@ -25,17 +25,18 @@ otp.widgets.TripSummaryWidget =
         otp.widgets.Widget.prototype.initialize.apply(this, arguments);
         
         var content = '';
-        content += "<div style='text-align: center;'>";
-        content += "<div style='font-size: 18px; margin-bottom: 8px; font-weight: bold;'>Your Trip</div>";
-        content += "<strong>Distance Traveled:</strong> <span id='otp-tsw-distance'></span><br/>";
-        content += "<strong>Estimated Time:</strong> <span id='otp-tsw-duration'></span><br/>";
-        content += "<strong>Calories Burned:</strong> N/A"+"<br/>";
-        content += "<strong>Cost:</strong> N/A<br/>";
-        content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Drag to Change Trip:</div>';
-        content += "<div id='otp-tsw-bikeTriangle' style='background: lightgray; height: 100px; margin-top: 10px;'></div>";
-        content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Share this Trip:</div>';
-        content += '<div id="share-route" style="background: lightgray; height: 40px; margin-top: 10px;"></div>';
-        content += '</div>';
+        content += '<h3>Your Trip:</h3>';
+        content += '<ul class="otp-stats">';
+        content += '<li><strong>Distance Traveled:</strong> <span id="otp-tsw-distance"></span></li>';
+        content += '<li><strong>Estimated Time:</strong> <span id="otp-tsw-duration"></span></li>';
+        content += '<li><strong>Calories Burned:</strong> N/A</li>';
+        content += '<li><strong>Cost:</strong> N/A</li>';
+        content += '</ul>';
+        content += '<hr />';
+        content += '<h6>Drag to Change Trip:</h6>';
+        content += '<div id="otp-tsw-bikeTriangle" style="background: lightgray; height: 100px; margin-top: 10px;"></div>';
+        content += '<h6>Share this Trip:</h6>';
+        content += '<div id="share-route"></div>';
                 
         this.setContent(content);
 
