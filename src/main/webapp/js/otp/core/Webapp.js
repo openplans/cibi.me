@@ -26,7 +26,7 @@ otp.core.Webapp = {
         
         this.map = new otp.core.Map();        
         
-        this.addModule(new otp.modules.bikeshare.BikeShareModule({'webapp': this}), true);
+        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
         
         // Init AddThis
         var addthis_config = {
@@ -49,6 +49,11 @@ otp.core.Webapp = {
         this.map.activeModuleChanged(module);
     },    
         
+    newTrip : function(module) {
+        console.log('new trip '+module.currentHash);
+    },
+    
+    
     CLASS_NAME : "otp.core.Webapp"
 }
 

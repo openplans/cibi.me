@@ -85,9 +85,7 @@ otp.modules.bikeshare.BikeShareModule =
     otp.Class(otp.modules.Module, {
 
     moduleName  : "Bike Share",
-    
-    webapp      : null,
-    
+        
     startLatLng : null,
     endLatLng   : null,
     
@@ -110,10 +108,9 @@ otp.modules.bikeshare.BikeShareModule =
     triangleSlopeFactor    : 0.333,
     triangleSafetyFactor   : 0.334,
                         
-    initialize : function(config) {
-        //otp.inherit(this, new otp.modules.Module());
-        otp.configure(this, config);
-        
+    initialize : function(webapp) {
+        otp.modules.Module.prototype.initialize.apply(this, arguments);
+                
         this.mapLayers.push(this.pathLayer);
         this.mapLayers.push(this.stationsLayer);
         this.mapLayers.push(this.markerLayer);
@@ -201,7 +198,7 @@ otp.modules.bikeshare.BikeShareModule =
                     });
                 }
             	
-            	this.currentHash = "abc123";
+            	this_.currentHash = "abc123";
                 
                 console.log(data);
                 var itin = data.plan.itineraries[0];
@@ -217,6 +214,7 @@ otp.modules.bikeshare.BikeShareModule =
                     }
                     this_.resultsWidget.updateMetrics(itin);
                     this_.updateTipStep(3);
+                    this_.webapp.newTrip(this_);
                 }
                 else {
                     //this_.resultsWidget.noTripFound();
