@@ -14,14 +14,16 @@
 
 otp.namespace("otp.modules");
 
-otp.modules.Module = {
+otp.modules.Module = new otp.Class({
+
+    webapp      : null,
 
     moduleName  : "N/A",
     mapLayers   : [ ],
     widgets     : [ ],
         
-    initialize : function(config) {
-        otp.configure(this, config);
+    initialize : function(webapp) {
+        this.webapp = webapp;
     },
     
     handleClick : function(event) {
@@ -36,7 +38,5 @@ otp.modules.Module = {
     },
         
     CLASS_NAME : "otp.modules.Module"
-}
+});
 
-
-otp.modules.Module = new otp.Class(otp.modules.Module);
