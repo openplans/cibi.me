@@ -33,7 +33,7 @@ otp.core.Webapp = {
 		     pubid: "ra-4fb2f5a73e6bd1f3",
 		     data_track_clickback: false
 		};
-		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js");
+		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb2f5a73e6bd1f3");
     },
     
     addModule : function(module, makeActive) {

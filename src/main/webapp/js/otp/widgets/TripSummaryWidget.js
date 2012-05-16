@@ -43,6 +43,7 @@ otp.widgets.TripSummaryWidget =
         // The url to share is set in Webapp.js in the newTrip() callback that is called once
         // a new route is loaded from the server.
         var addthisElement = $(".addthis_toolbox").clone();
+        addthisElement.find(".addthis_counter").remove();
         addthisElement.appendTo("#share-route");
         addthisElement.attr("addthis:title", "route title");
         addthisElement.attr("addthis:description", "route description");
