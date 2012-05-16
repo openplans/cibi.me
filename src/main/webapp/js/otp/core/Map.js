@@ -21,15 +21,20 @@ otp.core.Map = {
     initialize : function(config) {
         otp.configure(this, config);
         
-        this.lmap = new L.Map('map');
+        this.lmap = new L.Map('map', {minZoom: otp.config.minZoom, maxZoom: otp.config.maxZoom});
 
-        var tileLayer = new L.TileLayer(otp.config.tileUrl, {maxZoom: 18, attribution: otp.config.tileAttrib});
+        var tileLayer = new L.TileLayer(otp.config.tileUrl, {attribution: otp.config.tileAttrib});
 	    
 	    if(typeof otp.config.getTileUrl != 'undefined') {
     	    tileLayer.getTileUrl = otp.config.getTileUrl;
         }
 	    
         this.lmap.setView(otp.config.initLatLng, otp.config.initZoom).addLayer(tileLayer);
+        
+        if(typeof otp.config.overlayTileUrl != 'undefined') {
+	    	var overlayTileLayer = new L.TileLayer(otp.config.overlayTileUrl);
+	    	 this.lmap.addLayer(overlayTileLayer);
+        }
     },
     
     activeModuleChanged : function(newModule) {

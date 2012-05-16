@@ -14,10 +14,12 @@ otp.config_defaults = {
     // tileAttrib : 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
 
     // devseed tiles (DC only) & tile URL function override:
-    tileUrl : 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png',
+    tileUrl : 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-light/{z}/{x}/{y}.png',
+    overlayTileUrl : 'http://{s}.tiles.mapbox.com/v3/intertwine.nyc_bike_overlay/{z}/{x}/{y}.png',
     tileAttrib : 'Map tiles &copy; Development Seed, Routing powered by OpenTripPlanner',
-    initLatLng : new L.LatLng(38.89355, -77.0146), // DC
+    initLatLng : new L.LatLng(), // DC
     initZoom : 14,
+    minZoom : 10,
     maxZoom : 17,
 
     CLASS_NAME : "otp.config"
