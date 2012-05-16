@@ -94,6 +94,8 @@ otp.modules.bikeshare.BikeShareModule =
     tipStep         : 0,
     
     currentRequest  : null,
+    
+    currentHash : null,
 
 
     triangleTimeFactor     : 0.333,
@@ -159,13 +161,15 @@ otp.modules.bikeshare.BikeShareModule =
         	this.currentRequest = null;
         }
     	
+    	this.currentHash = null;
+    	
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
         this.pathLayer.clearLayers();        
-        //this.stationsLayer.clearLayers();        
+        //this.stationsLayer.clearLayers(); 
+        
         var this_ = this;
         
-        this.currentRequest = $.ajax(url, {
-            data: {             
+        var data_ = {             
                 fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
                 mode: 'WALK,BICYCLE',
@@ -173,16 +177,23 @@ otp.modules.bikeshare.BikeShareModule =
                 triangleTimeFactor: this_.triangleTimeFactor,
                 triangleSlopeFactor: this_.triangleSlopeFactor,
                 triangleSafetyFactor: this_.triangleSafetyFactor
-            },
+            };
+        
+        
+        
+        this.currentRequest = $.ajax(url, {
+            data: data_,
             dataType: 'jsonp',
                 
             success: function(data) {
-            
-                if(this_.resultsWidget == null) {
+            	
+            	if(this_.resultsWidget == null) {
                     this_.resultsWidget = new otp.widgets.TripSummaryWidget('otp-mainTSW', function() {
                         this_.trianglePlanTrip();
                     });
                 }
+            	
+            	this.currentHash = "abc123";
                 
                 console.log(data);
                 var itin = data.plan.itineraries[0];
@@ -201,9 +212,10 @@ otp.modules.bikeshare.BikeShareModule =
                 }
                 else {
                     //this_.resultsWidget.noTripFound();
-                }                
+                }
             }
         });
+        
         console.log("rw "+this.resultsWidget);
     },
         
