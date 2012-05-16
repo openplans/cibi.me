@@ -334,9 +334,17 @@ button {width: auto; overflow: visible;}
   border: 2px solid black;
 }
 
-#tripResultsWidget {
+#otp-tripResultsWidget {
   width: 200px;
   height: 100px;
   left: 20px;
-  top: 100px;
+  bottom: 100px;
+}
+
+#otp-tipWidget {
+  width: 450px;
+  height: 25px;
+  left: 20px;
+  bottom: 20px;
+  font-size: 18px;
 }

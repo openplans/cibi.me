@@ -85,6 +85,8 @@ otp.modules.bikeshare.BikeShareModule = {
     stationsLayer   : new L.LayerGroup(),
     
     resultsWidget   : null,
+    tipWidget       : null,
+    tipStep         : 0,
         
     initialize : function(config) {
         otp.inherit(this, new otp.modules.Module());
@@ -93,6 +95,9 @@ otp.modules.bikeshare.BikeShareModule = {
         this.mapLayers.push(this.pathLayer);
         this.mapLayers.push(this.stationsLayer);
         this.mapLayers.push(this.markerLayer);
+        
+        this.tipWidget = this.createWidget("otp-tipWidget", "");
+        this.updateTipStep(1);          
     },
 
     handleClick : function(event) {
@@ -107,6 +112,7 @@ otp.modules.bikeshare.BikeShareModule = {
                 this_.planTrip();
             });
             this.markerLayer.addLayer(start);
+            this.updateTipStep(2);          
         }
         else if(this.endLatLng == null) {
             this.endLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
@@ -150,6 +156,7 @@ otp.modules.bikeshare.BikeShareModule = {
                         }
                     }
                     resultsContent += '<strong>Trip Duration:</strong> '+otp.util.Time.msToHrMin(itin.duration);
+                    this_.updateTipStep(3);
                 }
                 else {
                     resultsContent = '<i>This trip could not be routed. Try different start/end locations.</i>';
@@ -159,7 +166,7 @@ otp.modules.bikeshare.BikeShareModule = {
                     this_.resultsWidget.setContent(resultsContent)
                 }
                 else {
-                    this_.resultsWidget = this_.createWidget("tripResultsWidget", resultsContent);
+                    this_.resultsWidget = this_.createWidget("otp-tripResultsWidget", resultsContent);
                 }
             }
         });
@@ -225,6 +232,15 @@ otp.modules.bikeshare.BikeShareModule = {
     
     distance : function(x1, y1, x2, y2) {
         return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+    },
+    
+    updateTipStep : function(step) {
+        if (step <= this.tipStep) return;
+        if(step == 1) this.tipWidget.setContent("To Start: Click on the Map to Plan a Bikeshare Trip.");
+        if(step == 2) this.tipWidget.setContent("Next: Click Again to Add Your Trip's End Point.");
+        if(step == 3) this.tipWidget.setContent("Tip: Drag the Start or End Points to Modify Your Trip.");
+        
+        this.tipStep = step;
     },
     
     CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"
