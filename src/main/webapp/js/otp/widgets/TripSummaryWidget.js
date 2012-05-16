@@ -40,13 +40,12 @@ otp.widgets.TripSummaryWidget =
         this.setContent(content);
 
         // Copy our existing share widget from the header and customize it for route sharing.
+        // The url to share is set in Webapp.js in the newTrip() callback that is called once
+        // a new route is loaded from the server.
         var addthisElement = $(".addthis_toolbox").clone();
         addthisElement.appendTo("#share-route");
-
-        addthisElement.attr("addthis:url", "http://cibi.me/12345");
         addthisElement.attr("addthis:title", "route title");
         addthisElement.attr("addthis:description", "route description");
-        addthis.toolbox(".addthis_toolbox");
         
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
         this.bikeTriangle.onChanged = planTripCallback; /*function() {

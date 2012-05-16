@@ -50,7 +50,9 @@ otp.core.Webapp = {
     },    
         
     newTrip : function(module) {
-        console.log('new trip '+module.currentHash);
+        var shareRoute = $("#share-route");
+        shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/"+module.currentHash);
+        addthis.toolbox(".addthis_toolbox");
     },
     
     
