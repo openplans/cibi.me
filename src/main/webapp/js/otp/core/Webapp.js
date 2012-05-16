@@ -27,6 +27,12 @@ otp.core.Webapp = {
         this.map = new otp.core.Map();        
         
         this.addModule(new otp.modules.bikeshare.BikeShareModule({'webapp': this}), true);
+        
+        // Init AddThis
+        var addthis_config = {
+		     pubid: "ra-4fb2f5a73e6bd1f3"
+		}
+        addthis.toolbox(".addthis_toolbox");
     },
     
     addModule : function(module, makeActive) {

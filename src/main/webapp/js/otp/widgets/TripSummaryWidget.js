@@ -34,10 +34,18 @@ otp.widgets.TripSummaryWidget =
         content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Drag to Change Trip:</div>';
         content += "<div id='otp-tsw-bikeTriangle' style='background: lightgray; height: 100px; margin-top: 10px;'></div>";
         content += '<div style="font-size: 14px; font-style: italic; font-weight: bold; margin-top: 16px;">Share this Trip:</div>';
-        content += '<div style="background: lightgray; height: 40px; margin-top: 10px;">social media icons</div>';
+        content += '<div id="share-route" style="background: lightgray; height: 40px; margin-top: 10px;"></div>';
         content += '</div>';
                 
         this.setContent(content);
+
+        // Copy our existing share widget from the header and customize it for route sharing.
+        var addthisElement = $(".addthis_toolbox").clone();
+        addthisElement.appendTo("#share-route");
+        addthisElement.attr("addthis:url", "http://cibi.me/12345");
+        addthisElement.attr("addthis:title", "route title");
+        addthisElement.attr("addthis:description", "route description");
+        addthis.toolbox(".addthis_toolbox");
         
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
         this.bikeTriangle.onChanged = planTripCallback; /*function() {
