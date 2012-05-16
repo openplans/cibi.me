@@ -218,6 +218,7 @@ button {width: auto; overflow: visible;}
   z-index: -1;
   border: 1px solid #2a65a1;
   border-top: 1px solid #529be6;
+  border-left: 2px solid #498fd7;
 
   background-color: #68aff7;
 
@@ -241,9 +242,9 @@ button {width: auto; overflow: visible;}
        -o-transform: skew(45deg,0deg);
      -moz-transform: skew(45deg,0deg);
 
-     -webkit-border-radius: 9px;
-        -moz-border-radius: 9px;
-             border-radius: 9px;
+     -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+             border-radius: 8px;
 
      -moz-box-shadow: -5px 0 15px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.5);
   -webkit-box-shadow: -5px 0 15px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.5);
@@ -252,7 +253,8 @@ button {width: auto; overflow: visible;}
 #logo:after {
   padding-right: 6em;
   right: -6em;
-  border-left: 1px solid #498fd7;
+  margin-right: -1px;
+  border-left: 2px solid #498fd7;
           transform: skew(-45deg,0deg);
       -ms-transform: skew(-45deg,0deg);
   -webkit-transform: skew(-45deg,0deg);
