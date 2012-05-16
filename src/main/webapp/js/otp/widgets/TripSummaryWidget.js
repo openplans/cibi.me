@@ -46,8 +46,8 @@ otp.widgets.TripSummaryWidget =
         var addthisElement = $(".addthis_toolbox").clone();
         addthisElement.find(".addthis_counter").remove();
         addthisElement.appendTo("#share-route");
-        addthisElement.attr("addthis:title", "route title");
-        addthisElement.attr("addthis:description", "route description");
+        addthisElement.attr("addthis:title", "Check out my #CiBi trip:");
+        addthisElement.attr("addthis:description", "Cibi.me is built by OpenPlans and allows users to plan trips using NYC's new bike share program.");
         
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
         this.bikeTriangle.onChanged = planTripCallback; /*function() {
