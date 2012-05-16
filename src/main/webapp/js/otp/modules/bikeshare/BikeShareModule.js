@@ -87,6 +87,8 @@ otp.modules.bikeshare.BikeShareModule = {
     resultsWidget   : null,
     tipWidget       : null,
     tipStep         : 0,
+    
+    currentRequest  : null,
         
     initialize : function(config) {
         otp.inherit(this, new otp.modules.Module());
@@ -129,11 +131,20 @@ otp.modules.bikeshare.BikeShareModule = {
     },
     
     planTrip : function() {
+    	
+    	if(this.currentRequest !== null)
+        {
+    		console.log("Canceling current request.");
+        	this.currentRequest.abort();
+        	this.currentRequest = null;
+        }
+    	
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
         this.pathLayer.clearLayers();        
         this.stationsLayer.clearLayers();        
         var this_ = this;
-        $.ajax(url, {
+        
+        this.currentRequest = $.ajax(url, {
             data: {             
                 fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
