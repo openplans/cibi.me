@@ -7,7 +7,7 @@ if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 // step 2: create an object of default otp.config default values (see step3 where we apply this to any existing config)
 otp.config_defaults = {
 
-    hostname : "http://dc-bike.deployer.opentripplanner.org",
+    hostname : "http://nyc-bike.deployer.opentripplanner.org",
     
     // default cloudmade tiles:
     // tileUrl : 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streetis/{z}/{x}/{y}.png',
@@ -17,7 +17,7 @@ otp.config_defaults = {
     tileUrl : 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-light/{z}/{x}/{y}.png',
     overlayTileUrl : 'http://{s}.tiles.mapbox.com/v3/intertwine.nyc_bike_overlay/{z}/{x}/{y}.png',
     tileAttrib : 'Map tiles &copy; Development Seed, Routing powered by OpenTripPlanner',
-    initLatLng : new L.LatLng(), // DC
+    initLatLng : new L.LatLng(40.719298,-73.999743), // NYC
     initZoom : 14,
     minZoom : 10,
     maxZoom : 17,
