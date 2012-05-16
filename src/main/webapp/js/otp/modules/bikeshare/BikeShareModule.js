@@ -156,9 +156,10 @@ otp.modules.bikeshare.BikeShareModule = {
                 }
                 
                 if(this_.resultsWidget) {
+                    this_.resultsWidget.setContent(resultsContent)
                 }
                 else {
-                    this_.createWidget("tripResultsWidget", resultsContent);
+                    this_.resultsWidget = this_.createWidget("tripResultsWidget", resultsContent);
                 }
             }
         });

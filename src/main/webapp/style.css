@@ -18,9 +18,17 @@ body {
     font-size: 12px;
 }
 
-#tripResultsWidget {
+.otp-widget {
     position : fixed;
+    z-index: 10;
+    padding: 10px;
+    background: white;
+    border: 2px solid black;
+}
+
+#tripResultsWidget {
     width: 200px;
     height: 100px;
-    border: 2px solid black;
+    left: 20px;
+    top: 100px;
 }
