@@ -71,6 +71,14 @@ var MediumBlueIcon = L.Icon.extend({
 });
 var mediumBlue = new MediumBlueIcon();
 
+var BlueNubIcon = L.Icon.extend({
+    iconUrl: 'images/marker-blue-nub.png',
+    shadowUrl: null,
+    iconSize: new L.Point(11, 8),
+    iconAnchor: new L.Point(5, 8),
+    popupAnchor: new L.Point(0, -8)
+});
+var blueNub = new BlueNubIcon();
 
 
 otp.modules.bikeshare.BikeShareModule = 
@@ -242,8 +250,10 @@ otp.modules.bikeshare.BikeShareModule =
             else if(this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol && 
                     parseInt(station.bikesAvailable) > 0) {
                 // start-adjacent station
-                this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: mediumBlue}); 
+                this.stationsLayer.removeLayer(station.marker);
+                              
+                var icon = this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol/2 ?  mediumBlue : smallBlue;
+                var marker = new L.Marker(station.marker.getLatLng(), { icon: icon }); 
                 marker.bindPopup(this.constructStationInfo("ALTERNATE PICKUP", station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
@@ -260,61 +270,21 @@ otp.modules.bikeshare.BikeShareModule =
                     parseInt(station.bikesAvailable) > 0) {
                 // end-adjacent station
                 this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: mediumBlue}); 
+
+                var icon = this.distance(station.x, station.y, this.endLatLng.lng, this.endLatLng.lat) < distTol/2 ?  mediumBlue : smallBlue;
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: icon}); 
                 marker.bindPopup(this.constructStationInfo("ALTERNATE DROP OFF", station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
             }
             else {
                 this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: smallBlue}); 
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: blueNub}); 
                 marker.bindPopup(this.constructStationInfo("BIKE STATION", station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
             }
         }
-
-        
-        /*var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/bike_rental';
-        var this_ = this;
-        $.ajax(url, {
-            data: {             
-            },
-            dataType: 'jsonp',
-                
-            success: function(data) {
-                //console.log(data);
-                var tol = .0001, distTol = .005;
-                for(var i=0; i<data.stations.length; i++) {
-                    var station = data.stations[i].BikeRentalStation;
-                    //console.log(station.x+","+station.y);
-                    if(Math.abs(station.x - start.lng) < tol && Math.abs(station.y - start.lat) < tol) {
-                        // start station
-                        var marker = new L.Marker(start, {icon: greenBike}); 
-                        marker.bindPopup(this_.constructStationInfo("PICK UP BIKE", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                    else if(Math.abs(station.x - end.lng) < tol && Math.abs(station.y - end.lat) < tol) {
-                        // end station
-                        var marker = new L.Marker(end, {icon: redBike}); 
-                        marker.bindPopup(this_.constructStationInfo("DROP OFF BIKE", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                    else if(this_.distance(station.x, station.y, this_.startLatLng.lng, this_.startLatLng.lat) < distTol && 
-                            parseInt(station.bikesAvailable) > 0) {
-                        var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: smallGreenBike}); 
-                        marker.bindPopup(this_.constructStationInfo("ALTERNATE PICKUP", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                    else if(this_.distance(station.x, station.y, this_.endLatLng.lng, this_.endLatLng.lat) < distTol && 
-                            parseInt(station.spacesAvailable) > 0) {
-                        var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: smallRedBike}); 
-                        marker.bindPopup(this_.constructStationInfo("ALTERNATE DROPOFF", station));
-                        this_.stationsLayer.addLayer(marker);                        
-                    }
-                }
-            }
-        });*/        
     },
     
     
@@ -331,7 +301,7 @@ otp.modules.bikeshare.BikeShareModule =
                 this_.stations = data.stations;
                 for(var i=0; i<this_.stations.length; i++) {
                     var station = this_.stations[i].BikeRentalStation;
-                    var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: smallBlue}); 
+                    var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: blueNub}); 
                     marker.bindPopup(this_.constructStationInfo("BIKE STATION", station));
                     this_.stationsLayer.addLayer(marker)
                     station.marker = marker;
