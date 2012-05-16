@@ -297,7 +297,7 @@ button {width: auto; overflow: visible;}
 }
 
 /* AddThis */
-#branding .addthis {
+#branding .addthis_toolbox {
   margin: 1.25em 0 0;
   float: right;
   min-width: 163px;

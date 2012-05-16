@@ -29,11 +29,11 @@ otp.core.Webapp = {
         this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
         
         // Init AddThis
-        var addthis_config = {
+        addthis_config = {
 		     pubid: "ra-4fb2f5a73e6bd1f3",
-		     data_track_clickback: true
-		}
-        addthis.toolbox(".addthis_toolbox");
+		     data_track_clickback: false
+		};
+		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js");
     },
     
     addModule : function(module, makeActive) {
