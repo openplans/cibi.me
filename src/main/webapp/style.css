@@ -328,6 +328,37 @@ button {width: auto; overflow: visible;}
   background-color: #333;
 }
 
+/* Location Search Form */
+#branding .search {
+  padding: 1em;
+}
+#branding .search input {
+  width: 15em;
+  padding: 0.5em;
+  background: #eee;
+  border: 0;
+  font-weight: bold;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+
+  background-image: linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(229,229,229) 0%, rgb(208,208,208) 100%);
+
+  background-image: -webkit-gradient(
+  	linear,
+  	left bottom,
+  	left top,
+  	color-stop(0, rgb(229,229,229)),
+  	color-stop(1, rgb(208,208,208))
+  );
+}
+#branding .search ::-webkit-input-placeholder { color: #777; }
+#branding .search :-moz-placeholder { color: #777; }
+
 
 /* =The Map
 -------------------------------------------------------------- */
