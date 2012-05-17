@@ -383,7 +383,7 @@ otp.modules.bikeshare.BikeShareModule =
         if (step <= this.tipStep) return;
         if(step == 1) this.tipWidget.setContent("To Start: Click on the Map to Plan a Bikeshare Trip.");
         if(step == 2) this.tipWidget.setContent("Next: Click Again to Add Your Trip's End Point.");
-        if(step == 3) this.tipWidget.setContent("Tip: Drag the Start or End Points to Modify Your Trip.");
+        if(step == 3) this.tipWidget.setContent("Tip: Drag the Start or End Flags to Modify Your Trip.");
         
         this.tipStep = step;
     },
