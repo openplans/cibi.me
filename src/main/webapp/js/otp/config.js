@@ -23,7 +23,7 @@ otp.config = {
     maxZoom : 17,
 
     loggerUrl : 'http://cibi.me/cibi/log',
-    dataStorageUrl : 'cibi.me/cibi/data', 
+    dataStorageUrl : 'http://cibi.me/cibi/data', 
     
     CLASS_NAME : "otp.config"
 };
