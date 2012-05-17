@@ -124,7 +124,7 @@ otp.modules.bikeshare.BikeShareModule =
     },
 
     handleClick : function(event) {
-        //console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
+        console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
        
         
         if(this.startLatLng == null) {
@@ -146,7 +146,7 @@ otp.modules.bikeshare.BikeShareModule =
         this.planTrip();
     },
     
-    setStartPoint : function(latlng, this_, update) {
+    setStartPoint : function(latlng, update) {
     
     	 var this_ = this;
     	 
@@ -162,7 +162,7 @@ otp.modules.bikeshare.BikeShareModule =
         	 this.updateTipStep(2);         
     },
     
-    setEndPoint : function(latlng, this_, update) {
+    setEndPoint : function(latlng, update) {
     	 var this_ = this;
     	 
          var end = new L.Marker(this.endLatLng, {icon: endFlag, draggable: true}); 
