@@ -27,7 +27,7 @@ otp.modules.Module = new otp.Class({
     },
     
     handleClick : function(event) {
-        console.log('unhandled map click at '+event.latlng.lat+", "+event.latlng.lng);
+        //console.log('unhandled map click at '+event.latlng.lat+", "+event.latlng.lng);
     },
 
     createWidget : function(id, content) {

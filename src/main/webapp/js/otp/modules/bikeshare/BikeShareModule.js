@@ -183,7 +183,7 @@ otp.modules.bikeshare.BikeShareModule =
     	
     	if(this.currentRequest !== null)
         {
-    		console.log("Canceling current request.");
+    		//console.log("Canceling current request.");
         	this.currentRequest.abort();
         	this.currentRequest = null;
         }
@@ -227,7 +227,7 @@ otp.modules.bikeshare.BikeShareModule =
                     });
                 }
                 
-                console.log(data);
+                //console.log(data);
                 var itin = data.plan.itineraries[0];
                 var resultsContent = '';
                 if(data.plan) {
@@ -261,7 +261,7 @@ otp.modules.bikeshare.BikeShareModule =
             }
         });
         
-        console.log("rw "+this.resultsWidget);
+        //console.log("rw "+this.resultsWidget);
     },
     
     savePlan : function(data){
@@ -290,7 +290,7 @@ otp.modules.bikeshare.BikeShareModule =
     },
     
     getStations : function(start, end) {
-        console.log('stations '+start+' '+end);
+        //console.log('stations '+start+' '+end);
         var tol = .0001, distTol = .005;
         
         for(var i=0; i<this.stations.length; i++) {
