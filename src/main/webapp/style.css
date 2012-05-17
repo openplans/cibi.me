@@ -404,13 +404,6 @@ button {width: auto; overflow: visible;}
           box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
 }
 
-#otp-tripResultsWidget {
-  width: 230px;
-  height: auto;
-  left: 20px;
-  bottom: 7.5em;
-}
-
 #otp-tipWidget {
   left: 20px;
   bottom: 2em;
@@ -427,6 +420,13 @@ button {width: auto; overflow: visible;}
   border: 1px solid #b1b24e;
   border-top: 1px solid #d1d263;
   border-bottom: 1px solid #929339;
+}
+
+#otp-tripResultsWidget {
+  width: 230px;
+  height: auto;
+  left: 20px;
+  bottom: 7.5em;
 }
 
 #otp-mainTSW {
