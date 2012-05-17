@@ -40,6 +40,9 @@ otp.core.Webapp = {
 		if(window.location.hash !== "")
 			otp.util.DataStorage.retreive(window.location.hash.replace("#", ""), this);
 		
+		this.activeModule.showAboutInfo();
+		
+		
     },
     
     addModule : function(module, makeActive) {
