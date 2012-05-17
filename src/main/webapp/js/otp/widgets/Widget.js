@@ -22,7 +22,7 @@ otp.widgets.Widget = {
     initialize : function(id) {
         //otp.configure(this, config);
         this.id = id;
-        console.log('widget constructor: '+this.id);
+        //console.log('widget constructor: '+this.id);
         
         this.div = document.createElement('div');
         this.div.setAttribute('id', this.id);

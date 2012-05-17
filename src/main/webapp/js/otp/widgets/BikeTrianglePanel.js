@@ -43,7 +43,7 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         var tri_side = 2 * (height - this.cursor_size) * 1/Math.sqrt(3);
         var margin = this.cursor_size/2;	
         
-        console.log()
+        //console.log()
 
         var canvas = Raphael($(this.div).attr('id'), width, height);
 
