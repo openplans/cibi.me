@@ -151,7 +151,7 @@ otp.modules.bikeshare.BikeShareModule =
     	 var this_ = this;
     	 
          var start = new L.Marker(this.startLatLng, {icon: startFlag, draggable: true}); 
-         start.bindPopup('<strong>From:</strong> '+this.startLatLng);
+         start.bindPopup('<strong>Start</strong>');
          start.on('dragend', function() {
              this_.startLatLng = start.getLatLng();
              this_.planTrip();
@@ -166,7 +166,7 @@ otp.modules.bikeshare.BikeShareModule =
     	 var this_ = this;
     	 
          var end = new L.Marker(this.endLatLng, {icon: endFlag, draggable: true}); 
-         end.bindPopup('<strong>To:</strong> '+this.endLatLng);
+         end.bindPopup('<strong>Destination</strong>');
          this.markerLayer.addLayer(end);
          end.on('dragend', function() {
              this_.endLatLng = end.getLatLng();
@@ -235,7 +235,16 @@ otp.modules.bikeshare.BikeShareModule =
                         polyline.setStyle({ color : this_.getModeColor(itin.legs[i].mode), weight: 8});
                         this_.pathLayer.addLayer(polyline);
                         if(itin.legs[i].mode === 'BICYCLE') {
+                        	polyline.bindPopup('Your CiBi route!')
                             this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
+                        }
+                        
+                        if(i == 0) {
+                        	polyline.bindPopup('Walk to the CiBi dock.')
+                        }
+                        
+                        if(i == 2) {
+                        	polyline.bindPopup('Walk from the CiBi dock to your destination.')
                         }
                     }
                     this_.resultsWidget.updateMetrics(itin);
