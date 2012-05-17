@@ -29,8 +29,8 @@ otp.widgets.TripSummaryWidget =
         content += '<ul class="otp-stats">';
         content += '<li><strong>Distance Traveled:</strong> <span id="otp-tsw-distance"></span></li>';
         content += '<li><strong>Estimated Time:</strong> <span id="otp-tsw-duration"></span></li>';
-        content += '<li><strong>Calories Burned:</strong> N/A</li>';
-        content += '<li><strong>Cost:</strong> N/A</li>';
+   //     content += '<li><strong>Calories Burned:</strong> N/A</li>';
+     //   content += '<li><strong>Cost:</strong> N/A</li>';
         content += '</ul>';
         content += '<hr />';
         content += '<h6>Drag to Change Trip:</h6>';
