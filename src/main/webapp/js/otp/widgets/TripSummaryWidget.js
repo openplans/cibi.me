@@ -29,8 +29,8 @@ otp.widgets.TripSummaryWidget =
         content += '<ul class="otp-stats">';
         content += '<li><strong>Distance Traveled:</strong> <span id="otp-tsw-distance"></span></li>';
         content += '<li><strong>Estimated Time:</strong> <span id="otp-tsw-duration"></span></li>';
-        content += '<li><strong>Calories Burned:</strong> N/A</li>';
-        content += '<li><strong>Cost:</strong> N/A</li>';
+   //     content += '<li><strong>Calories Burned:</strong> N/A</li>';
+     //   content += '<li><strong>Cost:</strong> N/A</li>';
         content += '</ul>';
         content += '<hr />';
         content += '<h6>Drag to Change Trip:</h6>';
@@ -57,8 +57,16 @@ otp.widgets.TripSummaryWidget =
     },
     
     updateMetrics : function(itin) {
-        $("#otp-tsw-distance").html(Math.round(100*itin.walkDistance/5280)/100+" mi.");
-        $("#otp-tsw-duration").html(otp.util.Time.msToHrMin(itin.duration)+" mi.");
+    	
+    	
+    	var dist = 0;
+    	
+    	for(var i=0; i < itin.legs.length; i++) {
+    		dist += itin.legs[i].distance;
+        }
+    	
+        $("#otp-tsw-distance").html(Math.round(100*(dist/1609.344))/100+" mi.");
+        $("#otp-tsw-duration").html(otp.util.Time.msToHrMin(itin.duration));	
     },
     
     CLASS_NAME : "otp.widgets.TripSummaryWidget"
