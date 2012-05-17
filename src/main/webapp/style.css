@@ -186,6 +186,7 @@ body {
   margin-top: -15px;
   overflow: hidden;
   padding: 10px 0 18px 3.5em;
+  z-index: 2;
 }
 #logo .ribbon {
   position: relative;
@@ -528,6 +529,28 @@ ul.otp-stats li strong {
 }
 
 
+p#splash-text {
+  position: absolute;
+  top: 6.75em;
+  right: 0;
+  line-height: 1.5;
+  font-weight: bold;
+  text-align: left;
+  padding: 1em 1.25em;
+  color: #444;
+  text-shadow: -1px 1px #fff;
+  background-color: #9ad5ea;
+  background-color: rgba(154,213,234,0.85);
+  border: 1px solid #7ab1c5;
+  border-top: 1px solid #8bc9de;
+  border-bottom: 1px solid #699bac;
+  z-index: 1;
+}
+p#splash-text span {
+  display: block;
+}
+
+
 /* 
  * 
  * "MOBILE FIRST!" they say. We agree. 
@@ -560,7 +583,7 @@ ul.otp-stats li strong {
   }
   #logo .ribbon {
     height: 6em;
-    padding: 0 4.5em 0 2em;
+    padding: 0 1.5em 0 2em;
   }
   #site-title {
     font-size: 4.25em;
@@ -679,6 +702,10 @@ ul.otp-stats li strong {
     margin-right: 0.25em;
   }
 
+  p#splash-text {
+    top: 7.5em;
+    font-size: 1.2em;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
