@@ -31,7 +31,7 @@ otp.widgets.InfoWidget =
 	
 	addCloseButton: function() {
 		var _this = this;
-		var close_div = $("<div class='close'><div>").html("x")
+		var close_div = $("<div class='close'><div>").html("&times;")
 			.click(function(e) {
 				e.preventDefault();
 				_this.hide();

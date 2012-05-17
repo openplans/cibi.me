@@ -146,9 +146,12 @@ button {width: auto; overflow: visible;}
 /* =Structure
 -------------------------------------------------------------- */
 
+body {
+  background: #444;
+}
 #page {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   overflow: hidden;
 }
 
@@ -412,18 +415,22 @@ button {width: auto; overflow: visible;}
 }
 
 .otp-widget .close {
-	color: #000000;
+	color: red;
 	cursor: pointer;
 	font-size: 20px;
-	font-weight: bold;
-	filter: alpha(opacity=35);
-	-khtml-opacity: 0.35;
-	-moz-opacity: 0.35;
-	opacity: 0.35;
+  font-weight: bold;
+	text-shadow: -1px 1px 0 #ffffff;
 	position: absolute;
-	right: 0.5em;
-	text-shadow: 0 1px 0 #ffffff;
-	top: 0.2em;
+	right: 0.25em;
+	top: 0.25em;
+	float: right;
+  padding: 0 0.4em 0.23em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.otp-widget .close:hover {
+  background: #ddd;
 }
 
 #otp-tripResultsWidget {
@@ -451,35 +458,11 @@ button {width: auto; overflow: visible;}
 
 #otp-contactWidget, #otp-aboutWidget {
   display: none;
-  left: 20px;
-  top: 10em;
-  width: 40em;
-  height: 27em;
+  position: absolute;
+  top: 2.5em;
+  right: 0.5em;
+  left: 0.5em;
   z-index: 100;
-  
-  color: #fff;
-
-  background-color: #444;
-
-  background-image: linear-gradient(bottom, rgb(68,68,68) 0%, rgb(102,102,102) 100%);
-  background-image: -o-linear-gradient(bottom, rgb(68,68,68) 0%, rgb(102,102,102) 100%);
-  background-image: -moz-linear-gradient(bottom, rgb(68,68,68) 0%, rgb(102,102,102) 100%);
-  background-image: -webkit-linear-gradient(bottom, rgb(68,68,68) 0%, rgb(102,102,102) 100%);
-  background-image: -ms-linear-gradient(bottom, rgb(68,68,68) 0%, rgb(102,102,102) 100%);
-
-  background-image: -webkit-gradient(
-  	linear,
-  	left bottom,
-  	left top,
-  	color-stop(0, rgb(68,68,68)),
-  	color-stop(1, rgb(102,102,102))
-  );
-}
-
-
-#otp-aboutWidget .close, #otp-contactWidget .close {
-   color: #fff;
-   font-weight: normal;
 }
 
 #otp-aboutWidget .content, #otp-contactWidget .content {
@@ -604,6 +587,12 @@ ul.otp-stats li {
     white-space: nowrap;
   }
 
+  #otp-contactWidget, #otp-aboutWidget {
+    top: 10em;
+    right: auto;
+    left: 2em;
+    width: 40em;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
