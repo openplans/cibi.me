@@ -459,6 +459,7 @@ body {
   border-bottom: 1px solid #929339;
 }
 
+
 #otp-contactWidget, #otp-aboutWidget {
   display: none;
   position: absolute;
@@ -630,6 +631,34 @@ p#splash-text span {
     padding-right: 1em;
     padding-left: 1em;
     white-space: nowrap;
+  }
+  
+  #otp-bikestationsWidget {
+  	left: auto;
+  	right: 20px;
+  	bottom: 2em;
+  	height: 6em;
+  	font-size: 1em;
+  	line-height: 1.5;
+  	padding: 0.2em;
+  	width: 30em;
+  	white-space: normal;
+  	text-align: center;
+  	text-shadow: -1px 1px #fff;
+  }
+  
+  #otp-bikestationsWidget .col1 {
+	float:left;
+	width:45%;
+	background:#9c9;
+	padding: .2em;
+  }
+  
+  #otp-bikestationsWidget .col2 {
+  	float:right;
+	width:45%;
+	background:#c9c;
+	padding: .2em;
   }
 
   #otp-contactWidget, #otp-aboutWidget {
