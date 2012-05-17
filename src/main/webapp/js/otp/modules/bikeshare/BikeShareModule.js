@@ -100,9 +100,6 @@ otp.modules.bikeshare.BikeShareModule =
     tipStep         : 0,
     
     currentRequest  : null,
-    
-    currentHash : null,
-
 
     triangleTimeFactor     : 0.333,
     triangleSlopeFactor    : 0.333,
@@ -112,9 +109,9 @@ otp.modules.bikeshare.BikeShareModule =
         otp.modules.Module.prototype.initialize.apply(this, arguments);
                 
         this.mapLayers.push(this.pathLayer);
-        this.mapLayers.push(this.stationsLayer);
         this.mapLayers.push(this.markerLayer);
-        
+        this.mapLayers.push(this.stationsLayer);
+       
         this.initStations();
         
         this.tipWidget = this.createWidget("otp-tipWidget", "");
@@ -123,29 +120,16 @@ otp.modules.bikeshare.BikeShareModule =
 
     handleClick : function(event) {
         //console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
-        var this_ = this;
+       
+        
         if(this.startLatLng == null) {
-            this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-            var start = new L.Marker(this.startLatLng, {icon: startFlag, draggable: true}); 
-            start.bindPopup('<strong>From:</strong> '+this.startLatLng);
-            start.on('dragend', function() {
-                this_.startLatLng = start.getLatLng();
-                this_.planTrip();
-            });
-            this.markerLayer.addLayer(start);
-            this.updateTipStep(2);          
+        	this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
+        	this.setStartPoint(this.startLatLng, true);
         }
+        
         else if(this.endLatLng == null) {
-            this.endLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-            var end = new L.Marker(this.endLatLng, {icon: endFlag, draggable: true}); 
-            end.bindPopup('<strong>To:</strong> '+this.endLatLng);
-            this.markerLayer.addLayer(end);
-            end.on('dragend', function() {
-                this_.endLatLng = end.getLatLng();
-                this_.planTrip();
-            });
-            
-            this.planTrip();
+        	this.endLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
+        	this.setEndPoint(this.endLatLng, true);
         }
     },
     
@@ -157,7 +141,39 @@ otp.modules.bikeshare.BikeShareModule =
         this.planTrip();
     },
     
-    planTrip : function() {
+    setStartPoint : function(latlng, this_, update) {
+    
+    	 var this_ = this;
+    	 
+         var start = new L.Marker(this.startLatLng, {icon: startFlag, draggable: true}); 
+         start.bindPopup('<strong>From:</strong> '+this.startLatLng);
+         start.on('dragend', function() {
+             this_.startLatLng = start.getLatLng();
+             this_.planTrip();
+         });
+         this.markerLayer.addLayer(start);
+         
+         if(update)
+        	 this.updateTipStep(2);         
+    },
+    
+    setEndPoint : function(latlng, this_, update) {
+    	 var this_ = this;
+    	 
+         var end = new L.Marker(this.endLatLng, {icon: endFlag, draggable: true}); 
+         end.bindPopup('<strong>To:</strong> '+this.endLatLng);
+         this.markerLayer.addLayer(end);
+         end.on('dragend', function() {
+             this_.endLatLng = end.getLatLng();
+             this_.planTrip();
+         });
+         
+         if(update)
+        	 this.planTrip();
+   },
+    
+    
+    planTrip : function(existingData, skipSave) {
     	
     	if(this.currentRequest !== null)
         {
@@ -166,7 +182,7 @@ otp.modules.bikeshare.BikeShareModule =
         	this.currentRequest = null;
         }
     	
-    	this.currentHash = null;
+    	
     	
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
         this.pathLayer.clearLayers();        
@@ -174,15 +190,22 @@ otp.modules.bikeshare.BikeShareModule =
         
         var this_ = this;
         
-        var data_ = {             
-                fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
-                toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
-                mode: 'WALK,BICYCLE',
-                optimize: 'TRIANGLE',
-                triangleTimeFactor: this_.triangleTimeFactor,
-                triangleSlopeFactor: this_.triangleSlopeFactor,
-                triangleSafetyFactor: this_.triangleSafetyFactor
-            };
+        var data_ = null;
+        
+        if(existingData)
+        	data_ = existingData;
+        else
+        {
+       	 data_ = {             
+               fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
+               toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
+               mode: 'WALK,BICYCLE',
+               optimize: 'TRIANGLE',
+               triangleTimeFactor: this_.triangleTimeFactor,
+               triangleSlopeFactor: this_.triangleSlopeFactor,
+               triangleSafetyFactor: this_.triangleSafetyFactor
+           };
+       } 	
         
         
         
@@ -197,8 +220,6 @@ otp.modules.bikeshare.BikeShareModule =
                         this_.trianglePlanTrip();
                     });
                 }
-            	
-            	this_.currentHash = "abc123";
                 
                 console.log(data);
                 var itin = data.plan.itineraries[0];
@@ -214,7 +235,10 @@ otp.modules.bikeshare.BikeShareModule =
                     }
                     this_.resultsWidget.updateMetrics(itin);
                     this_.updateTipStep(3);
-                    this_.webapp.newTrip(this_);
+                    
+                    if(!skipSave)
+                    	this_.savePlan(data_);
+                    
                 }
                 else {
                     //this_.resultsWidget.noTripFound();
@@ -223,6 +247,23 @@ otp.modules.bikeshare.BikeShareModule =
         });
         
         console.log("rw "+this.resultsWidget);
+    },
+    
+    savePlan : function(data){
+    	
+    	var data_ = {data: data, startLat: this.startLatLng.lat, startLon: this.startLatLng.lng, endLat: this.endLatLng.lat, endLon: this.endLatLng.lng, parrent : this.webapp.currentHash };
+    	otp.util.DataStorage.store(data_, this.webapp );
+    },
+    
+    restorePlan : function(data){
+    	
+    	this.startLatLng = new L.LatLng(data.startLat, data.startLon);
+    	this.setStartPoint(this.startLatLng, false);
+    	
+    	this.endLatLng = new L.LatLng(data.endLat, data.endLon);
+    	this.setEndPoint(this.endLatLng, false);
+    	
+    	this.planTrip(data.data, true);
     },
         
     getModeColor : function(mode) {
@@ -287,7 +328,7 @@ otp.modules.bikeshare.BikeShareModule =
     
     
     initStations : function(start, end) {
-        console.log('stations '+start+' '+end);
+        //console.log('stations '+start+' '+end);
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/bike_rental';
         var this_ = this;
         $.ajax(url, {
