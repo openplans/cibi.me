@@ -47,6 +47,11 @@ otp.core.Map = {
         }
     },
     
+    setBounds : function(bounds)
+    {
+    	this.lmap.fitBounds(bounds);
+    },
+    
     CLASS_NAME : "otp.core.Map"
 }
 

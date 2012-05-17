@@ -19,7 +19,9 @@ otp.core.Webapp = {
     map     : null,
     
     modules : [ ],
+    
     activeModule : null,
+    currentHash : null,
     
     initialize : function(config) {
         otp.configure(this, config);
@@ -34,6 +36,10 @@ otp.core.Webapp = {
 		     data_track_clickback: false
 		};
 		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb2f5a73e6bd1f3");
+		
+		if(window.location.hash !== "")
+			otp.util.DataStorage.retreive(window.location.hash.replace("#", ""), this);
+		
     },
     
     addModule : function(module, makeActive) {
@@ -42,16 +48,48 @@ otp.core.Webapp = {
         if(makeActive) {
             this.setActiveModule(module);
         }
+        this.setLinks(module);
     },
     
     setActiveModule : function(module) {
         console.log("set active module: "+module.moduleName);
         this.map.activeModuleChanged(module);
-    },    
+        this.activeModule = module;
+    },   
+    
+    restoreTrip : function(data) {
+    	
+    	this.activeModule.restorePlan(data);
+   
+    },
+    
+    setLinks : function(module) {
+    	var aboutLink = $("#about_link");
+    	var contactLink = $("#contact_link");
+    	    	
+    	aboutLink.click(function(e) {
+        	e.preventDefault("about");
+        	module.showAboutInfo();
+        });	
+    	contactLink.click(function(e) {
+        	e.preventDefault();
+        	module.showContactInfo();
+        });
+    },
+    
+    setBounds : function(bounds)
+    {
+    	this.map.lmap.fitBounds(bounds);
+    },
         
-    newTrip : function(module) {
+    newTrip : function(hash) {
+    	
+    	this.currentHash = hash;	
+    	
+    	window.location.hash = this.currentHash;
+    	
         var shareRoute = $("#share-route");
-        shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/"+module.currentHash);
+        shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/#"+this.currentHash);
         addthis.toolbox(".addthis_toolbox");
     },
     
