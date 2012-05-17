@@ -76,6 +76,11 @@ otp.core.Webapp = {
         	module.showContactInfo();
         });
     },
+    
+    setBounds : function(bounds)
+    {
+    	this.map.lmap.fitBounds(bounds);
+    },
         
     newTrip : function(hash) {
     	

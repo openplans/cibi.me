@@ -268,6 +268,8 @@ otp.modules.bikeshare.BikeShareModule =
     	this.endLatLng = new L.LatLng(data.endLat, data.endLon);
     	this.setEndPoint(this.endLatLng, false);
     	
+    	this.webapp.setBounds(new L.LatLngBounds([this.startLatLng, this.endLatLng]));
+    	
     	this.planTrip(data.data, true);
     },
         
