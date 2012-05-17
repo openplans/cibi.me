@@ -460,8 +460,8 @@ body {
   display: none;
   position: absolute;
   top: 2.5em;
-  right: 0.5em;
-  left: 0.5em;
+  right: 0.25em;
+  left: 0.25em;
   z-index: 100;
 }
 
