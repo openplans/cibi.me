@@ -149,11 +149,6 @@ button {width: auto; overflow: visible;}
 body {
   background: #444;
 }
-#page {
-  width: 100%;
-  min-height: 100%;
-  overflow: hidden;
-}
 
 
 /* =Header
@@ -185,12 +180,18 @@ body {
 
 /* the logo */
 #logo {
-  height: 5em;
-  margin-top: -5px;
   position: absolute;
   top: 2.5em;
-  right: -1em;
-  padding: 0 2.5em 0 1em;
+  right: 0;
+  margin-top: -15px;
+  overflow: hidden;
+  padding: 10px 0 18px 3.5em;
+}
+#logo .ribbon {
+  position: relative;
+  height: 5em;
+  right: -10px;
+  padding: 0 10px 0 1.5em;
   border-top: 1px solid #529be6;
   border-bottom: 1px solid #2a65a1;
 
@@ -214,8 +215,8 @@ body {
   -webkit-box-shadow: inset -2px 1px 1px rgba(255,255,255,0.5);
           box-shadow: inset -2px 1px 1px rgba(255,255,255,0.5);
 }
-#logo:before,
-#logo:after { 
+#logo .ribbon:before,
+#logo .ribbon:after { 
   content: "\0020";
   display: block; 
 	width: 100%; 
@@ -258,7 +259,7 @@ body {
   -webkit-box-shadow: -5px 0 15px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.5);
           box-shadow: -5px 0 15px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.5);
 }
-#logo:after {
+#logo .ribbon:after {
   padding-right: 6em;
   right: -6em;
   margin-right: -1px;
@@ -277,7 +278,7 @@ body {
 #site-title {
   font-family: 'Dancing Script', cursive;
   font-size: 3.25em;
-  margin: -0.2em 0 0;
+  margin: -0.2em 20px 0 0;
   line-height: 1;
 }
 #site-title a {
@@ -297,7 +298,7 @@ body {
 #site-description {
   color: #dfeefd;
   font-size: 1em;
-  margin: 0;
+  margin: 0 20px 0 0;
   text-shadow: -1px -1px 1px rgba(42,101,161,0.25),
                -1px  1px 1px rgba(42,101,161,0.25),
                 1px -1px 1px rgba(42,101,161,0.25),
@@ -415,22 +416,23 @@ body {
 }
 
 .otp-widget .close {
-	color: red;
+	color: #666;
 	cursor: pointer;
 	font-size: 20px;
   font-weight: bold;
 	text-shadow: -1px 1px 0 #ffffff;
-	position: absolute;
-	right: 0.25em;
-	top: 0.25em;
-	float: right;
   padding: 0 0.4em 0.23em;
+	float: right;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1000;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
 .otp-widget .close:hover {
-  background: #ddd;
+	color: red;
 }
 
 #otp-tripResultsWidget {
@@ -466,7 +468,11 @@ body {
 }
 
 #otp-aboutWidget .content, #otp-contactWidget .content {
-	padding: 5px 20px 5px 20px;
+	padding: 2em;
+}
+
+#otp-aboutWidget .content img, #otp-contactWidget .content img {
+  max-width: 100%;
 }
 
 #otp-aboutWidget .content a, #otp-contactWidget .content a {
@@ -541,9 +547,11 @@ ul.otp-stats li {
     top: 4em;
   }
   #logo {
-    height: 6em;
-    right: -2em;
+    right: 0;
     top: 4em;
+  }
+  #logo .ribbon {
+    height: 6em;
     padding: 0 4.5em 0 2em;
   }
   #site-title {
@@ -590,8 +598,38 @@ ul.otp-stats li {
   #otp-contactWidget, #otp-aboutWidget {
     top: 10em;
     right: auto;
-    left: 2em;
+    left: 1.75em;
     width: 40em;
+    bottom: 7.5em;
+  	padding: 0;
+  	overflow: hidden;
+  }
+  #otp-aboutWidget .content, #otp-contactWidget .content {
+  	overflow: auto;
+  	padding: 0 1em 2em;
+  	margin: 0 1em 0 0;
+  	position: absolute;
+  	top: 2em;
+  	bottom: 2em;
+  }
+  #otp-aboutWidget .content::-webkit-scrollbar-track
+  {
+  	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  	border-radius: 10px;
+  	background-color: #F5F5F5;
+  }
+
+  #otp-aboutWidget .content::-webkit-scrollbar
+  {
+  	width: 12px;
+  	background-color: #F5F5F5;
+  }
+
+  #otp-aboutWidget .content::-webkit-scrollbar-thumb
+  {
+  	border-radius: 10px;
+  	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  	background-color: #555;
   }
 }
 
