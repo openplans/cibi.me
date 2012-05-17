@@ -383,17 +383,13 @@ otp.modules.bikeshare.BikeShareModule =
     createAboutInfo : function() {
     	this.contactWidget = new otp.widgets.InfoWidget("otp-contactWidget");
 
-		var contactCopy = "<p class='text'>If you'd like to give us feedback please contact us at <a href='http://openplans.org/contact-us/'>OpenPlans</a>.</p>"
-			+ "<p class='text'>For information about the upcoming bike share system, visit <a href='http://citibikenyc.com'>Citi Bike</a>.</p>" 
-			+ "<p class='text'>For information on the bike share system operator, please contact <a href='http://www.altabicycleshare.com/'>Alta Bicycle Share</a>.</p>" 
-			+ "<p class='text'>For information on system sponsorship, please visit <a href='http://NYCBikeShareSponsorship.com'>NYCBikeShareSponsorship.com</a>.</p>"
-			+ "<p class='text'>To contact NYC DOT about community outreach and siting, please email bikeshare@dot.nyc.gov.</p>";
+		var contactCopy = '<p>Comments? Reach us <a href="http://twitter.com/openplans">@OpenPlans</a> or <a href="http://openplans.org/contact">send us a message</a> via our website. </p><p>Read more about <a href="http://openplans.org/?p=9892">cibi.me</a>.</p><p>For more information about NYC’s bike share, visit <a href="http://citibikenyc.com/">Citi Bike</a> and <a href="http://nyc.gov/bikeshare">nyc.gov/bikeshare</a>.</p><p>cibi.me is a project from <a href="http://openplans.org/">OpenPlans</a> [LOGO?].</p>';
 
 		this.contactWidget.setContent("<p class='title'>Contact</p>" + contactCopy);
 		this.contactWidget.hide();
     	
         this.aboutWidget = new otp.widgets.InfoWidget("otp-aboutWidget");
-		this.aboutWidget.setContent("<p class='title'>About</p>");
+		this.aboutWidget.setContent('<img src="http://www.streetsblog.org/wp-content/uploads/2012/05/IMAG0391.jpg"/><p><strong>Bike share is coming to NYC this summer!</strong> How will you use it to get around?</p><p>CiBi.me is a trip planner for bike share. Pick your start and end points, and we\'ll tell you how to make the trip with a <a href="">Citi Bike</a>. Including, where to pick up a bike and where to drop it off, and alternative docks nearby. When the system is running this summer, cibi.me will check to see if bikes and docks are available before recommending a route.</p><p>Soon, Citi Bike will make all sorts of short trips quicker and easier. With CiBi.me, you can start planning those trips today!</p><p>cibi.me is a project from OpenPlans, powered by OpenTripPlanner and using OpenStreetMap data. Proposed station data from <a href="http://nyc.gov/bikeshare/">nyc.gov/bikeshare</a>. Photo of station dock from streetsblog.org.</p> [OP LOGO HERE?]>');
 		this.aboutWidget.hide();
 
     },
