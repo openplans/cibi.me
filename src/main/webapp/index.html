@@ -35,6 +35,7 @@
 <script src="js/otp/widgets/Widget.js"></script>
 <script src="js/otp/widgets/TripSummaryWidget.js"></script>
 <script src="js/otp/widgets/BikeTrianglePanel.js"></script>
+<script src="js/otp/widgets/InfoWidget.js"></script>
 <link rel="stylesheet" href="style.css" />
 
 <!-- make legacy Internet Explorer play nice(r) -->
@@ -47,6 +48,7 @@
 <script type="text/javascript" language="javascript">
 $(document).ready(function() {
     new otp.core.Webapp();
+
 });
 </script>
 
@@ -78,8 +80,8 @@ $(document).ready(function() {
 
   <nav id="main-menu" role="article">
     <ul>
-      <li class=""><a href="#">About</a></li>
-      <li class=""><a href="#">Contact</a></li>
+      <li class="" id="about_link"><a href="#">About</a></li>
+      <li class="" id="contact_link"><a href="#">Contact</a></li>
     </ul>
   </nav>
 
