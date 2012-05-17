@@ -25,15 +25,15 @@ otp.widgets.TripSummaryWidget =
         otp.widgets.Widget.prototype.initialize.apply(this, arguments);
         
         var content = '';
-        content += '<h3>Your Trip:</h3>';
+        content += '<h3 class="your-trip">Your Trip:</h3>';
         content += '<ul class="otp-stats">';
         content += '<li><strong>Distance Traveled:</strong> <span id="otp-tsw-distance"></span></li>';
         content += '<li><strong>Estimated Time:</strong> <span id="otp-tsw-duration"></span></li>';
-   //     content += '<li><strong>Calories Burned:</strong> N/A</li>';
-   //     content += '<li><strong>Cost:</strong> N/A</li>';
+        // content += '<li><strong>Calories Burned:</strong> N/A</li>';
+        // content += '<li><strong>Cost:</strong> N/A</li>';
         content += '</ul>';
         content += '<hr />';
-        content += '<h6>Drag to Change Trip:</h6>';
+        content += '<h6 class="drag-to-change">Drag to Change Trip:</h6>';
         content += '<div id="otp-tsw-bikeTriangle"></div>';
         content += '<hr />';
         content += '<h6 id="share-route-header">Share this Trip:</h6>';

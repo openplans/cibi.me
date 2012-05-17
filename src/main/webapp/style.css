@@ -383,7 +383,7 @@ body {
 }
 
 .leaflet-control-zoom {
-/*  display: none;*/
+  display: none;
 }
 
 .leaflet-container .leaflet-control-attribution {
@@ -492,31 +492,39 @@ body {
 }
 
 #otp-mainTSW {
-  width: 240px;
-/*  height: 360px;*/ /* do we need this height? don't think so. -acochran */
-  left: 20px;
-  bottom: 100px;
+  width: auto;
+  left: 0.5em;
+  bottom: auto;
+  top: 3em;
+  padding: 0.25em 0.5em;
+}
+
+h3.your-trip,
+h6.drag-to-change {
+  display: none;
 }
 
 #otp-tsw-bikeTriangle {
-  height: 100px;
-  margin: 0 0 1em;
+  display: none;
 }
 
 ul.otp-stats {
   list-style: none;
-  margin: 0 0 1.5em;
+  margin: 0;
 }
 ul.otp-stats li { 
-  margin-bottom: 0.25em 
+  margin-bottom: 0;
+  font-weight: bold;
+  font-size: 2em;
+}
+ul.otp-stats li strong { 
+  display: none;
 }
 
-#share-route-header {
-  float: left;
-  margin-right: 0.5em;
-}
+#otp-mainTSW hr,
+#share-route-header,
 #share-route {
-  padding: 0.2em 0 0;
+  display: none;
 }
 
 
@@ -631,6 +639,46 @@ ul.otp-stats li {
   	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   	background-color: #555;
   }
+
+  #otp-mainTSW {
+    width: 240px;
+    top: auto;
+    left: 20px;
+    bottom: 100px;
+    padding: 10px;
+  }
+
+  h6.drag-to-change {
+    display: block;
+  }
+  #otp-tsw-bikeTriangle {
+    display: block;
+    height: 100px;
+    margin: 0 0 1em;
+  }
+  ul.otp-stats {
+    margin: 0 0 0.25em;
+  }
+  ul.otp-stats li { 
+/*    margin-bottom: 0.25em */
+/*    font-weight: normal;*/
+/*    font-size: 1em;*/
+    display: inline;
+    margin: 0;
+  }
+  ul.otp-stats li strong { 
+/*    display: inline;*/
+  }
+  #otp-mainTSW hr,
+  #share-route-header,
+  #share-route {
+    display: block;
+  }
+  #share-route-header {
+    float: left;
+    margin-right: 0.25em;
+  }
+
 }
 
 @media only screen and (min-width: 1024px) {
