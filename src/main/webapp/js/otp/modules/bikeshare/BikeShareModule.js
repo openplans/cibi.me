@@ -283,8 +283,8 @@ otp.modules.bikeshare.BikeShareModule =
     },
         
     getModeColor : function(mode) {
-        if(mode === "WALK") return '#0f0';
-        if(mode === "BICYCLE") return '#f00';
+        if(mode === "WALK") return '#444';
+        if(mode === "BICYCLE") return '#00f';
         return '#aaa';
     },
     
