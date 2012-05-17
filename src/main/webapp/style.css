@@ -151,18 +151,16 @@ button {width: auto; overflow: visible;}
   height: 100%;
   overflow: hidden;
 }
-#branding {
-  height: 4em;
-  overflow: visible;
-  position: relative;
-  z-index: 100;
-}
 
 
 /* =Header
 -------------------------------------------------------------- */
 
 #branding {
+  height: 2.25em;
+  overflow: visible;
+  position: relative;
+  z-index: 100;
   color: #fff;
 
   background-color: #444;
@@ -187,7 +185,7 @@ button {width: auto; overflow: visible;}
   height: 5em;
   margin-top: -5px;
   position: absolute;
-  top: 4em;
+  top: 2.5em;
   right: -1em;
   padding: 0 2.5em 0 1em;
   border-top: 1px solid #529be6;
@@ -305,19 +303,18 @@ button {width: auto; overflow: visible;}
 
 /* AddThis */
 #branding .addthis_toolbox {
-  margin: 1.25em 0 0 1.25em;
+  margin: 0.5em 0 0 0.5em;
   float: left;
   min-width: 163px;
 }
 
-/* Main Navigation */
+/* Navigation: Main Menu */
 #main-menu {
-  padding: 1em;
+  padding: .25em;
   float: right;
 }
 #main-menu li {
   float: left;
-  margin-right: 1em;
 }
 #main-menu a {
   display: block;
@@ -327,6 +324,8 @@ button {width: auto; overflow: visible;}
   line-height: 1.75;
   text-decoration: none;
   padding: 0 0.75em;
+  position: relative;
+  z-index: 1000;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
@@ -372,13 +371,21 @@ button {width: auto; overflow: visible;}
 
 #map {
   position: absolute;
-  top: 4em;
+  top: 2.25em;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 1;
 }
 
+.leaflet-control-zoom {
+/*  display: none;*/
+}
+
+.leaflet-container .leaflet-control-attribution {
+  font-size: 6px;
+}
+  
 .ui-dialog-titlebar {
   font-size: 14px;
   padding:2px;
@@ -427,16 +434,14 @@ button {width: auto; overflow: visible;}
 }
 
 #otp-tipWidget {
-  left: 20px;
-  bottom: 2em;
-  height: 1.5em;
-  font-size: 1.25em;
+  left: 0.5em;
+  right: 0.5em;
+  bottom: 1em;
+  font-size: 85%;
   font-weight: bold;
-  line-height: 1.5;
-  padding-right: 1em;
-  padding-left: 1em;
+  text-align: center;
+  padding: 0.5em;
   text-shadow: -1px 1px #fff;
-  white-space: nowrap;
   background-color: #e3e57a;
   background-color: rgba(227,229,122,0.8);
   border: 1px solid #b1b24e;
@@ -546,9 +551,17 @@ ul.otp-stats li {
 }
 
 @media only screen and (min-width: 768px) {
+  #branding {
+    height: 4em;
+  }
+  #map {
+    top: 4em;
+  }
   #logo {
     height: 6em;
     right: -2em;
+    top: 4em;
+    padding: 0 4.5em 0 2em;
   }
   #site-title {
     font-size: 4.25em;
@@ -556,9 +569,41 @@ ul.otp-stats li {
   #site-description {
     font-size: 1.25em;
   }
-  #branding .addthis_toolbox {
-    float: right;
+
+  /* Navigation: Main Menu */
+  #main-menu {
+    padding: 1em;
   }
+  #main-menu li {
+    float: left;
+    margin-right: 1em;
+  }
+
+  /* AddThis */
+  #branding .addthis_toolbox {
+    margin: 1.25em 0 0 1.25em;
+  }
+
+  /* Map UI */
+  .leaflet-control-zoom {
+    display: block;
+  }
+  .leaflet-container .leaflet-control-attribution {
+    font-size: 10px;
+  }
+
+  #otp-tipWidget {
+    left: 20px;
+    right: auto;
+    bottom: 2em;
+    height: 1.5em;
+    font-size: 1.25em;
+    line-height: 1.5;
+    padding-right: 1em;
+    padding-left: 1em;
+    white-space: nowrap;
+  }
+
 }
 
 @media only screen and (min-width: 1024px) {
