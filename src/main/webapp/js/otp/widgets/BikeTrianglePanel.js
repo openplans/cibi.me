@@ -59,26 +59,29 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         
         var labelSize = "18px";
 
-        var safeFill = "#2890AC"; 
+        var safeFill = "#bbe070"; 
+        var safeFill2 = "#77b300"; 
         var safeName = "Safest"; //locale.bikeTriangle.safeName;
         var safeSym  = "S"; //locale.bikeTriangle.safeSym;
 
-        var hillFill = "#6DB33F"; 
+        var hillFill = "#8cc4ff"; 
+        var hillFill2 = "#61a7f2"; 
         var hillName = "Flattest"; //locale.bikeTriangle.hillName;
         var hillSym  = "F"; //locale.bikeTriangle.hillSym;
         
-        var timeFill = "#D59F0F";
+        var timeFill = "#ffb2b2";
+        var timeFill2 = "#f27979";
         var timeName = "Quickest"; //locale.bikeTriangle.timeName;
         var timeSym  = "Q"; //locale.bikeTriangle.timeSym;
 
         var labelT = canvas.text(margin + tri_side/2, margin+24, timeSym);
-        labelT.attr({fill:timeFill, "font-size":labelSize, "font-weight":"bold"});	
+        labelT.attr({fill:timeFill2, "font-size":labelSize, "font-weight":"bold"});	
 
         var labelH = canvas.text(margin + 22, height-margin-14, hillSym);
-        labelH.attr({fill:hillFill, "font-size":labelSize, "font-weight":"bold"});	
+        labelH.attr({fill:hillFill2, "font-size":labelSize, "font-weight":"bold"});	
 
         var labelS = canvas.text(margin + tri_side - 22, height-margin-14, safeSym);
-        labelS.attr({fill:safeFill, "font-size":labelSize, "font-weight":"bold"});	
+        labelS.attr({fill:safeFill2, "font-size":labelSize, "font-weight":"bold"});	
 
         var barLeft = margin*2 + tri_side; 
         var barWidth = width - margin*3 - tri_side;
