@@ -32,10 +32,10 @@ otp.core.Webapp = {
         
         // Init AddThis
         addthis_config = {
-		     pubid: "ra-4fb2f5a73e6bd1f3",
+		     pubid: "ra-4fb549f217255a7d",
 		     data_track_clickback: false
 		};
-		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb2f5a73e6bd1f3");
+		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb549f217255a7d");
 		
 		if(window.location.hash !== "")
 			otp.util.DataStorage.retreive(window.location.hash.replace("#", ""), this);
