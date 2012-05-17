@@ -89,7 +89,7 @@ otp.core.Webapp = {
     	window.location.hash = this.currentHash;
     	
         var shareRoute = $("#share-route");
-        shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/"+this.currentHash);
+        shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/#"+this.currentHash);
         addthis.toolbox(".addthis_toolbox");
     },
     
