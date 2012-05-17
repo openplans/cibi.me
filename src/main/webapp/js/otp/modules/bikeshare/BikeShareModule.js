@@ -126,7 +126,7 @@ otp.modules.bikeshare.BikeShareModule =
     handleClick : function(event) {
         //console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
        
-    	this.hideContent();
+    	this.hideSplash();
     	
         if(this.startLatLng == null) {
         	this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
@@ -403,9 +403,8 @@ otp.modules.bikeshare.BikeShareModule =
 
     },
     
-    hideContent : function() {
-    	this.aboutWidget.hide();
-    	this.contactWidget.hide();
+    hideSplash : function() {
+    	$("#splash-text").hide();
     },
     
     showAboutInfo : function() {
