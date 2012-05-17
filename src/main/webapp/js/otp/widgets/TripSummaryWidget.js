@@ -57,8 +57,16 @@ otp.widgets.TripSummaryWidget =
     },
     
     updateMetrics : function(itin) {
-        $("#otp-tsw-distance").html(Math.round(100*itin.walkDistance/5280)/100+" mi.");
-        $("#otp-tsw-duration").html(otp.util.Time.msToHrMin(itin.duration)+" mi.");
+    	
+    	
+    	var dist = 0;
+    	
+    	for(var i=0; i < itin.legs.length; i++) {
+    		dist += itin.legs[i].distance;
+        }
+    	
+        $("#otp-tsw-distance").html(Math.round(100*(dist/1609.344))/100+" mi.");
+        $("#otp-tsw-duration").html(otp.util.Time.msToHrMin(itin.duration));	
     },
     
     CLASS_NAME : "otp.widgets.TripSummaryWidget"
