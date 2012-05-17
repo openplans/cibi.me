@@ -104,6 +104,9 @@ otp.modules.bikeshare.BikeShareModule =
     triangleTimeFactor     : 0.333,
     triangleSlopeFactor    : 0.333,
     triangleSafetyFactor   : 0.334,
+    
+    aboutWidget		: null,
+    contactWidget		: null,
                         
     initialize : function(webapp) {
         otp.modules.Module.prototype.initialize.apply(this, arguments);
@@ -116,6 +119,8 @@ otp.modules.bikeshare.BikeShareModule =
         
         this.tipWidget = this.createWidget("otp-tipWidget", "");
         this.updateTipStep(1);
+        
+        this.createAboutInfo();
     },
 
     handleClick : function(event) {
@@ -371,6 +376,34 @@ otp.modules.bikeshare.BikeShareModule =
         if(step == 3) this.tipWidget.setContent("Tip: Drag the Start or End Points to Modify Your Trip.");
         
         this.tipStep = step;
+    },
+    
+    createAboutInfo : function() {
+    	this.contactWidget = new otp.widgets.InfoWidget("otp-contactWidget");
+
+		var contactCopy = "<p class='text'>If you'd like to give us feedback please contact us at <a href='http://openplans.org/contact-us/'>OpenPlans</a>.</p>"
+			+ "<p class='text'>For information about the upcoming bike share system, visit <a href='http://citibikenyc.com'>Citi Bike</a>.</p>" 
+			+ "<p class='text'>For information on the bike share system operator, please contact <a href='http://www.altabicycleshare.com/'>Alta Bicycle Share</a>.</p>" 
+			+ "<p class='text'>For information on system sponsorship, please visit <a href='http://NYCBikeShareSponsorship.com'>NYCBikeShareSponsorship.com</a>.</p>"
+			+ "<p class='text'>To contact NYC DOT about community outreach and siting, please email bikeshare@dot.nyc.gov.</p>";
+
+		this.contactWidget.setContent("<p class='title'>Contact</p>" + contactCopy);
+		this.contactWidget.hide();
+    	
+        this.aboutWidget = new otp.widgets.InfoWidget("otp-aboutWidget");
+		this.aboutWidget.setContent("<p class='title'>About</p>");
+		this.aboutWidget.hide();
+
+    },
+    
+    showAboutInfo : function() {
+    	this.aboutWidget.show();
+    	this.contactWidget.hide();
+    },
+    
+    showContactInfo : function() {
+    	this.aboutWidget.hide();
+    	this.contactWidget.show();
     },
     
     CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"

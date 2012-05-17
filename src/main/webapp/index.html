@@ -37,6 +37,7 @@
 <script src="js/otp/widgets/Widget.js"></script>
 <script src="js/otp/widgets/TripSummaryWidget.js"></script>
 <script src="js/otp/widgets/BikeTrianglePanel.js"></script>
+<script src="js/otp/widgets/InfoWidget.js"></script>
 <link rel="stylesheet" href="style.css" />
 
 <!-- make legacy Internet Explorer play nice(r) -->
@@ -49,6 +50,7 @@
 <script type="text/javascript" language="javascript">
 $(document).ready(function() {
     new otp.core.Webapp();
+
 });
 </script>
 
@@ -67,7 +69,7 @@ $(document).ready(function() {
   <!-- AddThis Button BEGIN -->
   <div class="addthis_toolbox addthis_default_style" 
     addthis:url="http://cibi.me"
-    addthis:title="How will you use NYC bike share? Plan a trip now."
+    addthis:title="How will you use NYC bike share? Plan a trip now with #CiBi."
     addthis:description="Cibi.me is built by OpenPlans and allows users to plan trips using NYC's new bike share program.">
     <a class="addthis_button_twitter"></a>
     <a class="addthis_button_facebook"></a>
@@ -80,8 +82,8 @@ $(document).ready(function() {
 
   <nav id="main-menu" role="article">
     <ul>
-      <li class=""><a href="#">About</a></li>
-      <li class=""><a href="#">Contact</a></li>
+      <li class="" id="about_link"><a href="#">About</a></li>
+      <li class="" id="contact_link"><a href="#">Contact</a></li>
     </ul>
   </nav>
 

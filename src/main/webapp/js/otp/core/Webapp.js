@@ -19,6 +19,7 @@ otp.core.Webapp = {
     map     : null,
     
     modules : [ ],
+    
     activeModule : null,
     currentHash : null,
     
@@ -47,6 +48,7 @@ otp.core.Webapp = {
         if(makeActive) {
             this.setActiveModule(module);
         }
+        this.setLinks(module);
     },
     
     setActiveModule : function(module) {
@@ -58,7 +60,21 @@ otp.core.Webapp = {
     restoreTrip : function(data) {
     	
     	this.activeModule.restorePlan(data);
-    	
+   
+    },
+    
+    setLinks : function(module) {
+    	var aboutLink = $("#about_link");
+    	var contactLink = $("#contact_link");
+    	    	
+    	aboutLink.click(function(e) {
+        	e.preventDefault("about");
+        	module.showAboutInfo();
+        });	
+    	contactLink.click(function(e) {
+        	e.preventDefault();
+        	module.showContactInfo();
+        });
     },
         
     newTrip : function(hash) {
