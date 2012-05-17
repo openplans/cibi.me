@@ -637,14 +637,13 @@ p#splash-text span {
   	left: auto;
   	right: 20px;
   	bottom: 2em;
-  	height: 6em;
+  	height: 6.4em;
   	font-size: 1em;
   	line-height: 1.5;
   	padding: 0.2em;
-  	width: 30em;
+  	width: 32em;
   	white-space: normal;
   	text-align: center;
-  	text-shadow: -1px 1px #fff;
   }
   
   #otp-bikestationsWidget .col1 {
@@ -657,7 +656,7 @@ p#splash-text span {
   #otp-bikestationsWidget .col2 {
   	float:right;
 	width:45%;
-	background:#c9c;
+	background:rgb(255,159,159);
 	padding: .2em;
   }
 
