@@ -18,6 +18,10 @@ otp.widgets.BikeStationsWidget =
 	otp.Class(otp.widgets.Widget, {
 	
 	_div: null,
+	
+	start_button: null,
+	
+	end_button: null,
 		 
 	initialize : function(id, config) {
 	    otp.configure(this, id);
@@ -26,6 +30,43 @@ otp.widgets.BikeStationsWidget =
 	    //$(this.div).draggable();
 	    
 	    this._div = this.div;
+	    this.hide();
+	},
+	
+	setContentAndShow: function(start, end) {
+
+		// Fit station names to widget:
+		start.name = start.name.length > 50 ? start.name.substring(0,50) + "..." : start.name;
+		end.name = end.name.length > 50 ? end.name.substring(0,50) + "..." : end.name;
+		
+		// Swap existing button name or create new button:
+		if (this.start_button !== null) {
+			this.start_button.empty();
+			this.end_button.empty();
+			this.start_button.html("<strong>Closest Pick Up:</strong> " + start.name + "<br /><strong>Bikes:</strong> " + start.bikesAvailable);
+			this.end_button.html("<strong>Closest Drop Off:</strong> " + end.name + "<br /><strong>Spaces:</strong> " + end.spacesAvailable);
+
+		} else {
+			this.start_button = $("<div id='pickup_btn'><strong>Closest Pick Up:</strong> " + start.name + "<br /><strong>Bikes:</strong> " + start.bikesAvailable + "</div>");
+			this.end_button = $("<div id='dropoff_btn'><strong>Closest Drop Off:</strong> " + end.name + "<br /><strong>Spaces:</strong> " + end.spacesAvailable + "</div>");
+			
+			($(this.div).append($("<div class='button left'></div>").append(this.start_button))).append($("<div class='button right'></div>").append(this.end_button));  
+		    this.show();
+		}
+		
+        var start_marker = start.marker;
+        var end_marker = end.marker;
+
+        this.start_button.click(function(e) {
+        	e.preventDefault();
+        	start_marker.openPopup();
+        });
+
+        this.end_button.click(function(e) {
+        	e.preventDefault();
+        	end_marker.openPopup();
+        });
+        
 	},
 
 	show: function() {

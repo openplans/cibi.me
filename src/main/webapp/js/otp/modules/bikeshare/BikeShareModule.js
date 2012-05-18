@@ -121,6 +121,7 @@ otp.modules.bikeshare.BikeShareModule =
         this.updateTipStep(1);
         
         this.createAboutInfo();
+        this.bikestationsWidget = new otp.widgets.BikeStationsWidget('otp-bikestationsWidget');
     },
 
     handleClick : function(event) {
@@ -251,14 +252,8 @@ otp.modules.bikeshare.BikeShareModule =
                     this_.resultsWidget.updateMetrics(itin);
                     this_.updateTipStep(3);
 
-                    if (start_and_end_stations !== undefined) {
-	                    this_.bikestationsWidget = new otp.widgets.BikeStationsWidget('otp-bikestationsWidget');  
-	                    var start_station = start_and_end_stations['start'];
-	                    var end_station = start_and_end_stations['end'];                                        
-	                    var start_content = "<div><strong>Pick Up Station:</strong><br /> " + start_station.name + "<br /><strong>Bikes:</strong> " + start_station.bikesAvailable + "</div>";
-	                    var end_content = "<div><strong>Drop Off Station:</strong><br /> " + end_station.name + "<br /><strong>Spaces:</strong> " + end_station.spacesAvailable + "</div>";                   
-	               		this_.bikestationsWidget.setContent("<div class='col1'>" + start_content + "</div><div class='col2'>" + end_content + "</div>");
-	               		this_.bikestationsWidget.show();
+                    if (start_and_end_stations !== undefined) {                   
+	               		this_.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
                     }
                     
                     if(!skipSave)
