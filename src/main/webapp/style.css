@@ -637,12 +637,12 @@ p#splash-text span {
   	left: auto;
   	right: 10px;
   	bottom: 2em;
-  	height: 5.5em;
+  	height: 6.3em;
   	font-size: 1em;
   	line-height: 1.5;
   	padding: 0;
   	border: 0;
-  	width: 38em;
+  	width: 40em;
   	white-space: normal;
   	text-align: center;
   	font-size: 90%;
@@ -653,10 +653,10 @@ p#splash-text span {
   #otp-bikestationsWidget .button {
   	cursor: pointer;
 	background:#ccc;
-	width: 49%;
+	width: 19em;
 	border: 1px solid #acacac;
 	color: #111;
-	padding: 0.5em 0.1em;
+	padding: 0.5em 0.2em .3em .2em;
 	border-top: 1px solid #bfbfbf;
 	border-bottom: 1px solid #9a9a9a;
 	-webkit-border-radius: 3px;
