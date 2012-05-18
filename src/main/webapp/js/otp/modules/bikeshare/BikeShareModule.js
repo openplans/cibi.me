@@ -155,6 +155,7 @@ otp.modules.bikeshare.BikeShareModule =
          var start = new L.Marker(this.startLatLng, {icon: startFlag, draggable: true}); 
          start.bindPopup('<strong>Start</strong>');
          start.on('dragend', function() {
+        	 this_.hideSplash();
              this_.startLatLng = start.getLatLng();
              this_.planTrip();
          });
@@ -171,6 +172,7 @@ otp.modules.bikeshare.BikeShareModule =
          end.bindPopup('<strong>Destination</strong>');
          this.markerLayer.addLayer(end);
          end.on('dragend', function() {
+        	 this_.hideSplash();
              this_.endLatLng = end.getLatLng();
              this_.planTrip();
          });
