@@ -1,6 +1,13 @@
 /* =html5doctor.com Reset Stylesheet \\v1.6.1 \\ Last Updated: 2010-09-17 \\ http://richclarkdesign.com \\ @rich_clark
 -------------------------------------------------------------- */
 
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Dancing Script Bold'), local('DancingScript-Bold'), url('http://themes.googleusercontent.com/static/fonts/dancingscript/v3/KGBfwabt0ZRLA5W1ywjowfVc48Rxw3pIW-IHeDZiIVI.woff') format('woff');
+}
+
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code,
