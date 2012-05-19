@@ -1,13 +1,6 @@
 /* =html5doctor.com Reset Stylesheet \\v1.6.1 \\ Last Updated: 2010-09-17 \\ http://richclarkdesign.com \\ @rich_clark
 -------------------------------------------------------------- */
 
-@font-face {
-  font-family: 'Dancing Script';
-  font-style: normal;
-  font-weight: bold;
-  src: local('Dancing Script Bold'), local('DancingScript-Bold'), url('http://themes.googleusercontent.com/static/fonts/dancingscript/v3/KGBfwabt0ZRLA5W1ywjowfVc48Rxw3pIW-IHeDZiIVI.woff') format('woff');
-}
-
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code,
@@ -466,9 +459,6 @@ body {
   border-bottom: 1px solid #929339;
 }
 
-#otp-bikestationsWidget {
-  visibility: hidden;
-}
 
 #otp-contactWidget, #otp-aboutWidget {
   display: none;
@@ -588,7 +578,6 @@ p#splash-text span {
 }
 
 @media only screen and (min-width: 768px) {
-
   #branding {
     height: 4em;
   }
@@ -635,9 +624,9 @@ p#splash-text span {
   #otp-tipWidget {
     left: 20px;
     right: auto;
-    bottom: 2.5em;
+    bottom: 2em;
     height: 1.5em;
-    font-size: 1em;
+    font-size: 1.25em;
     line-height: 1.5;
     padding-right: 1em;
     padding-left: 1em;
@@ -645,46 +634,47 @@ p#splash-text span {
   }
   
   #otp-bikestationsWidget {
-    visibility: visible;
+  	left: auto;
   	right: 10px;
-  	bottom: 2.5em;
-  	text-align: center;
-  	background: transparent;
+  	bottom: 2em;
+  	height: 6.3em;
+  	font-size: 1em;
+  	line-height: 1.5;
   	padding: 0;
   	border: 0;
-  	   -moz-box-shadow: none;
-  	-webkit-box-shadow: none;
-  	        box-shadow: none;
+  	width: 40em;
+  	white-space: normal;
+  	text-align: center;
+  	font-size: 90%;
+  	opacity:0.8;
+  	filter:alpha(opacity=80);
   }
   
   #otp-bikestationsWidget .button {
   	cursor: pointer;
-	  background:#ccc;
-	  color: #111;
-	  margin: 0.5em 0 0;
-	  padding: 0.5em 1em;
-	  -webkit-border-radius: 3px;
-	     -moz-border-radius: 3px;
-	          border-radius: 3px;
-       -moz-box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
-	  -webkit-box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
-	          box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+	background:#ccc;
+	width: 19em;
+	border: 1px solid #acacac;
+	color: #111;
+	padding: 0.5em 0.2em .3em .2em;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #9a9a9a;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+	-webkit-box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+	box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
   }
   
   #otp-bikestationsWidget .button.left {
-  	background-color: #3fc100;
-  	background-color: rgba(153,204,153, 0.8);
-	  border: 1px solid #51be1b;
-	  border-top: 1px solid #7fca5b;
-	  border-bottom: 1px solid #70995c;
+	float:left;
+	background:rgba(153,204,153, 0.85);
   }
   
   #otp-bikestationsWidget .button.right {
-  	background-color: #fd7474;
-	  background-color: rgba(255,159,159, 0.8);
-	  border: 1px solid #ff9191;
-	  border-top: 1px solid #fea6a6;
-	  border-bottom: 1px solid #e68b8b;
+  	float:right;
+	background:rgba(255,159,159, 0.85);
   }
 
   #otp-contactWidget, #otp-aboutWidget {
@@ -767,23 +757,9 @@ p#splash-text span {
     top: 7.5em;
     font-size: 1.2em;
   }
-
 }
 
 @media only screen and (min-width: 1024px) {
-
-  #otp-tipWidget {
-    bottom: 2em;
-    font-size: 1.25em;
-  }
-
-  #otp-bikestationsWidget .button {
-	  width: 16em;
-  	float: left;
-  	margin: 0 0 0 0.5em;
-  }
-  
-
 }
 
 @media only screen and (min-width: 1300px) {
