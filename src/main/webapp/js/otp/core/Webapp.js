@@ -90,7 +90,7 @@ otp.core.Webapp = {
     	
         var shareRoute = $("#share-route");
         shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/#"+this.currentHash);
-        addthis.toolbox(".addthis_toolbox");
+        addthis.toolbox(".addthis_toolbox_route");
     },
     
     
