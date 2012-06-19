@@ -728,11 +728,17 @@ p#splash-text span {
   h6.drag-to-change {
     display: block;
   }
+  
   #otp-tsw-bikeTriangle {
     display: block;
     height: 100px;
     margin: 0 0 1em;
   }
+  
+  #otp-tsw-bikeTypeRow {
+    margin: .5em 0;
+  }
+  
   ul.otp-stats {
     margin: 0 0 0.25em;
   }

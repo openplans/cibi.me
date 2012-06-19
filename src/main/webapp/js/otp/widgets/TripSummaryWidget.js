@@ -35,6 +35,12 @@ otp.widgets.TripSummaryWidget =
         content += '<hr />';
         content += '<h6 class="drag-to-change">Drag to Change Trip:</h6>';
         content += '<div id="otp-tsw-bikeTriangle"></div>';
+
+        content += '<div id="otp-tsw-bikeTypeRow">Use: ';
+        content += '<input id="myOwnBikeRBtn" type="radio" name="bikeType" value="my_bike"> My Own Bike&nbsp;&nbsp;';
+        content += '<input id="sharedBikeRBtn" type="radio" name="bikeType" value="shared_bike" checked> A Shared Bike';
+        content += '</div>';
+        
         content += '<hr />';
         content += '<h6 id="share-route-header">Share this Trip:</h6>';
         content += '<div id="share-route"></div>';
@@ -56,6 +62,9 @@ otp.widgets.TripSummaryWidget =
         this.bikeTriangle.onChanged = planTripCallback; /*function() {
             console.log('worked!');
         };*/
+        
+        document.getElementById('myOwnBikeRBtn').onclick = planTripCallback;
+        document.getElementById('sharedBikeRBtn').onclick = planTripCallback;
     },
     
     updateMetrics : function(itin) {

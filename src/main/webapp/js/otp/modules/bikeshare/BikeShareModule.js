@@ -212,10 +212,12 @@ otp.modules.bikeshare.BikeShareModule =
         	data_ = existingData;
         else
         {
+            var mode = $('input:radio[name=bikeType]:checked').val() == "shared_bike" ? 'WALK,BICYCLE' : 'BICYCLE';
+            console.log(mode);
        	    data_ = {             
                 fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
-                mode: 'WALK,BICYCLE',
+                mode: mode,
                 optimize: 'TRIANGLE',
                 triangleTimeFactor: this_.triangleTimeFactor,
                 triangleSlopeFactor: this_.triangleSlopeFactor,
