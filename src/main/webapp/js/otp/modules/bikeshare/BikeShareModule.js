@@ -390,7 +390,8 @@ otp.modules.bikeshare.BikeShareModule =
     constructStationInfo : function(title, station) {
         var info = "<strong>"+title+"</strong><br/>";
         info += '<strong>Station:</strong> '+station.name+'<br/>';
-        info += '<strong>Bikes/Docks Available:</strong> '+station.bikesAvailable+'<br/>';
+        info += '<strong>Bikes Available:</strong> '+station.bikesAvailable+'<br/>';
+        info += '<strong>Docks Available:</strong> '+station.spacesAvailable+'<br/>';
         return info;
     },
     
