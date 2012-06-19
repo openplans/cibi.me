@@ -205,22 +205,24 @@ otp.modules.bikeshare.BikeShareModule =
         	data_ = existingData;
         else
         {
-       	 data_ = {             
-               fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
-               toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
-               mode: 'WALK,BICYCLE',
-               optimize: 'TRIANGLE',
-               triangleTimeFactor: this_.triangleTimeFactor,
-               triangleSlopeFactor: this_.triangleSlopeFactor,
-               triangleSafetyFactor: this_.triangleSafetyFactor
-           };
-       } 	
+       	    data_ = {             
+                fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
+                toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
+                mode: 'WALK,BICYCLE',
+                optimize: 'TRIANGLE',
+                triangleTimeFactor: this_.triangleTimeFactor,
+                triangleSlopeFactor: this_.triangleSlopeFactor,
+                triangleSafetyFactor: this_.triangleSafetyFactor
+            };
+            if(otp.config.routerId !== undefined) {
+                data_.routerId = otp.config.routerId;
+            }
+        } 	
         
-        
-        
+
         this.currentRequest = $.ajax(url, {
-            data: data_,
-            dataType: 'jsonp',
+            data:       data_,
+            dataType:   'jsonp',
                 
             success: function(data) {
             	
@@ -360,10 +362,14 @@ otp.modules.bikeshare.BikeShareModule =
         //console.log('stations '+start+' '+end);
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/bike_rental';
         var this_ = this;
+        var data_ = { };
+        if(otp.config.routerId !== undefined) {
+            data_ = { routerId : otp.config.routerId }
+        }
+        
         $.ajax(url, {
-            data: {             
-            },
-            dataType: 'jsonp',
+            data:       data_,
+            dataType:   'jsonp',
                 
             success: function(data) {
                 this_.stations = data.stations;

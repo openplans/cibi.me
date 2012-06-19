@@ -8,6 +8,8 @@ if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 otp.config = {
 
     hostname : "http://cibi.me",
+    //routerId : <id>,
+    
     
     // default cloudmade tiles:
     // tileUrl : 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streetis/{z}/{x}/{y}.png',
