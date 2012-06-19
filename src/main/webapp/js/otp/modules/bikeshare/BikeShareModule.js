@@ -212,8 +212,10 @@ otp.modules.bikeshare.BikeShareModule =
         	data_ = existingData;
         else
         {
-            var mode = $('input:radio[name=bikeType]:checked').val() == "shared_bike" ? 'WALK,BICYCLE' : 'BICYCLE';
-            console.log(mode);
+            var bikeType = $('input:radio[name=bikeType]:checked').val();
+            var mode = 'WALK,BICYCLE';
+            if(bikeType !== undefined)
+                mode = (bikeType == "shared_bike") ? 'WALK,BICYCLE' : 'BICYCLE';
        	    data_ = {             
                 fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
@@ -265,7 +267,7 @@ otp.modules.bikeshare.BikeShareModule =
                     this_.resultsWidget.updateMetrics(itin);
                     this_.updateTipStep(3);
 
-                    if (start_and_end_stations !== undefined) {                   
+                    if (start_and_end_stations !== undefined && data_.mode == 'WALK,BICYCLE') {                   
 	               		this_.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
                     }
                     
