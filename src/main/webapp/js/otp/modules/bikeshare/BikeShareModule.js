@@ -15,73 +15,6 @@
 otp.namespace("otp.modules.bikeshare");
 
 
-// TODO: move these to a shared icon libary file
-
-/*var StartFlagIcon = L.Icon.extend({
-    iconUrl: 'images/marker-flag-start-shadowed.png',
-    shadowUrl: null,
-    iconSize: new L.Point(48, 49),
-    iconAnchor: new L.Point(46, 42),
-    popupAnchor: new L.Point(0, -16)
-});
-var startFlag = new StartFlagIcon();
-
-var EndFlagIcon = L.Icon.extend({
-    iconUrl: 'images/marker-flag-end-shadowed.png',
-    shadowUrl: null,
-    iconSize: new L.Point(48, 49),
-    iconAnchor: new L.Point(46, 42),
-    popupAnchor: new L.Point(0, -16)
-});
-var endFlag = new EndFlagIcon();
-
-
-var StartBikeIcon = L.Icon.extend({
-    iconUrl: 'images/marker-bike-green-shadowed.png',
-    shadowUrl: null,
-    iconSize: new L.Point(25, 39),
-    iconAnchor: new L.Point(12, 36),
-    popupAnchor: new L.Point(0, -36)
-});
-var startBike = new StartBikeIcon();
-
-var EndBikeIcon = L.Icon.extend({
-    iconUrl: 'images/marker-bike-red-shadowed.png',
-    shadowUrl: null,
-    iconSize: new L.Point(25, 39),
-    iconAnchor: new L.Point(12, 36),
-    popupAnchor: new L.Point(0, -36)
-});
-var endBike = new EndBikeIcon();
-
-var SmallBlueIcon = L.Icon.extend({
-    iconUrl: 'images/marker-blue-sm.png',
-    shadowUrl: null,
-    iconSize: new L.Point(9, 16),
-    iconAnchor: new L.Point(5, 16),
-    popupAnchor: new L.Point(0, -16)
-});
-var smallBlue = new SmallBlueIcon();
-
-var MediumBlueIcon = L.Icon.extend({
-    iconUrl: 'images/marker-blue-med.png',
-    shadowUrl: null,
-    iconSize: new L.Point(13, 23),
-    iconAnchor: new L.Point(7, 23),
-    popupAnchor: new L.Point(0, -23)
-});
-var mediumBlue = new MediumBlueIcon();
-
-var BlueNubIcon = L.Icon.extend({
-    iconUrl: 'images/marker-blue-nub.png',
-    shadowUrl: null,
-    iconSize: new L.Point(11, 8),
-    iconAnchor: new L.Point(5, 8),
-    popupAnchor: new L.Point(0, -8)
-});
-var blueNub = new BlueNubIcon();
-*/
-
 otp.modules.bikeshare.BikeShareModule = 
     otp.Class(otp.modules.Module, {
 
@@ -364,7 +297,7 @@ otp.modules.bikeshare.BikeShareModule =
             }
             else {
                 this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.blueNub}); 
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.getSmall(station)}); 
                 marker.bindPopup(this.constructStationInfo("BIKE STATION", station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
