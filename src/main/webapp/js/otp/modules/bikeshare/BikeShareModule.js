@@ -17,7 +17,7 @@ otp.namespace("otp.modules.bikeshare");
 
 // TODO: move these to a shared icon libary file
 
-var StartFlagIcon = L.Icon.extend({
+/*var StartFlagIcon = L.Icon.extend({
     iconUrl: 'images/marker-flag-start-shadowed.png',
     shadowUrl: null,
     iconSize: new L.Point(48, 49),
@@ -34,6 +34,7 @@ var EndFlagIcon = L.Icon.extend({
     popupAnchor: new L.Point(0, -16)
 });
 var endFlag = new EndFlagIcon();
+
 
 var StartBikeIcon = L.Icon.extend({
     iconUrl: 'images/marker-bike-green-shadowed.png',
@@ -79,7 +80,7 @@ var BlueNubIcon = L.Icon.extend({
     popupAnchor: new L.Point(0, -8)
 });
 var blueNub = new BlueNubIcon();
-
+*/
 
 otp.modules.bikeshare.BikeShareModule = 
     otp.Class(otp.modules.Module, {
@@ -109,6 +110,8 @@ otp.modules.bikeshare.BikeShareModule =
     
     aboutWidget		: null,
     contactWidget		: null,
+    
+    icons       : null,
                         
     initialize : function(webapp) {
         otp.modules.Module.prototype.initialize.apply(this, arguments);
@@ -116,6 +119,8 @@ otp.modules.bikeshare.BikeShareModule =
         this.mapLayers.push(this.pathLayer);
         this.mapLayers.push(this.markerLayer);
         this.mapLayers.push(this.stationsLayer);
+
+        this.icons = new otp.modules.bikeshare.IconFactory();
        
         this.initStations();
         var this_ = this;
@@ -129,6 +134,7 @@ otp.modules.bikeshare.BikeShareModule =
         
         this.createAboutInfo();
         this.bikestationsWidget = new otp.widgets.BikeStationsWidget('otp-bikestationsWidget');
+        
     },
 
     handleClick : function(event) {
@@ -159,7 +165,7 @@ otp.modules.bikeshare.BikeShareModule =
     
     	 var this_ = this;
     	 
-         var start = new L.Marker(this.startLatLng, {icon: startFlag, draggable: true}); 
+         var start = new L.Marker(this.startLatLng, {icon: this.icons.startFlag, draggable: true}); 
          start.bindPopup('<strong>Start</strong>');
          start.on('dragend', function() {
         	 this_.hideSplash();
@@ -175,7 +181,7 @@ otp.modules.bikeshare.BikeShareModule =
     setEndPoint : function(latlng, update) {
     	 var this_ = this;
     	 
-         var end = new L.Marker(this.endLatLng, {icon: endFlag, draggable: true}); 
+         var end = new L.Marker(this.endLatLng, {icon: this.icons.endFlag, draggable: true}); 
          end.bindPopup('<strong>Destination</strong>');
          this.markerLayer.addLayer(end);
          end.on('dragend', function() {
@@ -311,7 +317,7 @@ otp.modules.bikeshare.BikeShareModule =
     
     getStations : function(start, end) {
         //console.log('stations '+start+' '+end);
-        var tol = .0001, distTol = .005;
+        var tol = .0001, distTol = .01;
         var start_and_end_stations = [];
         
         for(var i=0; i<this.stations.length; i++) {
@@ -319,7 +325,7 @@ otp.modules.bikeshare.BikeShareModule =
             if(Math.abs(station.x - start.lng) < tol && Math.abs(station.y - start.lat) < tol) {
                 // start station
                 this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: startBike});
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.startBike});
                 marker.bindPopup(this.constructStationInfo("PICK UP BIKE", station));
                 this.stationsLayer.addLayer(marker);
                 station.marker = marker;
@@ -330,7 +336,7 @@ otp.modules.bikeshare.BikeShareModule =
                 // start-adjacent station
                 this.stationsLayer.removeLayer(station.marker);
                               
-                var icon = this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol/2 ?  mediumBlue : smallBlue;
+                var icon = this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol/2 ?  this.icons.getLarge(station) : this.icons.getMedium(station);
                 var marker = new L.Marker(station.marker.getLatLng(), { icon: icon }); 
                 marker.bindPopup(this.constructStationInfo("ALTERNATE PICKUP", station));
                 this.stationsLayer.addLayer(marker);                        
@@ -339,7 +345,7 @@ otp.modules.bikeshare.BikeShareModule =
             else if(Math.abs(station.x - end.lng) < tol && Math.abs(station.y - end.lat) < tol) {
                 // end station
                 this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: endBike});
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.endBike});
                 marker.bindPopup(this.constructStationInfo("DROP OFF BIKE", station));
                 this.stationsLayer.addLayer(marker);
                 station.marker = marker;
@@ -350,7 +356,7 @@ otp.modules.bikeshare.BikeShareModule =
                 // end-adjacent station
                 this.stationsLayer.removeLayer(station.marker);                        
 
-                var icon = this.distance(station.x, station.y, this.endLatLng.lng, this.endLatLng.lat) < distTol/2 ?  mediumBlue : smallBlue;
+                var icon = this.distance(station.x, station.y, this.endLatLng.lng, this.endLatLng.lat) < distTol/2 ?  this.icons.getLarge(station) : this.icons.getMedium(station);
                 var marker = new L.Marker(station.marker.getLatLng(), {icon: icon}); 
                 marker.bindPopup(this.constructStationInfo("ALTERNATE DROP OFF", station));
                 this.stationsLayer.addLayer(marker);                        
@@ -358,7 +364,7 @@ otp.modules.bikeshare.BikeShareModule =
             }
             else {
                 this.stationsLayer.removeLayer(station.marker);                        
-                var marker = new L.Marker(station.marker.getLatLng(), {icon: blueNub}); 
+                var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.blueNub}); 
                 marker.bindPopup(this.constructStationInfo("BIKE STATION", station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
@@ -376,7 +382,7 @@ otp.modules.bikeshare.BikeShareModule =
             this_.stations = stations;
             for(var i=0; i<this_.stations.length; i++) {
                 var station = this_.stations[i].BikeRentalStation;
-                var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: blueNub}); 
+                var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: this_.icons.getSmall(station)}); 
                 marker.bindPopup(this_.constructStationInfo("BIKE STATION", station));
                 this_.stationsLayer.addLayer(marker)
                 station.marker = marker;
