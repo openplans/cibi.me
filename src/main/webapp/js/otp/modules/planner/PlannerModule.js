@@ -31,6 +31,8 @@ otp.modules.planner.PlannerModule =
     tipStep         : 0,
     
     currentRequest  : null,
+    currentHash : null,
+
 
     triangleTimeFactor     : 0.333,
     triangleSlopeFactor    : 0.333,
@@ -206,8 +208,8 @@ otp.modules.planner.PlannerModule =
     
     savePlan : function(data){
     	
-    	var data_ = {data: data, startLat: this.startLatLng.lat, startLon: this.startLatLng.lng, endLat: this.endLatLng.lat, endLon: this.endLatLng.lng, parrent : this.webapp.currentHash };
-    	otp.util.DataStorage.store(data_, this.webapp );
+    	var data_ = {data: data, startLat: this.startLatLng.lat, startLon: this.startLatLng.lng, endLat: this.endLatLng.lat, endLon: this.endLatLng.lng, parrent : this.currentHash };
+    	otp.util.DataStorage.store(data_, this );
     },
     
     restorePlan : function(data){
@@ -227,6 +229,18 @@ otp.modules.planner.PlannerModule =
         if(mode === "WALK") return '#444';
         if(mode === "BICYCLE") return '#0073e5';
         return '#aaa';
+    },
+    
+    newTrip : function(hash) {
+        console.log("newTrip");
+    	
+    	this.currentHash = hash;	
+    	
+    	window.location.hash = this.currentHash;
+    	
+        var shareRoute = $("#share-route");
+        shareRoute.find(".addthis_toolbox").attr("addthis:url", otp.config.siteURL+"/#"+this.currentHash);
+        addthis.toolbox(".addthis_toolbox_route");
     },
     
     distance : function(x1, y1, x2, y2) {

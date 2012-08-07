@@ -22,11 +22,10 @@ otp.core.Webapp = otp.Class({
     moduleMenu : null,
     
     activeModule : null,
-    currentHash : null,
     
     // TODO: generalize
     aboutWidget		: null,
-    contactWidget		: null,    
+    contactWidget	: null,    
     
     initialize : function(config) {
         otp.configure(this, config);
@@ -76,7 +75,7 @@ otp.core.Webapp = otp.Class({
 		this.createAboutInfo();
 		        
 		if(window.location.hash !== "")
-			otp.util.DataStorage.retreive(window.location.hash.replace("#", ""), this);
+			otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
 			
 		
     },
@@ -168,17 +167,7 @@ otp.core.Webapp = otp.Class({
     	this.map.lmap.fitBounds(bounds);
     },
         
-    newTrip : function(hash) {
-    	
-    	this.currentHash = hash;	
-    	
-    	window.location.hash = this.currentHash;
-    	
-        var shareRoute = $("#share-route");
-        shareRoute.find(".addthis_toolbox").attr("addthis:url", otp.config.hostname+"/#"+this.currentHash);
-        addthis.toolbox(".addthis_toolbox_route");
-    },
-    
+   
     mapClicked : function(event) {
         $(this.moduleMenu).hide();
         this.hideSplash();

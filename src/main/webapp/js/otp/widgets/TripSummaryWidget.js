@@ -55,8 +55,8 @@ otp.widgets.TripSummaryWidget =
         // give this addthis toolbox a unique class so we can activate it alone in Webapp.js
         addthisElement.addClass("addthis_toolbox_route");
         addthisElement.appendTo("#share-route");
-        addthisElement.attr("addthis:title", "Check out my #CiBi trip:");
-        addthisElement.attr("addthis:description", "Cibi.me is built by OpenPlans and allows users to plan trips using NYC's new bike share program.");
+        addthisElement.attr("addthis:title", "Check out my trip planned on "+otp.config.siteName+":");
+        addthisElement.attr("addthis:description", otp.config.siteDescription);
         
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
         this.bikeTriangle.onChanged = planTripCallback; /*function() {

@@ -20,39 +20,31 @@ otp.namespace("otp.util");
 
 otp.util.DataStorage = {
 	
-    store : function(data, webapp) {
+    store : function(data, module) {
     
 		var this_ = this;
-		var webapp_ = webapp;
 	
 		$.ajax(otp.config.dataStorageUrl , {dataType: 'jsonp', data: {data: JSON.stringify(data)},
 		
 			success: function(data) { 
-			
-				webapp_.newTrip(data.id);
-		
+				module.newTrip(data.id);
 			}
 		
 		});
 	
     },
     
-    retreive : function(id, webapp) {
+    retrieve : function(id, module) {
         
 		var this_ = this;
-		var webapp_ = webapp;
 	
 		$.ajax(otp.config.dataStorageUrl , {dataType: 'jsonp', data: {id: id},
 		
 			success: function(data) {
-				
 				if(data)
-					webapp_.restoreTrip(data);
-		
+					module.restorePlan(data);
 			}
-		
 		});
-	
     },
 
     CLASS_NAME: "otp.util.DataStorage"
