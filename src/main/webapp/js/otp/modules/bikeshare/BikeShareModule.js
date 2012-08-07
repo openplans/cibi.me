@@ -64,14 +64,17 @@ otp.modules.bikeshare.BikeShareModule =
             }
         }
 
-        if (start_and_end_stations !== undefined && data.mode == 'WALK,BICYCLE') {                   
-       		this.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
+        if (start_and_end_stations !== undefined && data.mode == 'WALK,BICYCLE') {
+            if(start_and_end_stations['start'] != null && start_and_end_stations['end'] != null)
+           		this.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
+           	else
+           	    this.bikestationsWidget.hide();
         }
     },
     
     
     getStations : function(start, end) {
-        var tol = .0001, distTol = .01;
+        var tol = .001, distTol = .01;
         var start_and_end_stations = [];
         
         for(var i=0; i<this.stations.length; i++) {
