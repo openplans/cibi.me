@@ -39,7 +39,7 @@ otp.modules.bikeshare.BikeShareModule =
 
         var this_ = this;
         setInterval(function() {
-            this_.updateStations();
+            this_.reloadStations();
         }, 30000);
        
     },
@@ -51,29 +51,40 @@ otp.modules.bikeshare.BikeShareModule =
             polyline.setStyle({ color : this.getModeColor(itin.legs[i].mode), weight: 8});
             this.pathLayer.addLayer(polyline);
             if(itin.legs[i].mode === 'BICYCLE') {
-            	polyline.bindPopup('Your '+otp.config.bikeshareName+' route!')
-                var start_and_end_stations = this.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
+                if(data.mode === 'WALK,BICYCLE') { // bikeshare trip
+                	polyline.bindPopup('Your '+otp.config.bikeshareName+' route!');
+                    var start_and_end_stations = this.processStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
+                }
+                else { // "my own bike" trip
+                	polyline.bindPopup('Your bike route');
+                	this.resetStations();
+                }	
             }
             
             if(i == 0) {
-            	polyline.bindPopup('Walk to the '+otp.config.bikeshareName+' dock.')
+            	polyline.bindPopup('Walk to the '+otp.config.bikeshareName+' dock.');
             }
             
             if(i == 2) {
-            	polyline.bindPopup('Walk from the '+otp.config.bikeshareName+' dock to your destination.')
+            	polyline.bindPopup('Walk from the '+otp.config.bikeshareName+' dock to your destination.');
             }
         }
 
-        if (start_and_end_stations !== undefined && data.mode == 'WALK,BICYCLE') {
-            if(start_and_end_stations['start'] != null && start_and_end_stations['end'] != null)
-           		this.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
+        if(start_and_end_stations !== undefined && data.mode === 'WALK,BICYCLE') {
+            if(start_and_end_stations['start'] !== null && start_and_end_stations['end'] !== null) {
+           	    this.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
+           	    this.bikestationsWidget.show();
+           	}
            	else
            	    this.bikestationsWidget.hide();
         }
+       	else {
+       	    this.bikestationsWidget.hide();
+       	}
     },
     
     
-    getStations : function(start, end) {
+    processStations : function(start, end) {
         var tol = .001, distTol = .01;
         var start_and_end_stations = [];
         
@@ -131,7 +142,20 @@ otp.modules.bikeshare.BikeShareModule =
         return start_and_end_stations;
     },
     
-    
+    resetStations : function(start, end) {
+        var tol = .001, distTol = .01;
+        var start_and_end_stations = [];
+        
+        for(var i=0; i<this.stations.length; i++) {
+            var station = this.stations[i].BikeRentalStation;
+            this.stationsLayer.removeLayer(station.marker);                        
+            var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.getSmall(station)}); 
+            marker.bindPopup(this.constructStationInfo("BIKE STATION", station));
+            this.stationsLayer.addLayer(marker);                        
+            station.marker = marker;
+        }
+    },
+
     initStations : function() {
         //console.log('init stations');
         var this_ = this;
@@ -149,7 +173,7 @@ otp.modules.bikeshare.BikeShareModule =
         });
     },
 
-    updateStations : function(stations) {
+    reloadStations : function(stations) {
         //console.log('update stations');
         var this_ = this;
         this.downloadStationData(function(newStations) {

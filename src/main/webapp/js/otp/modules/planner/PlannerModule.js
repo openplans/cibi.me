@@ -232,8 +232,6 @@ otp.modules.planner.PlannerModule =
     },
     
     newTrip : function(hash) {
-        console.log("newTrip");
-    	
     	this.currentHash = hash;	
     	
     	window.location.hash = this.currentHash;

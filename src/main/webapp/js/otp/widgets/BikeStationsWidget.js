@@ -67,6 +67,7 @@ otp.widgets.BikeStationsWidget =
         	end_marker.openPopup();
         });
         
+        
 	},
 
 	CLASS_NAME : "otp.widgets.BikeStationsWidget"
