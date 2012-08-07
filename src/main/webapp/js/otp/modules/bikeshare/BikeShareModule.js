@@ -16,240 +16,61 @@ otp.namespace("otp.modules.bikeshare");
 
 
 otp.modules.bikeshare.BikeShareModule = 
-    otp.Class(otp.modules.Module, {
+    otp.Class(otp.modules.planner.PlannerModule, {
+    
+    moduleName  : "Bike Share Planner",
 
-    moduleName  : "Bike Share",
-        
-    startLatLng : null,
-    endLatLng   : null,
-    
-    stations    : null,
-    
+    stations    : null,    
     stationLookup :   { },
-    
-    markerLayer     : new L.LayerGroup(),
-    pathLayer       : new L.LayerGroup(),
-    stationsLayer   : new L.LayerGroup(),
-    
-    resultsWidget   : null,
-    tipWidget       : null,
-    tipStep         : 0,
-    
-    currentRequest  : null,
-
-    triangleTimeFactor     : 0.333,
-    triangleSlopeFactor    : 0.333,
-    triangleSafetyFactor   : 0.334,
-    
-    aboutWidget		: null,
-    contactWidget		: null,
-    
-    icons       : null,
-                        
+    stationsLayer   : null,
+     
     initialize : function(webapp) {
-        otp.modules.Module.prototype.initialize.apply(this, arguments);
-                
-        this.mapLayers.push(this.pathLayer);
-        this.mapLayers.push(this.markerLayer);
-        this.mapLayers.push(this.stationsLayer);
+        otp.modules.planner.PlannerModule.prototype.initialize.apply(this, arguments);
+    },
+    
+    activate : function() {
+        if(this.activated) return;
+        otp.modules.planner.PlannerModule.prototype.activate.apply(this);
+        
+        this.stationsLayer = new L.LayerGroup();
+        this.addLayer("Bike Stations", this.stationsLayer);
 
-        this.icons = new otp.modules.bikeshare.IconFactory();
-       
         this.initStations();
+
         var this_ = this;
         setInterval(function() {
             this_.updateStations();
         }, 30000);
-        
-        
-        this.tipWidget = this.createWidget("otp-tipWidget", "");
-        this.updateTipStep(1);
-        
-        this.createAboutInfo();
-        this.bikestationsWidget = new otp.widgets.BikeStationsWidget('otp-bikestationsWidget');
-        
-    },
-
-    handleClick : function(event) {
-        //console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
        
-    	this.hideSplash();
-    	
-        if(this.startLatLng == null) {
-        	this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-        	this.setStartPoint(this.startLatLng, true);
-        }
-        
-        else if(this.endLatLng == null) {
-        	this.endLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
-        	this.setEndPoint(this.endLatLng, true);
-        }
     },
-    
-    trianglePlanTrip : function() {
-        var triParams = this.resultsWidget.bikeTriangle.getFormData();
-        this.triangleTimeFactor = triParams.triangleTimeFactor;
-        this.triangleSlopeFactor = triParams.triangleSlopeFactor;
-        this.triangleSafetyFactor = triParams.triangleSafetyFactor;
-        this.planTrip();
-    },
-    
-    setStartPoint : function(latlng, update) {
-    
-    	 var this_ = this;
-    	 
-         var start = new L.Marker(this.startLatLng, {icon: this.icons.startFlag, draggable: true}); 
-         start.bindPopup('<strong>Start</strong>');
-         start.on('dragend', function() {
-        	 this_.hideSplash();
-             this_.startLatLng = start.getLatLng();
-             this_.planTrip();
-         });
-         this.markerLayer.addLayer(start);
-         
-         if(update)
-        	 this.updateTipStep(2);         
-    },
-    
-    setEndPoint : function(latlng, update) {
-    	 var this_ = this;
-    	 
-         var end = new L.Marker(this.endLatLng, {icon: this.icons.endFlag, draggable: true}); 
-         end.bindPopup('<strong>Destination</strong>');
-         this.markerLayer.addLayer(end);
-         end.on('dragend', function() {
-        	 this_.hideSplash();
-             this_.endLatLng = end.getLatLng();
-             this_.planTrip();
-         });
-         
-         if(update)
-        	 this.planTrip();
-   },
-    
-    
-    planTrip : function(existingData, skipSave) {
-    	
-    	if(this.currentRequest !== null)
-        {
-    		//console.log("Canceling current request.");
-        	this.currentRequest.abort();
-        	this.currentRequest = null;
-        }
-    	
-    	
-    	
-        var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
-        this.pathLayer.clearLayers();        
-        //this.stationsLayer.clearLayers(); 
-        
-        var this_ = this;
-        
-        var data_ = null;
-        
-        if(existingData)
-        	data_ = existingData;
-        else
-        {
-            var bikeType = $('input:radio[name=bikeType]:checked').val();
-            var mode = 'WALK,BICYCLE';
-            if(bikeType !== undefined)
-                mode = (bikeType == "shared_bike") ? 'WALK,BICYCLE' : 'BICYCLE';
-       	    data_ = {             
-                fromPlace: this.startLatLng.lat+','+this.startLatLng.lng,
-                toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
-                mode: mode,
-                optimize: 'TRIANGLE',
-                triangleTimeFactor: this_.triangleTimeFactor,
-                triangleSlopeFactor: this_.triangleSlopeFactor,
-                triangleSafetyFactor: this_.triangleSafetyFactor
-            };
-            if(otp.config.routerId !== undefined) {
-                data_.routerId = otp.config.routerId;
-            }
-        } 	
-        
 
-        this.currentRequest = $.ajax(url, {
-            data:       data_,
-            dataType:   'jsonp',
-                
-            success: function(data) {
-            	
-            	if(this_.resultsWidget == null) {
-                    this_.resultsWidget = new otp.widgets.TripSummaryWidget('otp-mainTSW', function() {
-                        this_.trianglePlanTrip();
-                    });
-                }
-                
-                //console.log(data);
-                var itin = data.plan.itineraries[0];
-                var resultsContent = '';
-                if(data.plan) {
-                    for(var i=0; i < itin.legs.length; i++) {
-                        var polyline = new L.EncodedPolyline(itin.legs[i].legGeometry.points);
-                        polyline.setStyle({ color : this_.getModeColor(itin.legs[i].mode), weight: 8});
-                        this_.pathLayer.addLayer(polyline);
-                        if(itin.legs[i].mode === 'BICYCLE') {
-                        	polyline.bindPopup('Your CiBi route!')
-                            var start_and_end_stations = this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
-                        }
-                        
-                        if(i == 0) {
-                        	polyline.bindPopup('Walk to the CiBi dock.')
-                        }
-                        
-                        if(i == 2) {
-                        	polyline.bindPopup('Walk from the CiBi dock to your destination.')
-                        }
-                    }
-                    this_.resultsWidget.updateMetrics(itin);
-                    this_.updateTipStep(3);
-
-                    if (start_and_end_stations !== undefined && data_.mode == 'WALK,BICYCLE') {                   
-	               		this_.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
-                    }
-                    
-                    if(!skipSave)
-                    	this_.savePlan(data_);
-                    
-                }
-                else {
-                    //this_.resultsWidget.noTripFound();
-                }
+    processItinerary : function(itin, data) {
+        for(var i=0; i < itin.legs.length; i++) {
+            //console.log(itin.legs[i].legGeometry.points);
+            var polyline = new L.Polyline(otp.util.Polyline.decode(itin.legs[i].legGeometry.points));
+            polyline.setStyle({ color : this.getModeColor(itin.legs[i].mode), weight: 8});
+            this.pathLayer.addLayer(polyline);
+            if(itin.legs[i].mode === 'BICYCLE') {
+            	polyline.bindPopup('Your '+otp.config.bikeshareName+' route!')
+                var start_and_end_stations = this.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
             }
-        });
-        
-        //console.log("rw "+this.resultsWidget);
+            
+            if(i == 0) {
+            	polyline.bindPopup('Walk to the '+otp.config.bikeshareName+' dock.')
+            }
+            
+            if(i == 2) {
+            	polyline.bindPopup('Walk from the '+otp.config.bikeshareName+' dock to your destination.')
+            }
+        }
+
+        if (start_and_end_stations !== undefined && data.mode == 'WALK,BICYCLE') {                   
+       		this.bikestationsWidget.setContentAndShow(start_and_end_stations['start'], start_and_end_stations['end']);
+        }
     },
     
-    savePlan : function(data){
-    	
-    	var data_ = {data: data, startLat: this.startLatLng.lat, startLon: this.startLatLng.lng, endLat: this.endLatLng.lat, endLon: this.endLatLng.lng, parrent : this.webapp.currentHash };
-    	otp.util.DataStorage.store(data_, this.webapp );
-    },
-    
-    restorePlan : function(data){
-    	
-    	this.startLatLng = new L.LatLng(data.startLat, data.startLon);
-    	this.setStartPoint(this.startLatLng, false);
-    	
-    	this.endLatLng = new L.LatLng(data.endLat, data.endLon);
-    	this.setEndPoint(this.endLatLng, false);
-    	
-    	this.webapp.setBounds(new L.LatLngBounds([this.startLatLng, this.endLatLng]));
-    	
-    	this.planTrip(data.data, true);
-    },
-        
-    getModeColor : function(mode) {
-        if(mode === "WALK") return '#444';
-        if(mode === "BICYCLE") return '#0073e5';
-        return '#aaa';
-    },
     
     getStations : function(start, end) {
-        //console.log('stations '+start+' '+end);
         var tol = .0001, distTol = .01;
         var start_and_end_stations = [];
         
@@ -315,7 +136,8 @@ otp.modules.bikeshare.BikeShareModule =
             this_.stations = stations;
             for(var i=0; i<this_.stations.length; i++) {
                 var station = this_.stations[i].BikeRentalStation;
-                var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: this_.icons.getSmall(station)}); 
+                var stationIcon = this_.icons.getSmall(station);
+                var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: stationIcon}); 
                 marker.bindPopup(this_.constructStationInfo("BIKE STATION", station));
                 this_.stationsLayer.addLayer(marker)
                 station.marker = marker;
@@ -339,6 +161,7 @@ otp.modules.bikeshare.BikeShareModule =
     },
     
     downloadStationData : function(callback) {
+        //var url = "http://localhost/newui/feed/bixi.xml"
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/bike_rental';
         var this_ = this;
         var data_ = { };
@@ -369,50 +192,6 @@ otp.modules.bikeshare.BikeShareModule =
         info += '<strong>Docks Available:</strong> '+station.spacesAvailable+'<br/>';
         return info;
     },
-    
-    distance : function(x1, y1, x2, y2) {
-        return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
-    },
-    
-    updateTipStep : function(step) {
-        if (step <= this.tipStep) return;
-        if(step == 1) this.tipWidget.setContent("To Start: Click on the Map to Plan a Bikeshare Trip.");
-        if(step == 2) this.tipWidget.setContent("Next: Click Again to Add Your Trip's End Point.");
-        if(step == 3) this.tipWidget.setContent("Tip: Drag the Start or End Flags to Modify Your Trip.");
-        
-        this.tipStep = step;
-    },
-    
-    createAboutInfo : function() {
-    	this.contactWidget = new otp.widgets.InfoWidget("otp-contactWidget");
-
-		var contactCopy = '<p>Comments? Reach us <a href="http://twitter.com/openplans">@OpenPlans</a> or <a href="http://openplans.org/contact">send us a message</a> via our website. </p><p>Read more about <a href="http://openplans.org/?p=9892">cibi.me</a>.</p><p>For more information about NYC&apos;s bike share, visit <a href="http://citibikenyc.com/">Citi Bike</a> and <a href="http://nyc.gov/bikeshare">nyc.gov/bikeshare</a>.</p><p>cibi.me is a project from <a href="http://openplans.org/">OpenPlans</a>.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif" /></a></p>';
-
-		this.contactWidget.setContent("<p class='title'>Contact</p>" + contactCopy);
-		this.contactWidget.hide();
-    	
-        this.aboutWidget = new otp.widgets.InfoWidget("otp-aboutWidget");
-		this.aboutWidget.setContent('<p><strong>Bike share is coming to NYC this summer!</strong> How will you use it to get around?</p><img src="http://www.streetsblog.org/wp-content/uploads/2012/05/IMAG0391.jpg"/><p>CiBi.me is a trip planner for bike share. Pick your start and end points, and we\'ll tell you how to make the trip with a <a href="">Citi Bike</a>. Including, where to pick up a bike and where to drop it off, and alternative docks nearby. When the system is running this summer, cibi.me will check to see if bikes and docks are available before recommending a route. For now, we&apos;re using draft station locations from NYC DOT.</p><p>Soon, Citi Bike will make all sorts of short trips quicker and easier. With CiBi.me, you can start planning those trips today!</p><p>cibi.me is a project from OpenPlans, powered by OpenTripPlanner and using OpenStreetMap data. Proposed station data from <a href="http://nyc.gov/bikeshare/">nyc.gov/bikeshare</a>. Photo of station dock from streetsblog.org.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif" /></a></p>');
-		this.aboutWidget.hide();
-
-    },
-    
-    hideSplash : function() {
-    	$("#splash-text").hide();
-    },
-    
-    showAboutInfo : function() {
-    	this.aboutWidget.show();
-    	this.contactWidget.hide();
-    },
-    
-    showContactInfo : function() {
-    	this.aboutWidget.hide();
-    	this.contactWidget.show();
-    },
-    
+                
     CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"
 });
-
-
-//otp.modules.bikeshare.BikeShareModule = new otp.Class(otp.modules.bikeshare.BikeShareModule);

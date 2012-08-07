@@ -154,6 +154,55 @@ body {
 /* =Header
 -------------------------------------------------------------- */
 
+#otp_topbutton {
+  float: left;
+  width: 90px;
+  height: 42px;
+  background: gray;
+  font-weight: bold;
+  font-size: 30px;
+  padding: 6px 0px 4px 10px;
+  cursor: pointer;
+}
+
+#otp_topbutton:hover {
+  color: cyan;
+}
+
+#otp_toptitle {
+  float: left;
+  width: 300px;
+  height: 42px;
+  font-weight: bold;
+  font-size: 30px;
+  padding: 6px 0px 4px 12px;
+}
+
+
+.otp_moduleMenu {
+  position: fixed;
+  left: 100px;
+  top: 0px;
+  width: 300px;
+  background: white;
+  z-index: 1000;
+  display: none;
+}
+
+.otp_moduleMenuLabel {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 2px;
+  /*border-top: 1px solid gray;*/
+  background: #bbb;
+  cursor: pointer;
+}
+
+.otp_moduleMenuLabel:hover {
+  font-size: 30px;
+}
+
+
 #branding {
   height: 2.25em;
   overflow: visible;
@@ -308,8 +357,8 @@ body {
 
 /* AddThis */
 #branding .addthis_toolbox {
-  margin: 0.5em 0 0 0.5em;
-  float: left;
+  margin: 1.25em 0 0 0;
+  float: right;
   min-width: 163px;
 }
 
@@ -612,10 +661,10 @@ p#splash-text span {
     margin-right: 1em;
   }
 
-  /* AddThis */
+  /* AddThis 
   #branding .addthis_toolbox {
     margin: 1.25em 0 0 1.25em;
-  }
+  }*/
 
   /* Map UI */
   .leaflet-control-zoom {

@@ -24,6 +24,8 @@ otp.config = {
     minZoom : 13,
     maxZoom : 17,
 
+    bikeshareName : "CiBi",
+
     loggerUrl : 'http://cibi.me/cibi/log',
     dataStorageUrl : 'http://cibi.me/cibi/data', 
     

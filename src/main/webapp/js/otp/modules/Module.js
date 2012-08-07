@@ -14,29 +14,43 @@
 
 otp.namespace("otp.modules");
 
-otp.modules.Module = new otp.Class({
+otp.modules.Module = otp.Class({
 
     webapp      : null,
 
     moduleName  : "N/A",
-    mapLayers   : [ ],
-    widgets     : [ ],
+    mapLayers   : null,
+    widgets     : null,
+    
+    activated   : false,
         
     initialize : function(webapp) {
         this.webapp = webapp;
+        this.widgets = [ ];
+        this.mapLayers = { };
     },
     
     handleClick : function(event) {
-        //console.log('unhandled map click at '+event.latlng.lat+", "+event.latlng.lng);
+        console.log('unhandled map click at ('+event.latlng.lat+", "+event.latlng.lng+ "), module="+this.moduleName);
     },
 
+    addLayer : function(name, layer) {
+        this.mapLayers[name] = layer;
+    },
+    
     createWidget : function(id, content) {
         var widget = new otp.widgets.Widget(id); 
         widget.setContent(content);
         this.widgets.push(widget);
         return widget;
     },
-        
+    
+    activate : function() {
+    },
+     
+    deactivate : function() {
+    },
+       
     CLASS_NAME : "otp.modules.Module"
 });
 

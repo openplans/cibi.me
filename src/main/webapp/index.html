@@ -6,7 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html dir="ltr" lang="en-US"> <!--<![endif]-->
 
 <head>
-<title>cibi.me</title>
+<title>OpenTripPlanner</title>
 
 <!--  Mobile Viewport Fix -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -36,13 +36,18 @@
 <script src="js/otp/config.js"></script>
 <script src="js/otp/util/leaflet.js"></script>
 <script src="js/otp/util/Time.js"></script>
+<script src="js/otp/util/Polyline.js"></script>
 <script src="js/otp/util/Logger.js"></script>
 <script src="js/otp/util/DataStorage.js"></script>
 <script src="js/otp/core/Webapp.js"></script>
 <script src="js/otp/core/Map.js"></script>
+
 <script src="js/otp/modules/Module.js"></script>
+<script src="js/otp/modules/planner/PlannerModule.js"></script>
+<script src="js/otp/modules/planner/IconFactory.js"></script>
 <script src="js/otp/modules/bikeshare/BikeShareModule.js"></script>
-<script src="js/otp/modules/bikeshare/IconFactory.js"></script>
+<script src="js/otp/modules/annotations/AnnotationsModule.js"></script>
+
 <script src="js/otp/widgets/Widget.js"></script>
 <script src="js/otp/widgets/TripSummaryWidget.js"></script>
 <script src="js/otp/widgets/BikeTrianglePanel.js"></script>
@@ -68,15 +73,17 @@ $(document).ready(function() {
 <body>
 
 <header id="branding" role="banner" class="clearfix">
+  <div id="otp_topbutton">OTP &raquo;</div>
+  <div id="otp_toptitle"></div>
 
-  <hgroup id="logo">
+  <!--<hgroup id="logo">
     <div class="ribbon">
       <h1 id="site-title"><span><a href="/" title="cibi.me" rel="home">cibi.me</a></span></h1>
       <h2 id="site-description">Where can you bike to?</h2>
     </div>
-  </hgroup>
+  </hgroup>-->
 
-  <p id="splash-text"><span>Bike share is coming to NYC this summer!</span> <span>How will you use it to get around?</span></p>
+  <!--<p id="splash-text"><span>Bike share is coming to NYC this summer!</span> <span>How will you use it to get around?</span></p>-->
 
   <!-- AddThis Button BEGIN -->
   <div class="addthis_toolbox addthis_default_style" 
