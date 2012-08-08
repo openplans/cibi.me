@@ -31,7 +31,7 @@ otp.modules.Module = otp.Class({
     },
     
     handleClick : function(event) {
-        console.log('unhandled map click at ('+event.latlng.lat+", "+event.latlng.lng+ "), module="+this.moduleName);
+        //console.log('unhandled map click at ('+event.latlng.lat+", "+event.latlng.lng+ "), module="+this.moduleName);
     },
 
     addLayer : function(name, layer) {

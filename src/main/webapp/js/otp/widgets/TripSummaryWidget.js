@@ -67,7 +67,7 @@ otp.widgets.TripSummaryWidget =
         
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
         this.bikeTriangle.onChanged = planTripCallback; /*function() {
-            console.log('worked!');
+            //console.log('worked!');
         };*/
         
         document.getElementById('myOwnBikeRBtn').onclick = planTripCallback;

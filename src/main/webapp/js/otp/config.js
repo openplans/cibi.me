@@ -75,7 +75,7 @@ otp.config = {
 try {
     otp.inherit(otp.config, otp.config_defaults);       // step 3a: build the object up
     otp.configure(otp.config, otp.config_defaults);     // step 3b: make sure any / all local changes above get applied
-    console.log("otp.config updated with default items from otp.config_defaults");
+    //console.log("otp.config updated with default items from otp.config_defaults");
 } catch(e) {
-    console.log("ERROR: was unable to run otp.inherit override in config.js - got this exception: " + e);
+    //console.log("ERROR: was unable to run otp.inherit override in config.js - got this exception: " + e);
 }*/

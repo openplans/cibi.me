@@ -46,7 +46,7 @@ otp.modules.bikeshare.BikeShareModule =
 
     processItinerary : function(itin, data) {
         for(var i=0; i < itin.legs.length; i++) {
-            console.log(itin);
+            //console.log(itin);
             var polyline = new L.Polyline(otp.util.Polyline.decode(itin.legs[i].legGeometry.points));
             polyline.setStyle({ color : this.getModeColor(itin.legs[i].mode), weight: 8});
             this.pathLayer.addLayer(polyline);

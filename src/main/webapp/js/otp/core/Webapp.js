@@ -116,7 +116,7 @@ otp.core.Webapp = otp.Class({
     },
     
     setActiveModule : function(module) {
-        console.log("set active module: "+module.moduleName);
+        //console.log("set active module: "+module.moduleName);
         if(this.activeModule != null) {
             this.activeModule.deactivate();
             
