@@ -7,7 +7,44 @@ if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 // step 2: create an object of default otp.config default values (see step3 where we apply this to any existing config)
 otp.config = {
 
-    hostname : "http://cibi.me",
+    hostname : "http://host-24.deployer.opentripplanner.org",
+    routerId : "dc",
+
+    // devseed tiles (DC only) & tile URL function override:
+    tileUrl : 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png',
+    //tileUrl : 'http://{s}.tiles.mapbox.com/v3/openplans.map-g4j0dszr,openplans.nyc_bike_overlay/{z}/{x}/{y}.png',
+    //overlayTileUrl : 'http://{s}.tiles.mapbox.com/v3/intertwine.nyc_bike_overlay/{z}/{x}/{y}.png',
+    tileAttrib : 'Routing powered by <a href="http://opentripplanner.org/">OpenTripPlanner</a>, Map tiles from MapBox (<a href="http://mapbox.com/about/maps/">terms</a>) and OpenStreetMap ',
+    initLatLng : new L.LatLng(38.895111, -77.036667), // DC
+    initZoom : 14,
+    minZoom : 13,
+    maxZoom : 17,
+
+    showModuleSelector: false,
+
+    siteName    : "BikePlanner.org",
+    siteURL     : "http://bikeplanner.org",
+    siteDescription  : "BikePlanner.org is a online trip planner, built by OpenPlans, that lets you plan trips around Washington DC using the Capital Bikeshare system.",
+    
+    bikeshareName : "CaBi",
+
+    loggerUrl : 'http://cibi.me/cibi/log',
+    dataStorageUrl : 'http://cibi.me/cibi/data',
+        
+    infoWidgets: [
+        {
+            title: 'About',
+            styleId: 'otp-aboutWidget',
+            content: '<p>Bikeplanner.org is a trip planner for bike and bikeshare. Right now it works in Washington, DC. But because the project is built on open source software and open data it can be adapted to work in any community.</p><p> Know a (legal) shortcut? Or see a missing bike lane? You can help make it better by improving the OpenStreetMap data that powers this site -- visit <a href="http://www.openstreetmap.org/">openstreetmap.org</a> to start editing! (Stay tuned for video a tutorial.)</p><p>To use the planner, pick your start and end points, and we\'ll tell you how to make the trip with a <a href="http://capitalbikeshare.com/">CaBi</a>. Including, where to pick up a bike and where to drop it off, and alternative docks nearby. When the system system checks to see if bikes and docks are available before recommending a route. Or if you want to use your own bike, we\'ll help with that too!</p><p>Bikeplanner.org is a project from <a href="http://openplans.org/">OpenPlans</a> in collaboration with <a href="http://mobilitylab.org/">Mobility Lab</a>, <a href="http://www.bikearlington.com/">Bike Arlington</a>, and <a href="http://mapbox.com">MapBox</a>. It\'s powered by <a href="http://opentripplanner.com/">OpenTripPlanner</a> and uses <a href="http://www.openstreetmap.org/">OpenStreetMap</a> data.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif"></a></p></div>',
+        },
+        {
+            title: 'Contact',
+            styleId: 'otp-contactWidget',
+            content: '<p>Comments? Reach us <a href="https://twitter.com/openplans">@OpenPlans</a> or send us a message via our <a href="http://openplans.org/">website</a>.</p><p>bikeplanner.org is a project from <a href="http://openplans.org/">OpenPlans</a> in collaboration with <a href="http://mobilitylab.org/">Mobility Lab</a>, <a href="http://www.bikearlington.com/">Bike Arlington</a>, and <a href="http://mapbox.com">MapBox</a>.</p>'
+        },           
+    ],
+    
+    /*hostname : "http://cibi.me",
     //routerId : <id>,
     
     
@@ -27,7 +64,7 @@ otp.config = {
     bikeshareName : "CiBi",
 
     loggerUrl : 'http://cibi.me/cibi/log',
-    dataStorageUrl : 'http://cibi.me/cibi/data', 
+    dataStorageUrl : 'http://cibi.me/cibi/data', */
     
     CLASS_NAME : "otp.config"
 };

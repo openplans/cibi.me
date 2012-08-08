@@ -27,6 +27,8 @@ otp.core.Webapp = otp.Class({
     aboutWidget		: null,
     contactWidget	: null,    
     
+    infoWidgets     : { },
+    
     initialize : function(config) {
         otp.configure(this, config);
 
@@ -67,6 +69,30 @@ otp.core.Webapp = otp.Class({
         this.addModule(new otp.modules.annotations.AnnotationsModule(this), false);
         this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
 
+        // Init info widgets
+        
+        if(otp.config.infoWidgets !== undefined && otp.config.infoWidgets.length > 0) {
+            var nav = $('<nav id="main-menu" role="article">').appendTo('#branding');
+            var ul = $('<ul>').appendTo(nav);
+            
+                    
+            //var about = $("<li><a href='#'>About</a></li>").appendTo(ul);
+            for(var i=0; i<otp.config.infoWidgets.length; i++) {
+    
+                var id = "infoWidget-"+i;            
+    
+                this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId);
+                this.infoWidgets[id].setContent(otp.config.infoWidgets[i].content);
+                this.infoWidgets[id].hide();
+                
+                $("<li id='"+id+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                    e.preventDefault();
+                    this_.infoWidgets[this.id].show();
+                });
+            
+            }
+        }
+
         // Init AddThis
         addthis_config = {
 		     pubid: "ra-4fb549f217255a7d",
@@ -74,9 +100,6 @@ otp.core.Webapp = otp.Class({
 		};
 		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb549f217255a7d");
 		
-		this.createAboutInfo();
-
-        this.setLinks();
 		        
 		if(window.location.hash !== "")
 			otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
@@ -120,49 +143,12 @@ otp.core.Webapp = otp.Class({
     	this.activeModule.restorePlan(data);
    
     },
-    
-    setLinks : function() {
-    	var aboutLink = $("#about_link");
-    	var contactLink = $("#contact_link");
-
-        var this_ = this;
-           	    	
-    	aboutLink.click(function(e) {
-        	e.preventDefault("about");
-        	this_.showAboutInfo();
-        });	
-    	contactLink.click(function(e) {
-        	e.preventDefault();
-        	this_.showContactInfo();
-        });
-    },
-    
-    createAboutInfo : function() {
-    	this.contactWidget = new otp.widgets.InfoWidget("otp-contactWidget");
-
-		var contactCopy = '<p>Comments? Reach us <a href="http://twitter.com/openplans">@OpenPlans</a> or <a href="http://openplans.org/contact">send us a message</a> via our website. </p><p>Read more about <a href="http://openplans.org/?p=9892">cibi.me</a>.</p><p>For more information about NYC&apos;s bike share, visit <a href="http://citibikenyc.com/">Citi Bike</a> and <a href="http://nyc.gov/bikeshare">nyc.gov/bikeshare</a>.</p><p>cibi.me is a project from <a href="http://openplans.org/">OpenPlans</a>.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif" /></a></p>';
-
-		this.contactWidget.setContent("<p class='title'>Contact</p>" + contactCopy);
-		this.contactWidget.hide();
-    	
-        this.aboutWidget = new otp.widgets.InfoWidget("otp-aboutWidget");
-		this.aboutWidget.setContent('<p><strong>Bike share is coming to NYC this summer!</strong> How will you use it to get around?</p><img src="http://www.streetsblog.org/wp-content/uploads/2012/05/IMAG0391.jpg"/><p>CiBi.me is a trip planner for bike share. Pick your start and end points, and we\'ll tell you how to make the trip with a <a href="">Citi Bike</a>. Including, where to pick up a bike and where to drop it off, and alternative docks nearby. When the system is running this summer, cibi.me will check to see if bikes and docks are available before recommending a route. For now, we&apos;re using draft station locations from NYC DOT.</p><p>Soon, Citi Bike will make all sorts of short trips quicker and easier. With CiBi.me, you can start planning those trips today!</p><p>cibi.me is a project from OpenPlans, powered by OpenTripPlanner and using OpenStreetMap data. Proposed station data from <a href="http://nyc.gov/bikeshare/">nyc.gov/bikeshare</a>. Photo of station dock from streetsblog.org.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif" /></a></p>');
-		this.aboutWidget.hide();
-
-    },
-    
-    showAboutInfo : function() {
-    	this.aboutWidget.show();
-    	this.contactWidget.hide();
-    },
-    
-    showContactInfo : function() {
-    	this.aboutWidget.hide();
-    	this.contactWidget.show();
-    },
-        
+           
     hideSplash : function() {
     	$("#splash-text").hide();
+    	for(widgetId in this.infoWidgets) {
+        	this.infoWidgets[widgetId].hide();
+    	}
     },
         
     setBounds : function(bounds)
