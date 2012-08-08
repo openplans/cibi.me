@@ -29,42 +29,44 @@ otp.core.Webapp = otp.Class({
     
     initialize : function(config) {
         otp.configure(this, config);
+
+        var this_ = this;
         
         this.map = new otp.core.Map(this);        
         
-        this.addModule(new otp.modules.annotations.AnnotationsModule(this), false);
-        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
-        //this.addModule(new otp.modules.planner.PlannerModule(this), true);
         
         // init module selector
         
-        var this_ = this;
+        if(otp.config.showModuleSelector) {
+
+            $("<div id='otp_topbutton'>OTP &raquo;</div>").appendTo('#branding');
+            $("<div id='otp_toptitle'>").appendTo('#branding');
         
-        this.moduleMenu = document.createElement("div");
-        this.moduleMenu.className = "otp_moduleMenu";
-        //this.moduleMenu.innerHTML = "Module Selector"
-        document.body.appendChild(this.moduleMenu);
-        
-        $.each(this.modules, function() {
-            var module = this;
-            var labelDiv = document.createElement("div");
-            labelDiv.className = "otp_moduleMenuLabel";
-            labelDiv.innerHTML = module.moduleName;
-            this_.moduleMenu.appendChild(labelDiv);
-            $(labelDiv).click(function() {
-                $(this_.moduleMenu).hide();
-                this_.setActiveModule(module);
+            /*$(this.moduleMenu).mouseleave(function() {
+                document.body.removeChild(this_.moduleMenu);
+            });*/
+            
+            $('#otp_topbutton').click(function() {
+                if(this_.moduleMenu == null) {
+                    this_.moduleMenu = $('<div class="otp_moduleMenu">').appendTo('body');
+                    
+                    $.each(this_.modules, function() {
+                        var module = this;
+                        var labelDiv = $('<div class="otp_moduleMenuLabel">'+module.moduleName+'</div>').appendTo(this_.moduleMenu);
+                        $(labelDiv).click(function() {
+                            $(this_.moduleMenu).hide();
+                            this_.setActiveModule(module);
+                        });
+                    });
+                }
+                
+                $(this_.moduleMenu).show();
             });
-        });
+        }
         
-        $(this.moduleMenu).mouseleave(function() {
-            //document.body.removeChild(this_.moduleMenu);
-        });        
-        
-        $('#otp_topbutton').click(function() {
-            $(this_.moduleMenu).show();
-        });
-        
+        this.addModule(new otp.modules.annotations.AnnotationsModule(this), false);
+        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
+
         // Init AddThis
         addthis_config = {
 		     pubid: "ra-4fb549f217255a7d",
@@ -73,6 +75,8 @@ otp.core.Webapp = otp.Class({
 		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb549f217255a7d");
 		
 		this.createAboutInfo();
+
+        this.setLinks();
 		        
 		if(window.location.hash !== "")
 			otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
@@ -86,7 +90,6 @@ otp.core.Webapp = otp.Class({
         if(makeActive) {
             this.setActiveModule(module);
         }
-        this.setLinks(module);
     },
     
     setActiveModule : function(module) {
@@ -118,7 +121,7 @@ otp.core.Webapp = otp.Class({
    
     },
     
-    setLinks : function(module) {
+    setLinks : function() {
     	var aboutLink = $("#about_link");
     	var contactLink = $("#contact_link");
 
