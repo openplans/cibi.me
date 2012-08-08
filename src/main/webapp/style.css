@@ -227,15 +227,18 @@ body {
   );
 }
 
+#addthis {
+  display: none;
+}
+
 /* the logo */
 #logo {
-  position: absolute;
-  top: 2.5em;
-  right: 0;
-  margin-top: -15px;
-  overflow: hidden;
-  padding: 10px 0 18px 3.5em;
-  z-index: 2;
+  display: none;
+}
+
+
+
+
 }
 #logo .ribbon {
   position: relative;
@@ -326,10 +329,8 @@ body {
 }
 
 #site-title {
-  font-family: 'Dancing Script', cursive;
-  font-size: 3.25em;
-  margin: -0.2em 20px 0 0;
-  line-height: 1;
+  font-size: 1.25em;
+  margin: .325em .25em;
 }
 #site-title a {
   text-decoration: none;
@@ -656,16 +657,20 @@ p#splash-text span {
   #map {
     top: 4em;
   }
+
   #logo {
-    right: 0;
-    top: 4em;
+    display: block;
+  }
+
+  #addthis {
+    display: block;
   }
   #logo .ribbon {
     height: 6em;
     padding: 0 1.5em 0 2em;
   }
   #site-title {
-    font-size: 4.25em;
+     margin: 1em 0;
   }
   #site-description {
     font-size: 1.25em;
