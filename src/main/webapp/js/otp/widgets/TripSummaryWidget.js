@@ -73,6 +73,19 @@ otp.widgets.TripSummaryWidget =
         document.getElementById('myOwnBikeRBtn').onclick = planTripCallback;
         document.getElementById('sharedBikeRBtn').onclick = planTripCallback;
     },
+
+    restorePlan : function(data) {
+        if(data.mode === "BICYCLE") {
+            $('#myOwnBikeRBtn').attr('checked', 'checked');
+        }
+        if(data.mode === "WALK,BICYCLE") {
+            $('#sharedBikeRBtn').attr('checked', 'checked');
+        }
+        
+        if(data.optimize === 'TRIANGLE') {
+            this.bikeTriangle.setValues(data.triangleTimeFactor, data.triangleSlopeFactor, data.triangleSafetyFactor);
+        }
+    },
     
     updateMetrics : function(itin) {
     	

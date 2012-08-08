@@ -18,18 +18,37 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
 
     div         : null,
     cursor_size : 19,
+    barWidth    : 0,
+    tri_size    : 0,
 
     triangleTimeFactor:    null,
     triangleSlopeFactor:   null,
     triangleSafetyFactor:  null,
 
-    // default is 100% safety 
-    timeFactor:    0.0,
-    slopeFactor:   0.0,
-    safetyFactor:  1.0,
+    // default is even mixture 
+    timeFactor:    0.333,
+    slopeFactor:   0.333,
+    safetyFactor:  0.334,
 
     onChanged   : null,
+    
+    
+    timeBar     : null,
+    topoBar     : null,
+    safetyBar   : null,
 
+    timeLabel   : null,
+    topoLabel   : null,
+    safetyLabel : null,
+    
+    cursorVert  : null,
+    cursorHoriz : null,
+    cursor      : null,
+
+    timeName    : "Quickest",
+    hillName    : "Flattest",
+    safeName    : "Safest",
+    
     initialize : function(divID) {
         this.div = document.getElementById(divID);
         this.render();
@@ -41,6 +60,7 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
    
         var width = $(this.div).width(), height = $(this.div).height();
         var tri_side = 2 * (height - this.cursor_size) * 1/Math.sqrt(3);
+        this.tri_side = tri_side;
         var margin = this.cursor_size/2;	
         
         //console.log()
@@ -61,17 +81,14 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
 
         var safeFill = "#bbe070"; 
         var safeFill2 = "#77b300"; 
-        var safeName = "Safest"; //locale.bikeTriangle.safeName;
         var safeSym  = "S"; //locale.bikeTriangle.safeSym;
 
         var hillFill = "#8cc4ff"; 
         var hillFill2 = "#61a7f2"; 
-        var hillName = "Flattest"; //locale.bikeTriangle.hillName;
         var hillSym  = "F"; //locale.bikeTriangle.hillSym;
         
         var timeFill = "#ffb2b2";
         var timeFill2 = "#f27979";
-        var timeName = "Quickest"; //locale.bikeTriangle.timeName;
         var timeSym  = "Q"; //locale.bikeTriangle.timeSym;
 
         var labelT = canvas.text(margin + tri_side/2, margin+24, timeSym);
@@ -84,37 +101,38 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         labelS.attr({fill:safeFill2, "font-size":labelSize, "font-weight":"bold"});	
 
         var barLeft = margin*2 + tri_side; 
-        var barWidth = width - margin*3 - tri_side;
+        this.barWidth = width - margin*3 - tri_side;
+        var barWidth = this.barWidth;
         var barHeight = (height-margin*4)/3;
 
-        var timeBar = canvas.rect(barLeft, margin, barWidth*.333, barHeight);
-        timeBar.attr({fill:timeFill, stroke:"none"});
+        this.timeBar = canvas.rect(barLeft, margin, barWidth*.333, barHeight);
+        this.timeBar.attr({fill:timeFill, stroke:"none"});
 
-        var topoBar = canvas.rect(barLeft, margin*2+barHeight, barWidth*.333, barHeight);
-        topoBar.attr({fill:hillFill, stroke:"none"});
+        this.topoBar = canvas.rect(barLeft, margin*2+barHeight, barWidth*.333, barHeight);
+        this.topoBar.attr({fill:hillFill, stroke:"none"});
 
-        var safetyBar = canvas.rect(barLeft, margin*3 + barHeight*2, barWidth*.333, barHeight);
-        safetyBar.attr({fill:safeFill, stroke:"none"});
+        this.safetyBar = canvas.rect(barLeft, margin*3 + barHeight*2, barWidth*.333, barHeight);
+        this.safetyBar.attr({fill:safeFill, stroke:"none"});
 
-        var timeLabel = canvas.text(barLeft + barWidth/2, margin+barHeight/2, timeName + ": 33%");
-        timeLabel.attr({"font-size":"15px", opacity:1});
+        this.timeLabel = canvas.text(barLeft + barWidth/2, margin+barHeight/2, this.timeName + ": 33%");
+        this.timeLabel.attr({"font-size":"15px", opacity:1});
 
-        var topoLabel = canvas.text(barLeft + barWidth/2, margin*2+barHeight+barHeight/2,  hillName + ": 33%");
-        topoLabel.attr({"font-size":"15px", opacity:1});
+        this.topoLabel = canvas.text(barLeft + barWidth/2, margin*2+barHeight+barHeight/2,  this.hillName + ": 33%");
+        this.topoLabel.attr({"font-size":"15px", opacity:1});
 
-        var safetyLabel = canvas.text(barLeft + barWidth/2, margin*3+barHeight*2+barHeight/2, safeName + ": 33%");
-        safetyLabel.attr({"font-size":"15px", opacity:1});
+        this.safetyLabel = canvas.text(barLeft + barWidth/2, margin*3+barHeight*2+barHeight/2, this.safeName + ": 33%");
+        this.safetyLabel.attr({"font-size":"15px", opacity:1});
 
         var cx = margin+tri_side/2, cy = height-margin-(1/Math.sqrt(3))*(tri_side/2);
-        var cursorVert = canvas.rect(cx-.5, cy-this.cursor_size/2-2, 1, this.cursor_size+4).attr({
+        this.cursorVert = canvas.rect(cx-.5, cy-this.cursor_size/2-2, 1, this.cursor_size+4).attr({
             fill: "rgb(0,0,0)",
             stroke: "none"
         });
-        var cursorHoriz = canvas.rect(cx-this.cursor_size/2-2, cy-.5, this.cursor_size+4, 1).attr({
+        this.cursorHoriz = canvas.rect(cx-this.cursor_size/2-2, cy-.5, this.cursor_size+4, 1).attr({
             fill: "rgb(0,0,0)",
             stroke: "none"
         });
-        var cursor = canvas.circle(cx, cy, this.cursor_size/2).attr({
+        this.cursor = canvas.circle(cx, cy, this.cursor_size/2).attr({
             fill: "rgb(128,128,128)",
             stroke: "none",
             opacity: 0.25
@@ -128,9 +146,9 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
             // storing original coordinates
             this.ox = this.attr("cx");
             this.oy = this.attr("cy");
-            timeBar.animate({opacity: .25}, animTime);
-            topoBar.animateWith(timeBar, {opacity: .25}, animTime);
-            safetyBar.animateWith(timeBar, {opacity: .25}, animTime);
+            thisBT.timeBar.animate({opacity: .25}, animTime);
+            thisBT.topoBar.animateWith(thisBT.timeBar, {opacity: .25}, animTime);
+            thisBT.safetyBar.animateWith(thisBT.timeBar, {opacity: .25}, animTime);
             //timeLabel.animate({opacity: 1}, animTime);
             //topoLabel.animate({opacity: 1}, animTime);
             //safetyLabel.animate({opacity: 1}, animTime);
@@ -148,22 +166,22 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
             topo = thisBT.distToSegment(nx, ny, margin+tri_side/2, margin, margin+tri_side, height-margin)/(height-2*margin);
             safety = 1- time - topo;
 
-            timeBar.attr({width: barWidth*time});
-            topoBar.attr({width: barWidth*topo});
-            safetyBar.attr({width: barWidth*safety});
-            timeLabel.attr("text",   timeName + ": "+Math.round(time*100)+"%");
-            topoLabel.attr("text",   hillName + ": " +Math.round(topo*100)+"%");
-            safetyLabel.attr("text", safeName + ": " +Math.round(safety*100)+"%");
+            thisBT.timeBar.attr({width: barWidth*time});
+            thisBT.topoBar.attr({width: barWidth*topo});
+            thisBT.safetyBar.attr({width: barWidth*safety});
+            thisBT.timeLabel.attr("text", thisBT.timeName + ": "+Math.round(time*100)+"%");
+            thisBT.topoLabel.attr("text", thisBT.hillName + ": " +Math.round(topo*100)+"%");
+            thisBT.safetyLabel.attr("text", thisBT.safeName + ": " +Math.round(safety*100)+"%");
     
             this.attr({cx: nx, cy: ny});
-            cursorVert.attr({x: nx-.5, y: ny-thisBT.cursor_size/2-2});
-            cursorHoriz.attr({x: nx-thisBT.cursor_size/2-2, y: ny-.5});
+            thisBT.cursorVert.attr({x: nx-.5, y: ny-thisBT.cursor_size/2-2});
+            thisBT.cursorHoriz.attr({x: nx-thisBT.cursor_size/2-2, y: ny-.5});
         },
         up = function () {
             // restoring state
-            timeBar.animate({opacity: 1}, animTime);
-            topoBar.animateWith(timeBar, {opacity: 1}, animTime);
-            safetyBar.animateWith(timeBar, {opacity: 1}, animTime);
+            thisBT.timeBar.animate({opacity: 1}, animTime);
+            thisBT.topoBar.animateWith(thisBT.timeBar, {opacity: 1}, animTime);
+            thisBT.safetyBar.animateWith(thisBT.timeBar, {opacity: 1}, animTime);
             //timeLabel.animate({opacity: 0}, animTime);
             //topoLabel.animate({opacity: 0}, animTime);
             //safetyLabel.animate({opacity: 0}, animTime);
@@ -181,11 +199,11 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
             }
         };
 
-        cursor.drag(move, start, up);
-        cursor.mouseover(function() {
+        this.cursor.drag(move, start, up);
+        this.cursor.mouseover(function() {
             this.animate({opacity: 0.5}, animTime);
         });
-        cursor.mouseout(function() {
+        this.cursor.mouseout(function() {
             this.animate({opacity: 0.25}, animTime);
         });
         
@@ -215,6 +233,21 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         dy = y2 - y1;
         r = ((px - x1) * dx + (py - y1) * dy) / (dx * dx + dy * dy);
         return this.distance(px, py, (1 - r) * x1 + r * x2, (1 - r) * y1 + r * y2);
+    },
+
+    setValues : function(time, slope, safety) {
+        this.timeFactor = time;
+        this.slopeFactor = slope;
+        this.safetyFactor = safety;
+        
+        this.timeBar.attr({width: this.barWidth*time});
+        this.topoBar.attr({width: this.barWidth*slope});
+        this.safetyBar.attr({width: this.barWidth*safety});
+        this.timeLabel.attr("text",   this.timeName + ": "+Math.round(time*100)+"%");
+        this.topoLabel.attr("text",   this.hillName + ": " +Math.round(slope*100)+"%");
+        this.safetyLabel.attr("text", this.safeName + ": " +Math.round(safety*100)+"%");
+
+
     },
 
     /** */

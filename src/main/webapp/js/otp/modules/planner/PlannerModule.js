@@ -177,6 +177,10 @@ otp.modules.planner.PlannerModule =
                         this_.trianglePlanTrip();
                     });
                     this_.widgets.push(this_.resultsWidget);
+                    
+                    if(existingData !== null) {
+                        this_.resultsWidget.restorePlan(existingData);
+                    }
 
                 }
                 
