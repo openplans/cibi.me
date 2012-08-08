@@ -562,7 +562,7 @@ h6.drag-to-change {
   display: none;
 }
 
-ul.otp-stats {
+/*ul.otp-stats {
   list-style: none;
   margin: 0;
 }
@@ -573,6 +573,25 @@ ul.otp-stats li {
 }
 ul.otp-stats li strong { 
   display: none;
+}*/
+
+#otp-tsw-distance {
+  float: left;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+#otp-tsw-duration {
+  font-weight: bold;
+  text-align: right; 
+  font-size: 2em;
+}
+
+
+#otp-tsw-timeSummary {
+    text-align: right;
+    margin-bottom: .5em;
+    font-style: italic;
 }
 
 #otp-mainTSW hr,

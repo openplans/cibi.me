@@ -26,12 +26,19 @@ otp.widgets.TripSummaryWidget =
         
         var content = '';
         content += '<h3 class="your-trip">Your Trip:</h3>';
-        content += '<ul class="otp-stats">';
+        /*content += '<ul class="otp-stats">';
         content += '<li><strong>Distance Traveled:</strong> <span id="otp-tsw-distance"></span></li>';
         content += '<li><strong>Estimated Time:</strong> <span id="otp-tsw-duration"></span></li>';
         // content += '<li><strong>Calories Burned:</strong> N/A</li>';
         // content += '<li><strong>Cost:</strong> N/A</li>';
         content += '</ul>';
+        content += '<span id="otp-tsw-timeSummary"></span>';*/
+
+        content += '<div id="otp-tsw-distance"></div>';
+        content += '<div id="otp-tsw-duration"></div>';
+        content += '<div id="otp-tsw-timeSummary"></div>';
+
+
         content += '<hr />';
         content += '<h6 class="drag-to-change">Drag to Change Trip:</h6>';
         content += '<div id="otp-tsw-bikeTriangle"></div>';
@@ -78,6 +85,33 @@ otp.widgets.TripSummaryWidget =
     	
         $("#otp-tsw-distance").html(Math.round(100*(dist/1609.344))/100+" mi.");
         $("#otp-tsw-duration").html(otp.util.Time.msToHrMin(itin.duration));	
+        
+        var timeByMode = { };
+        for(var i=0; i < itin.legs.length; i++) {
+            if(itin.legs[i].mode in timeByMode) {
+                timeByMode[itin.legs[i].mode] = timeByMode[itin.legs[i].mode] + itin.legs[i].duration;
+            }
+            else {
+                timeByMode[itin.legs[i].mode] = itin.legs[i].duration;
+            }
+        }
+        
+        var summaryStr = "";
+        for(mode in timeByMode) {
+            summaryStr += otp.util.Time.msToHrMin(timeByMode[mode]) + " " + this.getModeName(mode) + " / ";
+        }
+        summaryStr = summaryStr.slice(0, -3);
+        $("#otp-tsw-timeSummary").html(summaryStr);	
+    },
+    
+    getModeName : function(mode) {
+        switch(mode) {
+            case 'WALK':
+                return "walking";
+            case 'BICYCLE':
+                return "biking";
+        }
+        return "n/a";
     },
     
     CLASS_NAME : "otp.widgets.TripSummaryWidget"
