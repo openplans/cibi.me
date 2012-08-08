@@ -148,7 +148,7 @@ otp.modules.planner.PlannerModule =
         else
         {
             var bikeType = $('input:radio[name=bikeType]:checked').val();
-            var mode = 'WALK,BICYCLE';
+            var mode = 'BICYCLE'; //'WALK,BICYCLE';
             if(bikeType !== undefined)
                 mode = (bikeType == "shared_bike") ? 'WALK,BICYCLE' : 'BICYCLE';
        	    data_ = {             

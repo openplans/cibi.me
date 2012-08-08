@@ -85,7 +85,7 @@ otp.modules.bikeshare.BikeShareModule =
     
     
     processStations : function(start, end) {
-        var tol = .001, distTol = .01;
+        var tol = .0005, distTol = .01;
         var start_and_end_stations = [];
         
         for(var i=0; i<this.stations.length; i++) {

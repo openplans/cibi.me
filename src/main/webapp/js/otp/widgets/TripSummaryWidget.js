@@ -44,8 +44,8 @@ otp.widgets.TripSummaryWidget =
         content += '<div id="otp-tsw-bikeTriangle"></div>';
 
         content += '<div id="otp-tsw-bikeTypeRow">Use: ';
-        content += '<input id="myOwnBikeRBtn" type="radio" name="bikeType" value="my_bike"> My Own Bike&nbsp;&nbsp;';
-        content += '<input id="sharedBikeRBtn" type="radio" name="bikeType" value="shared_bike" checked> A Shared Bike';
+        content += '<input id="myOwnBikeRBtn" type="radio" name="bikeType" value="my_bike" checked> My Own Bike&nbsp;&nbsp;';
+        content += '<input id="sharedBikeRBtn" type="radio" name="bikeType" value="shared_bike"> A Shared Bike';
         content += '</div>';
         
         content += '<hr />';
