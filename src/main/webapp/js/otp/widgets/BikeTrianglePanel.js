@@ -113,7 +113,7 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         this.safeBar = canvas.rect(barLeft, margin*3 + barHeight*2, barWidth*.333, barHeight);
         this.safeBar.attr({fill:safeFill, stroke:"none"});
 
-        this.quickLabel = canvas.text(barLeft + barWidth/2, margin+barHeight/2, this.quickLabel + ": 33%");
+        this.quickLabel = canvas.text(barLeft + barWidth/2, margin+barHeight/2, this.quickName + ": 33%");
         this.quickLabel.attr({"font-size":"15px", opacity:1});
 
         this.flatLabel = canvas.text(barLeft + barWidth/2, margin*2+barHeight+barHeight/2,  this.flatName + ": 33%");
