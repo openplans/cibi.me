@@ -75,6 +75,11 @@ otp.widgets.TripSummaryWidget =
     },
 
     restorePlan : function(data) {
+	
+	// looks like we're receiving errant restorPlan calls with no data -- catching and discarding
+	if(data == null)
+		return;
+
         if(data.mode === "BICYCLE") {
             $('#myOwnBikeRBtn').attr('checked', 'checked');
         }

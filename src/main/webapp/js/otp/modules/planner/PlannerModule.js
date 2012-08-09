@@ -69,7 +69,7 @@ otp.modules.planner.PlannerModule =
     
 
     handleClick : function(event) {
-        console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
+        //console.log('bikeshare click at '+event.latlng.lat+", "+event.latlng.lng);
         
         if(this.startLatLng == null) {
         	this.startLatLng = new L.LatLng(event.latlng.lat, event.latlng.lng);
