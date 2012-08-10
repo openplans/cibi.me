@@ -130,6 +130,8 @@ otp.modules.planner.PlannerModule =
     
     
     planTrip : function(existingData, skipSave) {
+    
+        $('#otp-spinner').show();
 
         if(typeof this.planTripStart == 'function') this.planTripStart();
         
@@ -178,6 +180,8 @@ otp.modules.planner.PlannerModule =
             dataType:   'jsonp',
                 
             success: function(data) {
+            
+                $('#otp-spinner').hide();
             	
             	if(this_.resultsWidget == null) {
                     this_.resultsWidget = new otp.widgets.TripSummaryWidget('otp-mainTSW', function() {

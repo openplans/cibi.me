@@ -612,7 +612,6 @@ ul.otp-stats li strong {
   display: none;
 }
 
-
 p#splash-text {
   position: absolute;
   top: 6.75em;
@@ -640,6 +639,17 @@ p#splash-text span {
   display: block;
 }
 
+#otp-spinner {
+  width: 32px;
+  height: 32px;
+  position: fixed;
+  left: 50%;
+  margin-left: -16px;
+  top: 50%;
+  margin-top: -16px;  
+  z-index: 1000;
+  display: none;
+}
 
 /* 
  * 
