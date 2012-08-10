@@ -28,6 +28,7 @@ otp.modules.planner.PlannerModule =
     
     resultsWidget   : null,
     tipWidget       : null,
+    noTripWidget    : null,
     tipStep         : 0,
     
     currentRequest  : null,
@@ -63,7 +64,11 @@ otp.modules.planner.PlannerModule =
         
         this.bikestationsWidget = new otp.widgets.BikeStationsWidget('otp-bikestationsWidget');
         this.widgets.push(this.bikestationsWidget);
-        
+
+        this.noTripWidget = new otp.widgets.Widget('otp-noTripWidget');
+        this.widgets.push(this.noTripWidget);
+        //this.noTripWidget.hide();
+                
         this.activated = true;
     },
     
@@ -125,6 +130,8 @@ otp.modules.planner.PlannerModule =
     
     
     planTrip : function(existingData, skipSave) {
+
+        this.noTripWidget.hide();
     	
     	if(this.currentRequest !== null)
         {
@@ -191,6 +198,8 @@ otp.modules.planner.PlannerModule =
                     var itin = data.plan.itineraries[0];
                     this_.processItinerary(itin, data_);
 
+                    this_.resultsWidget.show();
+
                     this_.resultsWidget.updateMetrics(itin);
                     this_.updateTipStep(3);
                     
@@ -199,7 +208,9 @@ otp.modules.planner.PlannerModule =
                     
                 }
                 else {
-                    //this_.resultsWidget.noTripFound();
+                    this_.resultsWidget.hide();
+                    this_.noTripWidget.setContent(data.error.msg);
+                    this_.noTripWidget.show();
                 }
             }
         });

@@ -493,6 +493,16 @@ body {
   bottom: 7.5em;
 }
 
+#otp-noTripWidget {
+  left: 0.5em;
+  right: 0.5em;
+  bottom: 5em;
+  font-size: 85%;
+  background-color: #ffa07a;
+  background-color: rgba(255,160,122,0.85);
+  display: none;
+}
+
 #otp-tipWidget {
   left: 0.5em;
   right: 0.5em;
@@ -644,9 +654,13 @@ p#splash-text span {
 -------------------------------------------------------------- */
 
 @media only screen and (min-width: 320px) {
+  #otp-noTripWidget {
+    bottom: 4em;
+  }  
 }
 
 @media only screen and (min-width: 480px) {
+
 }
 
 @media only screen and (min-width: 768px) {
@@ -708,6 +722,14 @@ p#splash-text span {
     padding-right: 1em;
     padding-left: 1em;
     white-space: nowrap;
+  }
+
+  #otp-noTripWidget {
+    width: 230px;
+    height: auto;
+    left: 20px;
+    bottom: 7.5em;
+    font-size: 1em;
   }
   
   #otp-bikestationsWidget {
