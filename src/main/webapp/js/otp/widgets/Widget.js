@@ -36,11 +36,11 @@ otp.widgets.Widget = otp.Class({
     },
     
     show : function() {
-        $(this.div).show();
+        $(this.div).fadeIn();//show();
     },
 
     hide : function() {
-        $(this.div).hide();
+        $(this.div).fadeOut();//hide();
     },
     
     CLASS_NAME : "otp.widgets.Widget"

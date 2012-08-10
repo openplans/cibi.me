@@ -188,6 +188,7 @@ otp.modules.planner.PlannerModule =
                     if(existingData !== null) {
                         this_.resultsWidget.restorePlan(existingData);
                     }
+                    this_.resultsWidget.show();
 
                 }
                 
