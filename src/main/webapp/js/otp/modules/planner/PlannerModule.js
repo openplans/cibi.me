@@ -131,6 +131,8 @@ otp.modules.planner.PlannerModule =
     
     planTrip : function(existingData, skipSave) {
 
+        if(typeof this.planTripStart == 'function') this.planTripStart();
+        
         this.noTripWidget.hide();
     	
     	if(this.currentRequest !== null)
@@ -139,8 +141,6 @@ otp.modules.planner.PlannerModule =
         	this.currentRequest.abort();
         	this.currentRequest = null;
         }
-    	
-    	
     	
         var url = otp.config.hostname + '/opentripplanner-api-webapp/ws/plan';
         this.pathLayer.clearLayers();        

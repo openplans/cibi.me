@@ -44,6 +44,10 @@ otp.modules.bikeshare.BikeShareModule =
        
     },
 
+    planTripStart : function() {
+        this.resetStations();
+    },
+    
     processItinerary : function(itin, data) {
         for(var i=0; i < itin.legs.length; i++) {
             //console.log(itin);
