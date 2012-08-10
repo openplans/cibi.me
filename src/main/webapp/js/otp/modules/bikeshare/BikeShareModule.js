@@ -147,6 +147,8 @@ otp.modules.bikeshare.BikeShareModule =
     },
     
     resetStations : function(start, end) {
+        if(this.stations == null) return;
+    
         var tol = .001, distTol = .01;
         var start_and_end_stations = [];
         
