@@ -23,21 +23,22 @@ otp.core.Webapp = otp.Class({
     
     activeModule : null,
     
-    // TODO: generalize
-    aboutWidget		: null,
-    contactWidget	: null,    
-    
     infoWidgets     : { },
     
-    initialize : function(config) {
-        otp.configure(this, config);
+    initialize : function() {
 
+        // misc. housekeeping
+        
+        if(typeof console == 'undefined') console = { log: function(str) {} };
         var this_ = this;
+       
+
+        // create the map
         
         this.map = new otp.core.Map(this);        
         
         
-        // init module selector
+        // create the module selector
         
         if(otp.config.showModuleSelector) {
 
@@ -66,17 +67,13 @@ otp.core.Webapp = otp.Class({
             });
         }
         
-        this.addModule(new otp.modules.annotations.AnnotationsModule(this), false);
-        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
-
-        // Init info widgets
+        
+        // create the info widgets and links along header bar
         
         if(otp.config.infoWidgets !== undefined && otp.config.infoWidgets.length > 0) {
             var nav = $('<nav id="main-menu" role="article">').appendTo('#branding');
             var ul = $('<ul>').appendTo(nav);
             
-                    
-            //var about = $("<li><a href='#'>About</a></li>").appendTo(ul);
             for(var i=0; i<otp.config.infoWidgets.length; i++) {
     
                 var id = "infoWidget-"+i;            
@@ -93,13 +90,22 @@ otp.core.Webapp = otp.Class({
             }
         }
 
-        // Init AddThis
+        // initialize the AddThis widget
+        
         addthis_config = {
 		     pubid: "ra-4fb549f217255a7d",
 		     data_track_clickback: false
 		};
 		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb549f217255a7d");
 		
+
+        // set up some modules (TODO: generalize using config file)
+        
+        this.addModule(new otp.modules.annotations.AnnotationsModule(this), false);
+        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
+
+        
+        // retrieve a saved trip, if applicable
 		        
 		if(window.location.hash !== "")
 			otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
