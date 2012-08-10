@@ -80,7 +80,7 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
 
         var safeFill = "#bbe070"; 
         var safeFill2 = "#77b300"; 
-        var safeSym  = "S"; //locale.bikeTriangle.safeSym;
+        var safeSym  = "B"; //locale.bikeTriangle.safeSym;
 
         var flatFill = "#8cc4ff"; 
         var flatFill2 = "#61a7f2"; 
