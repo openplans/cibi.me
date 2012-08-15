@@ -75,6 +75,8 @@ otp.core.Webapp = otp.Class({
             var ul = $('<ul>').appendTo(nav);
             
             for(var i=0; i<otp.config.infoWidgets.length; i++) {
+            
+                if(otp.config.infoWidgets[i] == undefined) continue;
     
                 var id = "infoWidget-"+i;            
     
