@@ -1,19 +1,26 @@
-// doesn't appear to work in Leaftet 0.4. Replaces w/ otp.util.Polyline
+/* This program is free software: you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public License
+   as published by the Free Software Foundation, either version 3 of
+   the License, or (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+*/
 
-L.EncodedPolyline = L.Polyline.extend ({
+otp.namespace("otp.util");
+
+/**
+ * Utility routines for date/time conversion
+ */
+ 
+otp.util.Polyline = {
 	
-	initialize: function (polyline, options) {
-		L.Polyline.prototype.initialize.call(this, options);
-	
-		this._latlngs = this._decode(polyline);
-	},
-	
-	setPolyline: function (polyline) {
-	
-		this.setLatLngs(this._decode(polyline));
-	},
-	
-	_decode: function (polyline) {
+	decode : function (polyline) {
 		
 		  var currentPosition = 0;
 
@@ -59,6 +66,7 @@ L.EncodedPolyline = L.Polyline.extend ({
 		  }	
 		  
 		  return polylineLatLngs;
-	}
-	
-});
+	},
+    
+    CLASS_NAME: "otp.util.Polyline"
+};	

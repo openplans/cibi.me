@@ -67,14 +67,7 @@ otp.widgets.BikeStationsWidget =
         	end_marker.openPopup();
         });
         
-	},
-
-	show: function() {
-		$(this._div).show();
-	},
-	 
-	hide: function() {
-		$(this._div).hide();
+        
 	},
 
 	CLASS_NAME : "otp.widgets.BikeStationsWidget"

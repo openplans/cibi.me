@@ -14,7 +14,7 @@
 
 otp.namespace("otp.widgets");
 
-otp.widgets.Widget = {
+otp.widgets.Widget = otp.Class({
     
     div :   null,
     id :    null,
@@ -34,9 +34,16 @@ otp.widgets.Widget = {
     setContent : function(content) {
         this.div.innerHTML = content;
     },
+    
+    show : function() {
+        $(this.div).fadeIn();//show();
+    },
 
+    hide : function() {
+        $(this.div).fadeOut();//hide();
+    },
+    
     CLASS_NAME : "otp.widgets.Widget"
-}
+});
 
 
-otp.widgets.Widget = new otp.Class(otp.widgets.Widget);

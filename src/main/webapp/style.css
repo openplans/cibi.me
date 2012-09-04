@@ -154,6 +154,55 @@ body {
 /* =Header
 -------------------------------------------------------------- */
 
+#otp_topbutton {
+  float: left;
+  width: 90px;
+  height: 42px;
+  background: gray;
+  font-weight: bold;
+  font-size: 30px;
+  padding: 6px 0px 4px 10px;
+  cursor: pointer;
+}
+
+#otp_topbutton:hover {
+  color: cyan;
+}
+
+#otp_toptitle {
+  float: left;
+  width: 300px;
+  height: 42px;
+  font-weight: bold;
+  font-size: 30px;
+  padding: 6px 0px 4px 12px;
+}
+
+
+.otp_moduleMenu {
+  position: fixed;
+  left: 100px;
+  top: 0px;
+  width: 300px;
+  background: white;
+  z-index: 1000;
+  display: none;
+}
+
+.otp_moduleMenuLabel {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 2px;
+  /*border-top: 1px solid gray;*/
+  background: #bbb;
+  cursor: pointer;
+}
+
+.otp_moduleMenuLabel:hover {
+  font-size: 30px;
+}
+
+
 #branding {
   height: 2.25em;
   overflow: visible;
@@ -178,15 +227,18 @@ body {
   );
 }
 
+#addthis {
+  display: none;
+}
+
 /* the logo */
 #logo {
-  position: absolute;
-  top: 2.5em;
-  right: 0;
-  margin-top: -15px;
-  overflow: hidden;
-  padding: 10px 0 18px 3.5em;
-  z-index: 2;
+  display: none;
+}
+
+
+
+
 }
 #logo .ribbon {
   position: relative;
@@ -277,10 +329,8 @@ body {
 }
 
 #site-title {
-  font-family: 'Dancing Script', cursive;
-  font-size: 3.25em;
-  margin: -0.2em 20px 0 0;
-  line-height: 1;
+  font-size: 1.25em;
+  margin: .325em .25em;
 }
 #site-title a {
   text-decoration: none;
@@ -308,8 +358,8 @@ body {
 
 /* AddThis */
 #branding .addthis_toolbox {
-  margin: 0.5em 0 0 0.5em;
-  float: left;
+  margin: 1.25em 0 0 0;
+  float: right;
   min-width: 163px;
 }
 
@@ -441,6 +491,17 @@ body {
   height: auto;
   left: 20px;
   bottom: 7.5em;
+  display: none;
+}
+
+#otp-noTripWidget {
+  left: 0.5em;
+  right: 0.5em;
+  bottom: 5em;
+  font-size: 85%;
+  background-color: #ffa07a;
+  background-color: rgba(255,160,122,0.85);
+  display: none;
 }
 
 #otp-tipWidget {
@@ -513,7 +574,7 @@ h6.drag-to-change {
   display: none;
 }
 
-ul.otp-stats {
+/*ul.otp-stats {
   list-style: none;
   margin: 0;
 }
@@ -524,6 +585,25 @@ ul.otp-stats li {
 }
 ul.otp-stats li strong { 
   display: none;
+}*/
+
+#otp-tsw-distance {
+  float: left;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+#otp-tsw-duration {
+  font-weight: bold;
+  text-align: right; 
+  font-size: 2em;
+}
+
+
+#otp-tsw-timeSummary {
+    text-align: right;
+    margin-bottom: .5em;
+    font-style: italic;
 }
 
 #otp-mainTSW hr,
@@ -531,7 +611,6 @@ ul.otp-stats li strong {
 #share-route {
   display: none;
 }
-
 
 p#splash-text {
   position: absolute;
@@ -560,6 +639,17 @@ p#splash-text span {
   display: block;
 }
 
+#otp-spinner {
+  width: 32px;
+  height: 32px;
+  position: fixed;
+  left: 50%;
+  margin-left: -16px;
+  top: 50%;
+  margin-top: -16px;  
+  z-index: 1000;
+  display: none;
+}
 
 /* 
  * 
@@ -575,9 +665,13 @@ p#splash-text span {
 -------------------------------------------------------------- */
 
 @media only screen and (min-width: 320px) {
+  #otp-noTripWidget {
+    bottom: 4em;
+  }  
 }
 
 @media only screen and (min-width: 480px) {
+
 }
 
 @media only screen and (min-width: 768px) {
@@ -588,16 +682,20 @@ p#splash-text span {
   #map {
     top: 4em;
   }
+
   #logo {
-    right: 0;
-    top: 4em;
+    display: block;
+  }
+
+  #addthis {
+    display: block;
   }
   #logo .ribbon {
     height: 6em;
     padding: 0 1.5em 0 2em;
   }
   #site-title {
-    font-size: 4.25em;
+     margin: 1em 0;
   }
   #site-description {
     font-size: 1.25em;
@@ -612,10 +710,10 @@ p#splash-text span {
     margin-right: 1em;
   }
 
-  /* AddThis */
+  /* AddThis 
   #branding .addthis_toolbox {
     margin: 1.25em 0 0 1.25em;
-  }
+  }*/
 
   /* Map UI */
   .leaflet-control-zoom {
@@ -635,6 +733,14 @@ p#splash-text span {
     padding-right: 1em;
     padding-left: 1em;
     white-space: nowrap;
+  }
+
+  #otp-noTripWidget {
+    width: 230px;
+    height: auto;
+    left: 20px;
+    bottom: 7.5em;
+    font-size: 1em;
   }
   
   #otp-bikestationsWidget {

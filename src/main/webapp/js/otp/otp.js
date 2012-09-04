@@ -78,6 +78,7 @@ otp.Class = function() {
     return C;
 };
 
+
 /**
  * set member variables in the destination object, as long as that same element is defined in the destination 
  * (and the source has a value other than null).  It might overwrite an existing variable.

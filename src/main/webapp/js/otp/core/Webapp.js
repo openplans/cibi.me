@@ -14,31 +14,104 @@
 
 otp.namespace("otp.core");
 
-otp.core.Webapp = {
+otp.core.Webapp = otp.Class({
 
     map     : null,
     
     modules : [ ],
+    moduleMenu : null,
     
     activeModule : null,
-    currentHash : null,
     
-    initialize : function(config) {
-        otp.configure(this, config);
+    infoWidgets     : { },
+    
+    initialize : function() {
+
+        // misc. housekeeping
         
-        this.map = new otp.core.Map();        
+        if(typeof console == 'undefined') console = { log: function(str) {} };
+        var this_ = this;
+       
+
+        // create the map
         
-        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
+        this.map = new otp.core.Map(this);        
         
-        // Init AddThis
+        
+        // create the module selector
+        
+        if(otp.config.showModuleSelector) {
+
+            $("<div id='otp_topbutton'>OTP &raquo;</div>").appendTo('#branding');
+            $("<div id='otp_toptitle'>").appendTo('#branding');
+        
+            /*$(this.moduleMenu).mouseleave(function() {
+                document.body.removeChild(this_.moduleMenu);
+            });*/
+            
+            $('#otp_topbutton').click(function() {
+                if(this_.moduleMenu == null) {
+                    this_.moduleMenu = $('<div class="otp_moduleMenu">').appendTo('body');
+                    
+                    $.each(this_.modules, function() {
+                        var module = this;
+                        var labelDiv = $('<div class="otp_moduleMenuLabel">'+module.moduleName+'</div>').appendTo(this_.moduleMenu);
+                        $(labelDiv).click(function() {
+                            $(this_.moduleMenu).hide();
+                            this_.setActiveModule(module);
+                        });
+                    });
+                }
+                
+                $(this_.moduleMenu).show();
+            });
+        }
+        
+        
+        // create the info widgets and links along header bar
+        
+        if(otp.config.infoWidgets !== undefined && otp.config.infoWidgets.length > 0) {
+            var nav = $('<nav id="main-menu" role="article">').appendTo('#branding');
+            var ul = $('<ul>').appendTo(nav);
+            
+            for(var i=0; i<otp.config.infoWidgets.length; i++) {
+            
+                if(otp.config.infoWidgets[i] == undefined) continue;
+    
+                var id = "infoWidget-"+i;            
+    
+                this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId);
+                this.infoWidgets[id].setContent(otp.config.infoWidgets[i].content);
+                this.infoWidgets[id].hide();
+                
+                $("<li id='"+id+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                    e.preventDefault();
+                    this_.infoWidgets[this.id].show();
+                });
+            
+            }
+        }
+
+        // initialize the AddThis widget
+        
         addthis_config = {
 		     pubid: "ra-4fb549f217255a7d",
 		     data_track_clickback: false
 		};
 		$.getScript("http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fb549f217255a7d");
 		
+
+        // set up some modules (TODO: generalize using config file)
+        
+        this.addModule(new otp.modules.annotations.AnnotationsModule(this), false);
+        this.addModule(new otp.modules.bikeshare.BikeShareModule(this), true);
+
+        
+        // retrieve a saved trip, if applicable
+		        
 		if(window.location.hash !== "")
-			otp.util.DataStorage.retreive(window.location.hash.replace("#", ""), this);
+			otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
+			
 		
     },
     
@@ -48,12 +121,28 @@ otp.core.Webapp = {
         if(makeActive) {
             this.setActiveModule(module);
         }
-        this.setLinks(module);
     },
     
     setActiveModule : function(module) {
         //console.log("set active module: "+module.moduleName);
-        this.map.activeModuleChanged(module);
+        if(this.activeModule != null) {
+            this.activeModule.deactivate();
+            
+            for(var i = 0; i < this.activeModule.widgets.length; i++) {
+                this.activeModule.widgets[i].hide();
+            }
+        }
+        
+        $('#otp_toptitle').html(module.moduleName);
+        
+        for(var i = 0; i < module.widgets.length; i++) {
+            module.widgets[i].show();
+        }
+        
+        module.activate();
+        
+        this.map.activeModuleChanged(this.activeModule, module);
+        
         this.activeModule = module;
     },   
     
@@ -62,40 +151,26 @@ otp.core.Webapp = {
     	this.activeModule.restorePlan(data);
    
     },
-    
-    setLinks : function(module) {
-    	var aboutLink = $("#about_link");
-    	var contactLink = $("#contact_link");
-    	    	
-    	aboutLink.click(function(e) {
-        	e.preventDefault("about");
-        	module.showAboutInfo();
-        });	
-    	contactLink.click(function(e) {
-        	e.preventDefault();
-        	module.showContactInfo();
-        });
+           
+    hideSplash : function() {
+    	$("#splash-text").hide();
+    	for(widgetId in this.infoWidgets) {
+        	this.infoWidgets[widgetId].hide();
+    	}
     },
-    
+        
     setBounds : function(bounds)
     {
     	this.map.lmap.fitBounds(bounds);
     },
         
-    newTrip : function(hash) {
-    	
-    	this.currentHash = hash;	
-    	
-    	window.location.hash = this.currentHash;
-    	
-        var shareRoute = $("#share-route");
-        shareRoute.find(".addthis_toolbox").attr("addthis:url", "http://cibi.me/#"+this.currentHash);
-        addthis.toolbox(".addthis_toolbox_route");
+   
+    mapClicked : function(event) {
+        $(this.moduleMenu).hide();
+        this.hideSplash();
+        this.activeModule.handleClick(event);
     },
     
-    
     CLASS_NAME : "otp.core.Webapp"
-}
+});
 
-
-otp.core.Webapp = new otp.Class(otp.core.Webapp);

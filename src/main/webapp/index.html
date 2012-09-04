@@ -6,7 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html dir="ltr" lang="en-US"> <!--<![endif]-->
 
 <head>
-<title>cibi.me</title>
+<title>bikeplanner.org</title>
 
 <!--  Mobile Viewport Fix -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -17,6 +17,9 @@
 <!-- leaflet -->
 <script src="js/lib/leaflet/leaflet.js"></script>
 <link rel="stylesheet" href="js/lib/leaflet/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="js/lib/leaflet/leaflet.ie.css" />
+<![endif]-->
 
 <!-- json support -->
 <script src="js/lib/json2.js"></script>
@@ -32,28 +35,33 @@
 <script src="js/lib/raphael/raphael-min.js"></script>
 
 <!-- otp-specific imports -->
-<script src="js/otp/otp.js"></script>
-<script src="js/otp/config.js"></script>
-<script src="js/otp/util/leaflet.js"></script>
-<script src="js/otp/util/Time.js"></script>
-<script src="js/otp/util/Logger.js"></script>
-<script src="js/otp/util/DataStorage.js"></script>
-<script src="js/otp/core/Webapp.js"></script>
-<script src="js/otp/core/Map.js"></script>
-<script src="js/otp/modules/Module.js"></script>
-<script src="js/otp/modules/bikeshare/BikeShareModule.js"></script>
-<script src="js/otp/modules/bikeshare/IconFactory.js"></script>
-<script src="js/otp/widgets/Widget.js"></script>
-<script src="js/otp/widgets/TripSummaryWidget.js"></script>
-<script src="js/otp/widgets/BikeTrianglePanel.js"></script>
-<script src="js/otp/widgets/BikeStationsWidget.js"></script>
-<script src="js/otp/widgets/InfoWidget.js"></script>
-<link rel="stylesheet" href="style.css" />
+<script src="js/otp/otp.js?v=1"></script>
+<script src="js/otp/config.js?v=1"></script>
+<script src="js/otp/util/leaflet.js?v=1"></script>
+<script src="js/otp/util/Time.js?v=1"></script>
+<script src="js/otp/util/Polyline.js?v=1"></script>
+<script src="js/otp/util/Logger.js?v=1"></script>
+<script src="js/otp/util/DataStorage.js?v=1"></script>
+<script src="js/otp/core/Webapp.js?v=1"></script>
+<script src="js/otp/core/Map.js?v=1"></script>
+
+<script src="js/otp/modules/Module.js?v=1"></script>
+<script src="js/otp/modules/planner/PlannerModule.js?v=1"></script>
+<script src="js/otp/modules/planner/IconFactory.js?v=1"></script>
+<script src="js/otp/modules/bikeshare/BikeShareModule.js?v=1"></script>
+<script src="js/otp/modules/annotations/AnnotationsModule.js?v=1"></script>
+
+<script src="js/otp/widgets/Widget.js?v=1"></script>
+<script src="js/otp/widgets/TripSummaryWidget.js?v=1"></script>
+<script src="js/otp/widgets/BikeTrianglePanel.js?v=1"></script>
+<script src="js/otp/widgets/BikeStationsWidget.js?v=1"></script>
+<script src="js/otp/widgets/InfoWidget.js?v=1"></script>
+<link rel="stylesheet" href="style.css?v=1" />
 
 <!-- make legacy Internet Explorer play nice(r) -->
 <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+  <script src="js/lib/respond.min.js"></script>
 <![endif]-->
 
 <!-- create the webapp at startups -->
@@ -68,21 +76,24 @@ $(document).ready(function() {
 <body>
 
 <header id="branding" role="banner" class="clearfix">
+  
+  <div  style="float:left;" id="logo"><a href="http://bikeplanner.org/"><img src="images/openplans-logo-40x40.png" style="height:30px; margin: 10px;"></a></div>
+  <div id="site-title" style="float:left; "><a href="http://bikeplanner.org/">bikeplanner.org</a></div>
 
-  <hgroup id="logo">
+  <!--<hgroup id="logo">
     <div class="ribbon">
       <h1 id="site-title"><span><a href="/" title="cibi.me" rel="home">cibi.me</a></span></h1>
       <h2 id="site-description">Where can you bike to?</h2>
     </div>
-  </hgroup>
+  </hgroup>-->
 
-  <p id="splash-text"><span>Bike share is coming to NYC this summer!</span> <span>How will you use it to get around?</span></p>
+  <!--<p id="splash-text"><span>Bike share is coming to NYC this summer!</span> <span>How will you use it to get around?</span></p>-->
 
   <!-- AddThis Button BEGIN -->
-  <div class="addthis_toolbox addthis_default_style" 
-    addthis:url="http://cibi.me"
-    addthis:title="How will you use NYC bike share? Plan a trip now with #CiBi."
-    addthis:description="Cibi.me is built by OpenPlans and allows users to plan trips using NYC's new bike share program.">
+  <div id="addthis" class="addthis_toolbox addthis_default_style" 
+    addthis:url="http://bikeplanner.org"
+    addthis:title="How do you bike around Washington? Plan a trip now with bikeplanner.org"
+    addthis:description="bikeplanner.org is built by OpenPlans and allows users to plan bicycle trips in Washington using Capital Bikeshare.">
     <a class="addthis_button_twitter"></a>
     <a class="addthis_button_facebook"></a>
     <a class="addthis_button_google_plusone_share"></a>
@@ -92,12 +103,6 @@ $(document).ready(function() {
   </div>
   <!-- AddThis Button END -->
 
-  <nav id="main-menu" role="article">
-    <ul>
-      <li class="" id="about_link"><a href="#">About</a></li>
-      <li class="" id="contact_link"><a href="#">Contact</a></li>
-    </ul>
-  </nav>
  <!--
   <div class="search">
     
@@ -108,7 +113,10 @@ $(document).ready(function() {
 
 <div id="map"></div>
 
-<div id="foo"></div>
+<div id="otp-spinner"><img src="images/spinner.gif"></div>
+
+<!-- <div id="foo"></div> -->
+
 
 <script type="text/javascript">
 

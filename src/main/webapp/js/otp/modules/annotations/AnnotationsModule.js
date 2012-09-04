@@ -12,41 +12,17 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-otp.namespace("otp.util");
+otp.namespace("otp.modules.annotations");
 
-/**
- * Utility routines remote storing routes
- */
 
-otp.util.DataStorage = {
-	
-    store : function(data, module) {
+otp.modules.annotations.AnnotationsModule = 
+    otp.Class(otp.modules.Module, {
     
-		var this_ = this;
-	
-		$.ajax(otp.config.dataStorageUrl , {dataType: 'jsonp', data: {data: JSON.stringify(data)},
-		
-			success: function(data) { 
-				module.newTrip(data.id);
-			}
-		
-		});
-	
+    moduleName  : "Annotations Viewer",
+     
+    initialize : function(webapp) {
+        otp.modules.Module.prototype.initialize.apply(this, arguments);
     },
-    
-    retrieve : function(id, module) {
-        
-		var this_ = this;
-	
-		$.ajax(otp.config.dataStorageUrl , {dataType: 'jsonp', data: {id: id},
-		
-			success: function(data) {
-				if(data)
-					module.restorePlan(data);
-			}
-		});
-    },
-
-    CLASS_NAME: "otp.util.DataStorage"
-};
-
+            
+    CLASS_NAME : "otp.modules.annotations.AnnotationsModule"
+});

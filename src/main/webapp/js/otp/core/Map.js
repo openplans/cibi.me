@@ -14,36 +14,71 @@
 
 otp.namespace("otp.core");
 
-otp.core.Map = {
+otp.core.Map = otp.Class({
 
-    lmap    : null,
+    webapp          : null,
+
+    lmap            : null,
+    layerControl    : null,
     
-    initialize : function(config) {
-        otp.configure(this, config);
+    initialize : function(webapp) {
+    
+        this.webapp = webapp;
         
-        this.lmap = new L.Map('map', {minZoom: otp.config.minZoom, maxZoom: otp.config.maxZoom});
-
         var tileLayer = new L.TileLayer(otp.config.tileUrl, {attribution: otp.config.tileAttrib});
 	    
 	    if(typeof otp.config.getTileUrl != 'undefined') {
     	    tileLayer.getTileUrl = otp.config.getTileUrl;
         }
-	    
-        this.lmap.setView(otp.config.initLatLng, otp.config.initZoom).addLayer(tileLayer);
+        
+        this.lmap = new L.Map('map', {
+            minZoom : otp.config.minZoom,
+            maxZoom : otp.config.maxZoom,
+            center  : otp.config.initLatLng,
+            zoom    : otp.config.initZoom,
+            layers  : [ tileLayer ]
+        });
+
+
+        var baseMaps = {
+            'Base Layer' : tileLayer 
+        };
+        
+        //this.lmap.setView(otp.config.initLatLng, otp.config.initZoom); //.addLayer(tileLayer);
+        
+        var overlays = { };
         
         if(typeof otp.config.overlayTileUrl != 'undefined') {
 	    	var overlayTileLayer = new L.TileLayer(otp.config.overlayTileUrl);
-	    	 this.lmap.addLayer(overlayTileLayer);
+	    	//this.lmap.addLayer(overlayTileLayer);
+	    	//overlays['Overlay'] = overlayTileLayer;
         }
+        
+        //this.layerControl = new L.Control.Layers(baseMaps, overlays);
+        //this.layerControl.addTo(this.lmap);
+        
+        this.lmap.on('click', function(event) {
+            webapp.mapClicked(event);        
+        });
     },
     
-    activeModuleChanged : function(newModule) {
-        this.lmap.on('click', function(event) {
-            newModule.handleClick(event);
-        });
+    activeModuleChanged : function(oldModule, newModule) {
         
-        for (var i = 0; i < newModule.mapLayers.length; i++) {
-            this.lmap.addLayer(newModule.mapLayers[i]);
+        //console.log("actModChanged: "+oldModule+", "+newModule);
+        if(oldModule != null) {
+            for(var layerName in oldModule.mapLayers) {
+                
+                var layer = oldModule.mapLayers[layerName];
+                this.lmap.removeLayer(layer);                
+                //this.layerControl.removeLayer(layer);
+            }
+        }
+
+        for(var layerName in newModule.mapLayers) {
+        
+            var layer = newModule.mapLayers[layerName];
+            this.lmap.addLayer(layer);
+            var this_ = this;
         }
     },
     
@@ -53,7 +88,5 @@ otp.core.Map = {
     },
     
     CLASS_NAME : "otp.core.Map"
-}
+});
 
-
-otp.core.Map = new otp.Class(otp.core.Map);
