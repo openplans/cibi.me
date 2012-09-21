@@ -53,6 +53,8 @@ otp.widgets.TripSummaryWidget =
             content += '<hr />';
             content += '<h6 id="share-route-header">Share this Trip:</h6>';
             content += '<div id="share-route"></div>';
+
+            this.setContent(content);
                 
             // Copy our existing share widget from the header and customize it for route sharing.
             // The url to share is set in PlannerModule.js in the newTrip() callback that is called
@@ -66,8 +68,10 @@ otp.widgets.TripSummaryWidget =
             addthisElement.attr("addthis:title", "Check out my trip planned on "+otp.config.siteName);
             addthisElement.attr("addthis:description", otp.config.siteDescription);
         }
+        else {
+            this.setContent(content);        
+        }
         
-        this.setContent(content);
 
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
         this.bikeTriangle.onChanged = planTripCallback;
