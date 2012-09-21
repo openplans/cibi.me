@@ -48,27 +48,29 @@ otp.widgets.TripSummaryWidget =
         content += '<input id="sharedBikeRBtn" type="radio" name="bikeType" value="shared_bike"> A Shared Bike';
         content += '</div>';
         
-        content += '<hr />';
-        content += '<h6 id="share-route-header">Share this Trip:</h6>';
-        content += '<div id="share-route"></div>';
+
+        if(otp.config.showAddThis) {
+            content += '<hr />';
+            content += '<h6 id="share-route-header">Share this Trip:</h6>';
+            content += '<div id="share-route"></div>';
                 
+            // Copy our existing share widget from the header and customize it for route sharing.
+            // The url to share is set in PlannerModule.js in the newTrip() callback that is called
+            // once a new route is loaded from the server.
+            var addthisElement = $(".addthis_toolbox").clone();
+            addthisElement.find(".addthis_counter").remove();
+            
+            // give this addthis toolbox a unique class so we can activate it alone in Webapp.js
+            addthisElement.addClass("addthis_toolbox_route");
+            addthisElement.appendTo("#share-route");
+            addthisElement.attr("addthis:title", "Check out my trip planned on "+otp.config.siteName);
+            addthisElement.attr("addthis:description", otp.config.siteDescription);
+        }
+        
         this.setContent(content);
 
-        // Copy our existing share widget from the header and customize it for route sharing.
-        // The url to share is set in Webapp.js in the newTrip() callback that is called once
-        // a new route is loaded from the server.
-        var addthisElement = $(".addthis_toolbox").clone();
-        addthisElement.find(".addthis_counter").remove();
-        // give this addthis toolbox a unique class so we can activate it alone in Webapp.js
-        addthisElement.addClass("addthis_toolbox_route");
-        addthisElement.appendTo("#share-route");
-        addthisElement.attr("addthis:title", "Check out my trip planned on "+otp.config.siteName+":");
-        addthisElement.attr("addthis:description", otp.config.siteDescription);
-        
         this.bikeTriangle = new otp.widgets.BikeTrianglePanel('otp-tsw-bikeTriangle');
-        this.bikeTriangle.onChanged = planTripCallback; /*function() {
-            //console.log('worked!');
-        };*/
+        this.bikeTriangle.onChanged = planTripCallback;
         
         document.getElementById('myOwnBikeRBtn').onclick = planTripCallback;
         document.getElementById('sharedBikeRBtn').onclick = planTripCallback;

@@ -50,6 +50,10 @@ otp.config = {
         },           
     ],
     
+    showAddThis     : true,
+    addThisPubId    : 'ra-4fb549f217255a7d',
+    addThisTitle    : 'How do you bike around Washington? Plan a trip now with bikeplanner.org',
+    
     /*hostname : "http://cibi.me",
     //routerId : <id>,
     
