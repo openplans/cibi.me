@@ -32,7 +32,20 @@ otp.core.Webapp = otp.Class({
         if(typeof console == 'undefined') console = { log: function(str) {} };
         var this_ = this;
        
+        // set the logo & title
+        
+        if(otp.config.showLogo) {
+          $('<div id="logo"><a href="'+otp.config.siteURL+'"><img src="'+otp.config.logoGraphic+'" style="height:100%"></a></div>').appendTo('#branding');
 
+        }
+        
+        if(otp.config.siteName !== undefined) {
+            document.title = otp.config.siteName;
+            if(otp.config.showTitle) {
+                $("<div id='site-title'><a href='"+otp.config.siteURL+"'>"+otp.config.siteName+"</a></div>").appendTo('#branding');
+            }
+        }
+        
         // create the map
         
         this.map = new otp.core.Map(this);        

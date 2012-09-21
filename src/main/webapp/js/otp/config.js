@@ -21,9 +21,14 @@ otp.config = {
     minZoom : 13,
     maxZoom : 17,
 
+    showLogo:           true,
+    showTitle:          true,
     showModuleSelector: false,
 
-    siteName    : "BikePlanner.org",
+    logoGraphic :       'images/openplans-logo-40x40.png',
+
+
+    siteName    : "bikeplanner.org",
     siteURL     : "http://bikeplanner.org",
     siteDescription  : "BikePlanner.org is a online trip planner, built by OpenPlans, that lets you plan trips around Washington DC using the Capital Bikeshare system.",
     

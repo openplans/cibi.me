@@ -234,10 +234,10 @@ body {
 /* the logo */
 #logo {
   display: none;
+  float: left;
+  height:30px;
+  margin: 10px 0px 0px 10px;
 }
-
-
-
 
 }
 #logo .ribbon {
@@ -331,7 +331,10 @@ body {
 #site-title {
   font-size: 1.25em;
   margin: .325em .25em;
+  float: left;
+  padding-left: 5px;
 }
+
 #site-title a {
   text-decoration: none;
   color: #fff;
@@ -696,6 +699,7 @@ p#splash-text span {
   }
   #site-title {
      margin: 1em 0;
+     padding-left: 10px;
   }
   #site-description {
     font-size: 1.25em;
