@@ -76,7 +76,7 @@ otp.widgets.TripSummaryWidget =
     		dist += itin.legs[i].distance;
         }
     	
-        $("#otp-tsw-distance").html(Math.round(100*(dist/1609.344))/100+" mi.");
+        $("#otp-tsw-distance").html(Math.round(100*(dist/1609.344))/100+" mi");
         $("#otp-tsw-duration").html(otp.util.Time.msToHrMin(itin.duration));	
     },
     
