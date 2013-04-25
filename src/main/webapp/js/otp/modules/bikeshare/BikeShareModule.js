@@ -99,7 +99,7 @@ otp.modules.bikeshare.BikeShareModule =
     	 var this_ = this;
     	 
          var start = new L.Marker(this.startLatLng, {icon: this.icons.startFlag, draggable: true}); 
-         start.bindPopup('<strong>Start</strong>');
+         start.bindPopup('<strong>'+ locale.stationInfo.start +'</strong>');
          start.on('dragend', function() {
         	 this_.hideSplash();
              this_.startLatLng = start.getLatLng();
@@ -115,7 +115,7 @@ otp.modules.bikeshare.BikeShareModule =
     	 var this_ = this;
     	 
          var end = new L.Marker(this.endLatLng, {icon: this.icons.endFlag, draggable: true}); 
-         end.bindPopup('<strong>Destination</strong>');
+         end.bindPopup('<strong>'+ locale.stationInfo.destination +'</strong>');
          this.markerLayer.addLayer(end);
          end.on('dragend', function() {
         	 this_.hideSplash();
@@ -191,16 +191,16 @@ otp.modules.bikeshare.BikeShareModule =
                         polyline.setStyle({ color : this_.getModeColor(itin.legs[i].mode), weight: 8});
                         this_.pathLayer.addLayer(polyline);
                         if(itin.legs[i].mode === 'BICYCLE') {
-                        	polyline.bindPopup('Your CiBi route!')
+                        	polyline.bindPopup(locale.stationInfo.tripLine)
                             var start_and_end_stations = this_.getStations(polyline.getLatLngs()[0], polyline.getLatLngs()[polyline.getLatLngs().length-1]);
                         }
                         
                         if(i == 0) {
-                        	polyline.bindPopup('Walk to the CiBi dock.')
+                        	polyline.bindPopup(locale.stationInfo.walkToDock)
                         }
                         
                         if(i == 2) {
-                        	polyline.bindPopup('Walk from the CiBi dock to your destination.')
+                        	polyline.bindPopup(locale.stationInfo.walkToDestination)
                         }
                     }
                     this_.resultsWidget.updateMetrics(itin);
@@ -259,7 +259,7 @@ otp.modules.bikeshare.BikeShareModule =
                 // start station
                 this.stationsLayer.removeLayer(station.marker);                        
                 var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.startBike});
-                marker.bindPopup(this.constructStationInfo("PICK UP BIKE", station));
+                marker.bindPopup(this.constructStationInfo(locale.stationInfo.pickUpBike, station));
                 this.stationsLayer.addLayer(marker);
                 station.marker = marker;
                 start_and_end_stations['start'] = station;
@@ -271,7 +271,7 @@ otp.modules.bikeshare.BikeShareModule =
                               
                 var icon = this.distance(station.x, station.y, this.startLatLng.lng, this.startLatLng.lat) < distTol/2 ?  this.icons.getLarge(station) : this.icons.getMedium(station);
                 var marker = new L.Marker(station.marker.getLatLng(), { icon: icon }); 
-                marker.bindPopup(this.constructStationInfo("ALTERNATE PICKUP", station));
+                marker.bindPopup(this.constructStationInfo(locale.stationInfo.alternatePickUp, station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
             }
@@ -279,7 +279,7 @@ otp.modules.bikeshare.BikeShareModule =
                 // end station
                 this.stationsLayer.removeLayer(station.marker);                        
                 var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.endBike});
-                marker.bindPopup(this.constructStationInfo("DROP OFF BIKE", station));
+                marker.bindPopup(this.constructStationInfo(locale.stationInfo.dropOffBike, station));
                 this.stationsLayer.addLayer(marker);
                 station.marker = marker;
                 start_and_end_stations['end'] = station;
@@ -291,14 +291,14 @@ otp.modules.bikeshare.BikeShareModule =
 
                 var icon = this.distance(station.x, station.y, this.endLatLng.lng, this.endLatLng.lat) < distTol/2 ?  this.icons.getLarge(station) : this.icons.getMedium(station);
                 var marker = new L.Marker(station.marker.getLatLng(), {icon: icon}); 
-                marker.bindPopup(this.constructStationInfo("ALTERNATE DROP OFF", station));
+                marker.bindPopup(this.constructStationInfo(locale.stationInfo.alternateDropOff, station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
             }
             else {
                 this.stationsLayer.removeLayer(station.marker);                        
                 var marker = new L.Marker(station.marker.getLatLng(), {icon: this.icons.getSmall(station)}); 
-                marker.bindPopup(this.constructStationInfo("BIKE STATION", station));
+                marker.bindPopup(this.constructStationInfo(locale.stationInfo.bikeStation, station));
                 this.stationsLayer.addLayer(marker);                        
                 station.marker = marker;
             }
@@ -316,7 +316,7 @@ otp.modules.bikeshare.BikeShareModule =
             for(var i=0; i<this_.stations.length; i++) {
                 var station = this_.stations[i].BikeRentalStation;
                 var marker = new L.Marker(new L.LatLng(station.y, station.x), {icon: this_.icons.getSmall(station)}); 
-                marker.bindPopup(this_.constructStationInfo("BIKE STATION", station));
+                marker.bindPopup(this_.constructStationInfo(locale.stationInfo.bikeStation, station));
                 this_.stationsLayer.addLayer(marker)
                 station.marker = marker;
                 this_.stationLookup[station.id] = station;
@@ -360,13 +360,13 @@ otp.modules.bikeshare.BikeShareModule =
             
     constructStationInfo : function(title, station) {
         if(title == null) {
-            title = (station.markerTitle !== undefined) ? station.markerTitle : "BIKE STATION";
+            title = (station.markerTitle !== undefined) ? station.markerTitle : locale.stationInfo.bikeStation;
         }
         var info = "<strong>"+title+"</strong><br/>";
         station.markerTitle = title;
-        info += '<strong>Station:</strong> '+station.name+'<br/>';
-        info += '<strong>Bikes Available:</strong> '+station.bikesAvailable+'<br/>';
-        info += '<strong>Docks Available:</strong> '+station.spacesAvailable+'<br/>';
+        info += '<strong>'+ locale.stationInfo.station +'</strong> '+station.name+'<br/>';
+        info += '<strong>'+ locale.stationInfo.bikesAvail +'</strong> '+station.bikesAvailable+'<br/>';
+        info += '<strong>'+ locale.stationInfo.docksAvail +'</strong> '+station.spacesAvailable+'<br/>';
         return info;
     },
     
@@ -376,9 +376,9 @@ otp.modules.bikeshare.BikeShareModule =
     
     updateTipStep : function(step) {
         if (step <= this.tipStep) return;
-        if(step == 1) this.tipWidget.setContent("To Start: Click on the Map to Plan a Bikeshare Trip.");
-        if(step == 2) this.tipWidget.setContent("Next: Click Again to Add Your Trip's End Point.");
-        if(step == 3) this.tipWidget.setContent("Tip: Drag the Start or End Flags to Modify Your Trip.");
+        if(step == 1) this.tipWidget.setContent(locale.tipWidget.startPoint);
+        if(step == 2) this.tipWidget.setContent(locale.tipWidget.endPoint);
+        if(step == 3) this.tipWidget.setContent(locale.tipWidget.modifyTrip);
         
         this.tipStep = step;
     },
@@ -386,13 +386,13 @@ otp.modules.bikeshare.BikeShareModule =
     createAboutInfo : function() {
     	this.contactWidget = new otp.widgets.InfoWidget("otp-contactWidget");
 
-		var contactCopy = '<p>Comments? Reach us <a href="http://twitter.com/openplans">@OpenPlans</a> or <a href="http://openplans.org/contact">send us a message</a> via our website. </p><p>Read more about <a href="http://openplans.org/?p=9892">cibi.me</a>.</p><p>For more information about NYC&apos;s bike share, visit <a href="http://citibikenyc.com/">Citi Bike</a> and <a href="http://nyc.gov/bikeshare">nyc.gov/bikeshare</a>.</p><p>cibi.me is a project from <a href="http://openplans.org/">OpenPlans</a>.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif" /></a></p>';
+		var contactCopy = locale.menu.contactText; 
 
-		this.contactWidget.setContent("<p class='title'>Contact</p>" + contactCopy);
+		this.contactWidget.setContent("<p class='title'>"+ locale.menu.contact +"</p>" + contactCopy);
 		this.contactWidget.hide();
     	
         this.aboutWidget = new otp.widgets.InfoWidget("otp-aboutWidget");
-		this.aboutWidget.setContent('<p><strong>Bike share is coming to NYC this summer!</strong> How will you use it to get around?</p><img src="http://www.streetsblog.org/wp-content/uploads/2012/05/IMAG0391.jpg"/><p>CiBi.me is a trip planner for bike share. Pick your start and end points, and we\'ll tell you how to make the trip with a <a href="">Citi Bike</a>. Including, where to pick up a bike and where to drop it off, and alternative docks nearby. When the system is running this summer, cibi.me will check to see if bikes and docks are available before recommending a route. For now, we&apos;re using draft station locations from NYC DOT.</p><p>Soon, Citi Bike will make all sorts of short trips quicker and easier. With CiBi.me, you can start planning those trips today!</p><p>cibi.me is a project from OpenPlans, powered by OpenTripPlanner and using OpenStreetMap data. Proposed station data from <a href="http://nyc.gov/bikeshare/">nyc.gov/bikeshare</a>. Photo of station dock from streetsblog.org.</p><p style="text-align:center;margin:2em;"><a href="http://openplans.org/"><img src="images/openplans-logo-gray.gif" /></a></p>');
+		this.aboutWidget.setContent(locale.menu.aboutText);
 		this.aboutWidget.hide();
 
     },
