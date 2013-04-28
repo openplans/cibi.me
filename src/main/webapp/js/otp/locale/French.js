@@ -20,24 +20,7 @@ otp.namespace("otp.locale");
 otp.locale.French = {
 
     config : {
-        metricsSystem : "international",
-        rightClickMsg : "Cliquez avec le bouton droit de la souris sur la carte pour désigner le départ et l'arrivée de votre parcours.",
-        attribution : {
-            title : "Attribution de licence",
-            content : "<p>Cet outil utilise des données provenant de nombreuses sources.</p><br/><p>Les données de transport en commun proviennent de</p> <ul><li>- L'<a href='http://www.amt.qc.ca/developpeurs/'>Agence métropolitaine de transport</a></li><li>- La <a href='http://www.stm.info/en-bref/developpeurs.htm'>Société de Transport de Montréal</a></li><li>- La <a href='http://www.stl.laval.qc.ca/lang/fr/stl-mobile/donnees-ouvertes/'>Société de Transport de Laval</a></li><li>- Le <a href='http://www.rtl-longueuil.qc.ca/fr-CA/donnees-ouvertes/fichiers-gtfs/'>Réseau de transport de Longueuil</a></li></ul><br/><p>Les données du réseau routier proviennent d'<a href='http://www.openstreetmap.org/'>OpenStreetMap</a>.</p><br/><p>Les données topographiques d'élévation proviennent de la <a href='http://www.echo.nasa.gov/reverb/about_reverb.htm'>NASA</a>.</p><br/><p>Les attributions pour les fonds de carte apparaissent dans le coin inférieur droit en fonction du fond de carte choisie.</p>"
-        }
-    },
-
-    contextMenu : {
-        fromHere : "Partir d'ici",
-        toHere : "Arriver ici",
-        intermediateHere : "Ajouter un point de passage",
-
-        centerHere : "Centrer la carte ici",
-        zoomInHere : "Zoomer ici",
-        zoomOutHere : "Dézoomer ici",
-        previous : "position précédente",
-        next : "position suivante"
+        metricsSystem : "international"
     },
 
     menu : {

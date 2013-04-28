@@ -1,1 +1,9 @@
-cibi.me is a bikeshare trip planner – pick your start and end locations, and we’ll find the closest bike share docks, and tell you the best cycling route between them. Drag your start or end flags, and the route will redraw on the fly.  When the system is running this summer, cibi.me will check to see if bikes and docks are available before recommending a route. See it in action at http://cibi.me.
+cibi.me is a bikeshare trip planner – pick your start and end locations, and we’ll find the closest bike share docks, and tell you the best cycling route between them. Drag your start or end flags, and the route will redraw on the fly.  When the system is running this summer, cibi.me will check to see if bikes and docks are available before recommending a route.
+
+Cibi.me is a 100% javascript app running almost as a new front end for Open Trip Planner. As a consequence, Cibi.me needs an Open Trip Planner instance running.
+
+Existing implementation of Cibi.me:
+- NYC: http://cibi.me
+- Washington DC: http://bikeplanner.org
+- Montreal: http://veloplan.net
+
