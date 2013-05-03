@@ -43,12 +43,16 @@ otp.widgets.BikeStationsWidget =
 		if (this.start_button !== null) {
 			this.start_button.empty();
 			this.end_button.empty();
-			this.start_button.html("<strong>Recommended Pick Up:</strong><br /> " + start.name + "<br /><strong>Bikes:</strong> " + start.bikesAvailable);
-			this.end_button.html("<strong>Recommended Drop Off:</strong><br /> " + end.name + "<br /><strong>Spaces:</strong> " + end.spacesAvailable);
+			this.start_button.html("<strong>"+ locale.stationWidget.recommendedPickUp +"</strong><br /> " 
+                              + start.name + "<br /><strong>"+ locale.stationWidget.bikes +"</strong> " + start.bikesAvailable);
+			this.end_button.html("<strong>"+ locale.stationWidget.recommendedDropOff +"</strong><br /> " 
+                              + end.name + "<br /><strong>"+ locale.stationWidget.spaces +"</strong> " + end.spacesAvailable);
 
 		} else {
-			this.start_button = $("<div id='pickup_btn'><strong>Recommended Pick Up:</strong><br /> " + start.name + "<br /><strong>Bikes:</strong> " + start.bikesAvailable + "</div>");
-			this.end_button = $("<div id='dropoff_btn'><strong>Recommended Drop Off:</strong><br /> " + end.name + "<br /><strong>Spaces:</strong> " + end.spacesAvailable + "</div>");
+			this.start_button = $("<div id='pickup_btn'><strong>"+ locale.stationWidget.recommendedPickUp +"</strong><br /> " 
+                              + start.name + "<br /><strong>"+ locale.stationWidget.bikes +"</strong> " + start.bikesAvailable + "</div>");
+			this.end_button = $("<div id='dropoff_btn'><strong>"+ locale.stationWidget.recommendedDropOff +"</strong><br /> " 
+                              + end.name + "<br /><strong>"+ locale.stationWidget.spaces+"</strong> " + end.spacesAvailable + "</div>");
 			
 			($(this.div).append($("<div class='button left'></div>").append(this.start_button))).append($("<div class='button right'></div>").append(this.end_button));  
 		    this.show();

@@ -179,14 +179,21 @@ body {
 }
 
 /* the logo */
+
+#imglogo {
+  float: left;
+  margin-right: 10px;
+}
 #logo {
-  position: absolute;
+/*  position: absolute;
   top: 2.5em;
   right: 0;
   margin-top: -15px;
-  overflow: hidden;
-  padding: 10px 0 18px 3.5em;
+  overflow: hidden;*/
+  padding: 0px 0 18px 1.5em;
   z-index: 2;
+  width: 250px;
+  float: left;
 }
 #logo .ribbon {
   position: relative;
@@ -277,10 +284,11 @@ body {
 }
 
 #site-title {
-  font-family: 'Dancing Script', cursive;
-  font-size: 3.25em;
-  margin: -0.2em 20px 0 0;
-  line-height: 1;
+  font-family: 'Doppio One', Sans-serif;
+  font-size: 10px;
+  margin: 12px 20px 0 30px;
+  letter-spacing:2px;
+  /*line-height: 1;*/
 }
 #site-title a {
   text-decoration: none;
@@ -309,7 +317,7 @@ body {
 /* AddThis */
 #branding .addthis_toolbox {
   margin: 0.5em 0 0 0.5em;
-  float: left;
+  float: right;
   min-width: 163px;
 }
 
@@ -535,9 +543,9 @@ ul.otp-stats li strong {
 
 p#splash-text {
   position: absolute;
-  top: 6.75em;
+  top: 4.75em;
   right: 0;
-  line-height: 1.5;
+  line-height: 2;
   font-weight: bold;
   text-align: left;
   padding: 1em 1.25em;
@@ -597,7 +605,7 @@ p#splash-text span {
     padding: 0 1.5em 0 2em;
   }
   #site-title {
-    font-size: 4.25em;
+    font-size: 1.50em;
   }
   #site-description {
     font-size: 1.25em;
@@ -763,7 +771,7 @@ p#splash-text span {
   }
 
   p#splash-text {
-    top: 7.5em;
+    top: 4.5em;
     font-size: 1.2em;
   }
 

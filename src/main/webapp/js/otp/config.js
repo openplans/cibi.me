@@ -4,11 +4,16 @@ if(typeof(otp.config) == "undefined" || otp.config == null) otp.config = {};
 //if(typeof(otp.config.locale) == "undefined" || otp.config.locale == null) otp.config.locale = otp.locale.English;
 
 
+//otp.config.locale = otp.locale.French;
+//otp.config.locale.config.metricsSystem = 'international';
+
+
 // step 2: create an object of default otp.config default values (see step3 where we apply this to any existing config)
 otp.config = {
 
-    hostname : "http://cibi.me",
-    //routerId : <id>,
+
+    hostname : "http://veloplan.net/",
+    routerId : "mtl",
     
     
     // default cloudmade tiles:
@@ -19,16 +24,20 @@ otp.config = {
     tileUrl : 'http://{s}.tiles.mapbox.com/v3/openplans.map-g4j0dszr,openplans.nyc_bike_overlay/{z}/{x}/{y}.png',
     //overlayTileUrl : 'http://{s}.tiles.mapbox.com/v3/intertwine.nyc_bike_overlay/{z}/{x}/{y}.png',
     tileAttrib : 'Routing powered by <a href="http://opentripplanner.org/">OpenTripPlanner</a>, Map tiles from MapBox (<a href="http://mapbox.com/about/maps/">terms</a>) and OpenStreetMap ',
-    initLatLng : new L.LatLng(40.719298,-73.999743), // NYC
+    initLatLng : new L.LatLng(45.500298,-73.565743),
     initZoom : 14,
-    minZoom : 13,
+    minZoom : 12,
     maxZoom : 17,
 
-    loggerUrl : 'http://cibi.me/cibi/log',
-    dataStorageUrl : 'http://cibi.me/cibi/data', 
+    loggerUrl : 'http://veloplan.net/cibi/log',
+    dataStorageUrl : 'http://veloplan.net/cibi/data', 
     
     CLASS_NAME : "otp.config"
 };
+
+var locale = otp.locale.French;
+
+$("#about_link").html("meuh");
 
 /*
 // step 3: apply our default to the existing (possibly empty) otp config

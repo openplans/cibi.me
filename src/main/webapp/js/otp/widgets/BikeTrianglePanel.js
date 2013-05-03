@@ -61,18 +61,18 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
 
         var safeFill = "#bbe070"; 
         var safeFill2 = "#77b300"; 
-        var safeName = "Safest"; //locale.bikeTriangle.safeName;
-        var safeSym  = "S"; //locale.bikeTriangle.safeSym;
+        var safeName = locale.bikeTriangle.safeName;
+        var safeSym  = locale.bikeTriangle.safeSym;
 
         var hillFill = "#8cc4ff"; 
         var hillFill2 = "#61a7f2"; 
-        var hillName = "Flattest"; //locale.bikeTriangle.hillName;
-        var hillSym  = "F"; //locale.bikeTriangle.hillSym;
+        var hillName = locale.bikeTriangle.hillName;
+        var hillSym  = locale.bikeTriangle.hillSym;
         
         var timeFill = "#ffb2b2";
         var timeFill2 = "#f27979";
-        var timeName = "Quickest"; //locale.bikeTriangle.timeName;
-        var timeSym  = "Q"; //locale.bikeTriangle.timeSym;
+        var timeName = locale.bikeTriangle.timeName;
+        var timeSym  = locale.bikeTriangle.timeSym;
 
         var labelT = canvas.text(margin + tri_side/2, margin+24, timeSym);
         labelT.attr({fill:timeFill2, "font-size":labelSize, "font-weight":"bold"});	
