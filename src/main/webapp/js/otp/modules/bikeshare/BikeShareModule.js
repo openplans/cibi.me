@@ -160,6 +160,7 @@ otp.modules.bikeshare.BikeShareModule =
                 toPlace: this.endLatLng.lat+','+this.endLatLng.lng,
                 mode: mode,
                 optimize: 'TRIANGLE',
+                bikeSpeed: 7.5,
                 triangleTimeFactor: this_.triangleTimeFactor,
                 triangleSlopeFactor: this_.triangleSlopeFactor,
                 triangleSafetyFactor: this_.triangleSafetyFactor
